@@ -13,7 +13,7 @@ const ReservationDate: FC = () => {
   const selectTime = (time: Date) => {
     setFieldValue("time", time);
   };
-  console.log(values.time && values.time.toTimeString());
+
   return (
     <section className="ReservationDate">
       <label>Select date:</label>

@@ -1,14 +1,12 @@
-import React, { FC, memo, useEffect } from "react";
-import { Provider } from "react-redux";
+import React, { FC, memo } from "react";
 import { useRouter } from "next/router";
 
-import BathInfo from "./bathInfo";
+import BathInfo from "./bathInfo/bathInfo";
 import { Formik } from "formik";
 import { Reservation } from "../../validation/validationInterfaces";
 import { reservation } from "../../validation/validationSchemas";
-import { Props } from "./main.interfaces";
 
-const Main: FC<Props> = ({ store }) => {
+const Main: FC = () => {
   const router = useRouter();
 
   const initialValues = {
@@ -39,11 +37,7 @@ const Main: FC<Props> = ({ store }) => {
           validateOnChange
         >
           {() => {
-            return (
-              <Provider store={store}>
-                <BathInfo />
-              </Provider>
-            );
+            return <BathInfo />;
           }}
         </Formik>
       </section>

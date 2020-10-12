@@ -1,10 +1,10 @@
 import { useFormikContext } from "formik";
 import React, { FC, memo } from "react";
 
-import Options from "./partials/Options";
-import ReservationDate from "./partials/ReservationDate";
-import Customer from "../customer";
-import Header from "../../header";
+import Options from "./partials/Options/options";
+import ReservationDate from "./partials/ReservationDate/reservationDate";
+import Customer from "../customer/customer";
+import Header from "../../header/header";
 import { Reservation } from "../../../validation/validationInterfaces";
 
 const BathInfo: FC = () => {
