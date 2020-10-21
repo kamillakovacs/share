@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, memo } from "react";
-import { FormikProps, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 

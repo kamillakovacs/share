@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import React, { FC, memo, useEffect } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 
@@ -33,18 +33,18 @@ const Options: FC = () => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
 
   useEffect(() => {
-    setFieldValue("numberOfTubsOptions", getTubOptions()[0]);
-  }, [values.numberOfGuestsOptions]);
+    setFieldValue("numberOfTubs", getTubOptions()[0]);
+  }, [values.numberOfGuests]);
 
   useEffect(() => {
     setFieldValue("price", setPrice());
-  }, [values.numberOfTubsOptions]);
+  }, [values.numberOfTubs]);
 
   const getTubOptions = () => {
-    if (!values.numberOfGuestsOptions) {
+    if (!values.numberOfGuests) {
       return onePersonTubOptions;
     } else {
-      switch (values.numberOfGuestsOptions.value) {
+      switch (values.numberOfGuests.value) {
         case "1":
           return onePersonTubOptions;
         case "2":
@@ -62,8 +62,8 @@ const Options: FC = () => {
   };
 
   const setPrice = () => {
-    if (values.numberOfTubsOptions) {
-      switch (values.numberOfTubsOptions.value) {
+    if (values.numberOfTubs) {
+      switch (values.numberOfTubs.value) {
         case "1":
           return "18000";
         case "2.1":
@@ -95,43 +95,24 @@ const Options: FC = () => {
 
   return (
     <>
-      {/* <div className="Options">
-        <label>{"Type of Bath"}:</label>
-        <Select
-          options={typeOfBath}
-          name="typeOfBath"
-          onChange={setTypeOfBath}
-        />
-      </div> */}
-
       <div className="Options">
         <label>{"Number of People"}:</label>
         <Select
           options={numberOfGuestsOptions}
-          name="numberOfGuestsOptions"
+          name="numberOfGuests"
           onChange={setOption}
-          value={values.numberOfGuestsOptions}
+          value={values.numberOfGuests}
         />
       </div>
       <div className="Options">
         <label>{"Number of Tubs"}:</label>
         <Select
           options={getTubOptions()}
-          name="numberOfTubsOptions"
+          name="numberOfTubs"
           onChange={setOption}
-          value={values.numberOfTubsOptions}
+          value={values.numberOfTubs}
         />
       </div>
-      {/* {!!values.numberOfGuestsOptions && !!values.numberOfTubsOptions && (
-        <div className="Options">
-          <label>{"Additional Treatments"}:</label>
-          <Select
-            options={additionalTreatments}
-            name="additionalTreatments"
-            onChange={setOption}
-          />
-        </div>
-      )} */}
     </>
   );
 };

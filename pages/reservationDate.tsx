@@ -1,4 +1,4 @@
-import { FormikProps, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import React, { FC, memo } from "react";
 import DatePicker from "react-datepicker";
 

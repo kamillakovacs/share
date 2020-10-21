@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "4.5.2",
     "dotenv": "8.2.0",
+    "dotenv-webpack": "4.0.0",
     "firebase": "7.23.0",
     "firebase-admin": "9.2.0",
     "formik": "2.1.7",

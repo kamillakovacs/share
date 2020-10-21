@@ -2,13 +2,13 @@ import * as Yup from "yup";
 
 export const reservation = Yup.object().shape({
   date: Yup.date().required(),
-  numberOfGuestsOptions: Yup.object()
+  numberOfGuests: Yup.object()
     .shape({
       value: Yup.string(),
       label: Yup.string(),
     })
     .required(),
-  numberOfTubsOptions: Yup.object()
+  numberOfTubs: Yup.object()
     .shape({
       value: Yup.string(),
       label: Yup.string(),
