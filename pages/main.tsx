@@ -1,5 +1,5 @@
-import { Formik, connect } from "formik";
-import React, { FC, memo } from "react";
+import { Formik } from "formik";
+import React, { memo } from "react";
 
 import firebase from "../lib/firebase";
 
@@ -38,8 +38,8 @@ const Main = ({ users }) => {
           validationSchema={reservation}
           validateOnChange
         >
-          {(formikProps) => {
-            const currency = parseInt(formikProps.values.price) / 356.33;
+          {({ values }) => {
+            const currency = parseInt(values.price) / 356.33;
 
             // @ts-ignore
             return (
@@ -51,14 +51,14 @@ const Main = ({ users }) => {
                   <ReservationDate />
                   <Options />
                 </section>
-                {formikProps.values.numberOfTubsOptions &&
-                  formikProps.values.numberOfGuestsOptions &&
-                  formikProps.values.date &&
-                  formikProps.values.time && (
+                {values.numberOfTubsOptions &&
+                  values.numberOfGuestsOptions &&
+                  values.date &&
+                  values.time && (
                     <>
                       <Customer />
                       <span className="Reservation__price">
-                        Total: {formikProps.values.price} Ft /
+                        Total: {values.price} Ft /
                         {parseInt(currency.toString())} EUR
                       </span>
                     </>

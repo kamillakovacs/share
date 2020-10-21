@@ -3,10 +3,6 @@ import { FormikProps, useFormikContext } from "formik";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
-interface Props {
-  formik: FormikProps<Reservation>;
-}
-
 const Customer: FC = () => {
   const { setFieldValue } = useFormikContext<Reservation>();
 

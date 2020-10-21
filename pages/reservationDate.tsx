@@ -4,12 +4,9 @@ import DatePicker from "react-datepicker";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
-interface Props {
-  formik: FormikProps<Reservation>;
-}
-
 const ReservationDate: FC = () => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
+
   const selectDate = (date: Date) => {
     setFieldValue("date", date);
   };

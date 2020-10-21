@@ -4,10 +4,6 @@ import Select, { ActionMeta, ValueType } from "react-select";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
-interface Props {
-  formik: FormikProps<Reservation>;
-}
-
 const numberOfGuestsOptions = [
   { value: "1", label: "1 person" },
   { value: "2", label: "2 people" },
