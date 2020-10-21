@@ -1,8 +1,12 @@
-import { useFormikContext } from "formik";
-import React, { memo, useEffect } from "react";
+import { FormikProps, useFormikContext } from "formik";
+import React, { FC, memo, useEffect } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 
-import { Reservation } from "../../../../../validation/validationInterfaces";
+import { Reservation } from "../lib/validation/validationInterfaces";
+
+interface Props {
+  formik: FormikProps<Reservation>;
+}
 
 const numberOfGuestsOptions = [
   { value: "1", label: "1 person" },
@@ -29,17 +33,7 @@ const fourPeopleTubOptions = [
 const fivePeopleTubOptions = [{ value: "5", label: "5 people in 3 tubs" }];
 const sixPeopleTubOptions = [{ value: "6", label: "6 people in 3 tubs" }];
 
-// const typeOfBath = [
-//   { value: "beer", label: "Beer - 10.000 Ft / 28 EUR" },
-//   { value: "wine", label: "Wine - 10.000 Ft / 28 EUR" },
-// ];
-
-const additionalTreatments = [
-  { value: "hopsMassage", label: "Hops Massage" },
-  { value: "swedishMassage", label: "Swedish Massage" },
-];
-
-const Options: React.FC = () => {
+const Options: FC = () => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
 
   useEffect(() => {

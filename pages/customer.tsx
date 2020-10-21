@@ -1,6 +1,11 @@
 import React, { ChangeEvent, FC, memo } from "react";
-import { connect, useFormikContext } from "formik";
-import { Reservation } from "../../../validation/validationInterfaces";
+import { FormikProps, useFormikContext } from "formik";
+
+import { Reservation } from "../lib/validation/validationInterfaces";
+
+interface Props {
+  formik: FormikProps<Reservation>;
+}
 
 const Customer: FC = () => {
   const { setFieldValue } = useFormikContext<Reservation>();
@@ -51,4 +56,4 @@ const Customer: FC = () => {
   );
 };
 
-export default connect(memo(Customer));
+export default memo(Customer);

@@ -1,8 +1,12 @@
-import { useFormikContext } from "formik";
+import { FormikProps, useFormikContext } from "formik";
 import React, { FC, memo } from "react";
 import DatePicker from "react-datepicker";
 
-import { Reservation } from "../../../../../validation/validationInterfaces";
+import { Reservation } from "../lib/validation/validationInterfaces";
+
+interface Props {
+  formik: FormikProps<Reservation>;
+}
 
 const ReservationDate: FC = () => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
