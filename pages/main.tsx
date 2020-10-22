@@ -11,6 +11,7 @@ import Header from "./header";
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 import firebaseAdmin from "../lib/firebase-admin";
+import handler from "./api/paymentApi";
 
 interface ReservationData {
   date: string;
@@ -76,7 +77,6 @@ const Main: FC<Props> = ({ users }) => {
   }
 
   const onSubmit = (values: Reservation) => {
-    console.log("submitting");
     const reservationData: ReservationData = {
       date: values.date.toDateString(),
       time: values.time.toTimeString(),
@@ -92,7 +92,8 @@ const Main: FC<Props> = ({ users }) => {
       email: values.email,
     };
 
-    return makeNewReservation(reservationData);
+    handler({ method: "POST" }, reservationData);
+    // return makeNewReservation(reservationData);
   };
 
   return (
@@ -101,7 +102,6 @@ const Main: FC<Props> = ({ users }) => {
         <Formik<Reservation>
           initialValues={initialValues}
           onSubmit={(values) => {
-            console.log("here");
             onSubmit(values);
           }}
           validationSchema={reservation}
