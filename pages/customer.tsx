@@ -1,12 +1,17 @@
 import React, { ChangeEvent, FC, memo } from "react";
-import { useFormikContext } from "formik";
+import { useFormikContext, ErrorMessage } from "formik";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
 const Customer: FC = () => {
-  const { setFieldValue } = useFormikContext<Reservation>();
+  const { setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "phoneNumber") {
+      e.target.value.replace(/\+|-/gi, "");
+    }
+
+    setFieldTouched(e.target.name);
     setFieldValue(e.target.name, e.target.value);
   };
 
@@ -18,8 +23,12 @@ const Customer: FC = () => {
         <input
           className="Customer__input"
           name="firstName"
+          type="text"
           onChange={onChangeInput}
         />
+      </div>
+      <div className="ErrorMessage">
+        <ErrorMessage name="firstName" />
       </div>
 
       <div className="Options">
@@ -27,8 +36,12 @@ const Customer: FC = () => {
         <input
           className="Customer__input"
           name="lastName"
+          type="text"
           onChange={onChangeInput}
         />
+      </div>
+      <div className="ErrorMessage">
+        <ErrorMessage name="lastName" />
       </div>
 
       <div className="Options">
@@ -37,7 +50,11 @@ const Customer: FC = () => {
           className="Customer__input"
           name="phoneNumber"
           onChange={onChangeInput}
+          type="tel"
         />
+      </div>
+      <div className="ErrorMessage">
+        <ErrorMessage name="phoneNumber" />
       </div>
 
       <div className="Options">
@@ -45,8 +62,12 @@ const Customer: FC = () => {
         <input
           className="Customer__input"
           name="email"
+          type="email"
           onChange={onChangeInput}
         />
+      </div>
+      <div className="ErrorMessage">
+        <ErrorMessage name="email" />
       </div>
     </section>
   );

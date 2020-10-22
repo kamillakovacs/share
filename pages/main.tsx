@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import React, { memo } from "react";
+import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
 import "firebase/database";
 
@@ -10,6 +10,7 @@ import Header from "./header";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
+import firebaseAdmin from "../lib/firebase-admin";
 
 interface ReservationData {
   date: string;
@@ -24,7 +25,11 @@ interface ReservationData {
   email: string;
 }
 
-const Main = () => {
+interface Props {
+  users: ReservationData[];
+}
+
+const Main: FC<Props> = ({ users }) => {
   const initialValues = {
     date: undefined,
     time: undefined,
@@ -38,7 +43,18 @@ const Main = () => {
     email: "",
   };
 
-  function writeNewPost(reservationData: ReservationData) {
+  function makeNewReservation(reservationData: ReservationData) {
+    const customerAlreadyInDatabase = !!Object.values(users).filter(
+      (user) =>
+        user.firstName.toLowerCase() ===
+          reservationData.firstName.toLowerCase() &&
+        user.lastName.toLowerCase() ===
+          reservationData.lastName.toLowerCase() &&
+        user.phoneNumber.toLowerCase() ===
+          reservationData.phoneNumber.toLowerCase() &&
+        user.email.toLowerCase() === reservationData.email.toLowerCase()
+    ).length;
+
     const newCustomer = {
       firstName: reservationData.firstName,
       lastName: reservationData.lastName,
@@ -52,12 +68,15 @@ const Main = () => {
 
     const updates = {};
     updates["/reservations/" + newReservationKey] = reservationData;
-    updates["/customers/" + newCustomerId] = newCustomer;
+    if (!customerAlreadyInDatabase) {
+      updates["/customers/" + newCustomerId] = newCustomer;
+    }
 
     return firebase.database().ref().update(updates);
   }
 
   const onSubmit = (values: Reservation) => {
+    console.log("submitting");
     const reservationData: ReservationData = {
       date: values.date.toDateString(),
       time: values.time.toTimeString(),
@@ -73,7 +92,7 @@ const Main = () => {
       email: values.email,
     };
 
-    return writeNewPost(reservationData);
+    return makeNewReservation(reservationData);
   };
 
   return (
@@ -81,16 +100,18 @@ const Main = () => {
       <section className="Main__container">
         <Formik<Reservation>
           initialValues={initialValues}
-          onSubmit={() => {}}
+          onSubmit={(values) => {
+            console.log("here");
+            onSubmit(values);
+          }}
           validationSchema={reservation}
           validateOnChange
         >
-          {({ values }) => {
+          {({ values, handleSubmit }) => {
             const currency = parseInt(values.price) / 356.33;
-            const submit = () => onSubmit(values);
 
             return (
-              <>
+              <form onSubmit={handleSubmit}>
                 <Header />
                 <section className="Reservation">
                   <label className="Reservation__title">
@@ -105,20 +126,18 @@ const Main = () => {
                   values.time && (
                     <>
                       <Customer />
-                      <span className="Reservation__price">
-                        Total: {values.price} Ft /
-                        {parseInt(currency.toString())} EUR
-                      </span>
-                      <button
-                        className="Reservation__submit"
-                        type="submit"
-                        onClick={submit}
-                      >
-                        Submit Reservation
-                      </button>
+                      <div className="Reservation__info">
+                        <span className="Reservation__price">
+                          Total: {values.price} Ft /
+                          {parseInt(currency.toString())} EUR
+                        </span>
+                        <button className="Reservation__submit" type="submit">
+                          Submit Reservation
+                        </button>
+                      </div>
                     </>
                   )}
-              </>
+              </form>
             );
           }}
         </Formik>
@@ -127,13 +146,15 @@ const Main = () => {
   );
 };
 
-// export async function getStaticProps() {
-//   const customers = firebase.database().ref("customers");
-//   const users = await customers.once("value").then(function (snapshot) {
-//     return snapshot.val() || "Anonymous";
-//   });
+export async function getStaticProps() {
+  const customers = firebaseAdmin.database().ref("customers");
+  const users: ReservationData[] = await customers
+    .once("value")
+    .then(function (snapshot) {
+      return snapshot.val() || "Anonymous";
+    });
 
-//   return { props: { users } };
-// }
+  return { props: { users } };
+}
 
 export default memo(Main);
