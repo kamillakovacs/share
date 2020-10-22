@@ -67,11 +67,24 @@ a {
   }
 
   &__price {
-    width: 40%;
+    width: 35%;
+    text-align: center;
     margin-top: 30px;
-    padding: 30px;
+    padding: 20px;
     border: 1px white solid;
     border-radius: 4px;
+  }
+
+  &__submit {
+    margin-top: 40px;
+    min-height: 60px;
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #fdb924;
+    color: #2f3135;
+    border-radius: 10px;
+    border: none;
   }
 }
 

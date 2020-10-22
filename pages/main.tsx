@@ -11,6 +11,19 @@ import Header from "./header";
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 
+interface ReservationData {
+  date: string;
+  time: string;
+  numberOfGuests: string;
+  numberOfTubs: string;
+  price: string;
+  additionalTreatments?: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+}
+
 const Main = () => {
   const initialValues = {
     date: undefined,
@@ -25,7 +38,7 @@ const Main = () => {
     email: "",
   };
 
-  function writeNewPost(reservationData: Reservation) {
+  function writeNewPost(reservationData: ReservationData) {
     const newCustomer = {
       firstName: reservationData.firstName,
       lastName: reservationData.lastName,
@@ -44,16 +57,23 @@ const Main = () => {
     return firebase.database().ref().update(updates);
   }
 
-  const onSubmit = (values: any) => {
-    return values.additionalTreatments
-      ? writeNewPost(values)
-      : writeNewPost({
-          ...values,
-          additionalTreatments: values.additionalTreatments || {
-            label: "none",
-            value: "none",
-          },
-        });
+  const onSubmit = (values: Reservation) => {
+    const reservationData: ReservationData = {
+      date: values.date.toDateString(),
+      time: values.time.toTimeString(),
+      numberOfGuests: values.numberOfGuests.label,
+      numberOfTubs: values.numberOfTubs.label,
+      price: values.price,
+      additionalTreatments: values.additionalTreatments
+        ? values.additionalTreatments.label
+        : "none",
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phoneNumber: values.phoneNumber,
+      email: values.email,
+    };
+
+    return writeNewPost(reservationData);
   };
 
   return (
@@ -73,7 +93,9 @@ const Main = () => {
               <>
                 <Header />
                 <section className="Reservation">
-                  <label className="Reservation__title"></label>
+                  <label className="Reservation__title">
+                    Reservation Information
+                  </label>
                   <ReservationDate />
                   <Options />
                 </section>
@@ -87,11 +109,15 @@ const Main = () => {
                         Total: {values.price} Ft /
                         {parseInt(currency.toString())} EUR
                       </span>
+                      <button
+                        className="Reservation__submit"
+                        type="submit"
+                        onClick={submit}
+                      >
+                        Submit Reservation
+                      </button>
                     </>
                   )}
-                <button type="submit" onClick={submit}>
-                  Submit Reservation
-                </button>
               </>
             );
           }}
