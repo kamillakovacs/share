@@ -13,7 +13,7 @@ const numberOfGuestsOptions = [
   { value: "6", label: "6 people" },
 ];
 
-const onePersonTubOptions = [{ value: "1", label: "1 tub" }];
+const onePersonTubOptions = [{ value: "1.1", label: "1 tub" }];
 const twoPeopleTubOptions = [
   { value: "2.1", label: "2 people in 1 tub" },
   { value: "2.2", label: "2 people in 2 tubs" },
@@ -26,8 +26,8 @@ const fourPeopleTubOptions = [
   { value: "4.2", label: "4 people in 2 tubs" },
   { value: "4.3", label: "4 people in 3 tubs" },
 ];
-const fivePeopleTubOptions = [{ value: "5", label: "5 people in 3 tubs" }];
-const sixPeopleTubOptions = [{ value: "6", label: "6 people in 3 tubs" }];
+const fivePeopleTubOptions = [{ value: "5.3", label: "5 people in 3 tubs" }];
+const sixPeopleTubOptions = [{ value: "6.3", label: "6 people in 3 tubs" }];
 
 const Options: FC = () => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
@@ -64,24 +64,24 @@ const Options: FC = () => {
   const setPrice = () => {
     if (values.numberOfTubs) {
       switch (values.numberOfTubs.value) {
-        case "1":
+        case "1.1":
           return "18000";
         case "2.1":
-          return "25000";
+          return "22000";
         case "2.2":
-          return "30000";
+          return "32000";
         case "3.2":
-          return "38000";
+          return "40000";
         case "3.3":
-          return "42000";
+          return "54000";
         case "4.2":
-          return "55000";
+          return "44000";
         case "4.3":
-          return "63000";
-        case "5":
-          return "70000";
-        case "6":
-          return "82000";
+          return "58000";
+        case "5.5":
+          return "62000";
+        case "6.6":
+          return "66000";
       }
     }
   };

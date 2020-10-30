@@ -1,26 +1,27 @@
 import Cors from "cors";
 
-const cors = Cors({
-  methods: ["GET", "POST"],
-  origin: "http://localhost:3000",
-});
-
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-
-      return resolve(result);
+function initMiddleware(middleware) {
+  return (req, res) =>
+    new Promise((resolve, reject) => {
+      middleware(req, res, (result) => {
+        if (result instanceof Error) {
+          return reject(result);
+        }
+        return resolve(result);
+      });
     });
-  });
 }
+
+const cors = initMiddleware(
+  Cors({
+    methods: ["GET", "POST", "OPTIONS"],
+  })
+);
 
 async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      await runMiddleware(req, res, cors);
+      await cors(req, res);
 
       const response = fetch("https://sandbox.simplepay.hu/payment/v2/start", {
         method: "POST",

@@ -7,6 +7,7 @@ import Options from "./options";
 import ReservationDate from "./reservationDate";
 import Customer from "./customer";
 import Header from "./header";
+import Packages from "./packages";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
@@ -142,6 +143,7 @@ const Main: FC<Props> = ({ users }) => {
           }}
         </Formik>
       </section>
+      <Packages />
     </article>
   );
 };
