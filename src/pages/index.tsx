@@ -121,29 +121,23 @@ const Main: FC<Props> = ({ users }) => {
                   <ReservationDate />
                   <Options />
                 </section>
-                {values.numberOfTubs &&
-                  values.numberOfGuests &&
-                  values.date &&
-                  values.time && (
-                    <>
-                      <Customer />
-                      <div className="Reservation__info">
-                        <span className="Reservation__price">
-                          Total: {values.price} Ft /
-                          {parseInt(currency.toString())} EUR
-                        </span>
-                        <button className="Reservation__submit" type="submit">
-                          Submit Reservation
-                        </button>
-                      </div>
-                    </>
-                  )}
+                <Customer />
+                <div className="Reservation__info">
+                  <span className="Reservation__price">
+                    {`Total: ${values.price} Ft /
+                    ${parseInt(currency.toString())}
+                    EUR`}
+                  </span>
+                  <button className="Reservation__submit" type="submit">
+                    Submit Reservation
+                  </button>
+                </div>
               </form>
             );
           }}
         </Formik>
       </section>
-      <Packages />
+      {/* <Packages /> */}
     </article>
   );
 };
