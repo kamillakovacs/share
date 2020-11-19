@@ -3,11 +3,11 @@ import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
 import "firebase/database";
 
-import Options from "./options";
-import ReservationDate from "./reservationDate";
-import Customer from "./customer";
-import Header from "./header";
-import Packages from "./packages";
+import Options from "../components/options";
+import ReservationDate from "../components/reservationDate";
+import Customer from "../components/customer";
+import Header from "../components/header";
+import Packages from "../components/packages";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
@@ -93,8 +93,8 @@ const Main: FC<Props> = ({ users }) => {
       email: values.email,
     };
 
-    handler({ method: "POST" }, reservationData);
-    // return makeNewReservation(reservationData);
+    // handler({ method: "POST" }, reservationData);
+    return makeNewReservation(reservationData);
   };
 
   return (
