@@ -15,8 +15,27 @@ a {
   box-sizing: border-box;
 }
 
+.Main {
+  display: flex;
+  flex-direction: column;
+  height: 1200px;
+  align-items: center;
+  background-color: #222222;
+
+  &__container {
+    display: flex;
+    align-items: center;
+
+    color: white;
+    font-weight: 600;
+
+    width: 80%;
+    margin: 30px 10px 20px 10px;
+  }
+}
+
 .Header {
-  width: 650px;
+  width: 80%;
   padding: 40px;
   margin-bottom: 15px;
 
@@ -36,107 +55,91 @@ a {
   }
 }
 
-.Main {
+.Packages {
   display: flex;
-  height: 1200px;
-  justify-content: space-evenly;
-  background-color: #222222;
+  flex-direction: column;
 
-  &__container {
+  margin: 20px 0 20px 30px;
+  padding-left: 30px;
+  width: 50%;
+  height: 100%;
+
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+
+  border-left: 1px solid;
+
+  &__title {
+    margin-bottom: 15px;
+  }
+
+  .Accordion {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    color: white;
-    font-weight: 600;
+    width: 100%;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 5px;
+    border: 1px solid white;
 
-    width: 700px;
-    height: 600px;
-    margin: 30px 10px 20px 10px;
-  }
-
-  .Packages {
-    display: flex;
-    flex-direction: column;
-    margin: 30px 10px 20px 10px;
-    width: 600px;
-    color: white;
-    font-size: 24px;
-    font-weight: 600;
-
-    &__title {
-      margin-bottom: 20px;
+    &__indicator {
+      padding: 0;
+      padding: 10px;
+      width: 100%;
+      color: #fdb924;
     }
 
-    .Accordion {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    &__panel {
+      background-color: #222222;
+      max-height: 0px;
+      overflow: hidden;
       width: 100%;
-      font-size: 16px;
-      border-radius: 5px;
-      border: 1px solid white;
 
-      &__indicator {
-        padding: 0;
-        // border: 1px solid white;
-        padding: 10px;
-        width: 100%;
-
-        .Icon {
-          margin-left: 10px;
-          transition: all 0.3s ease;
-        }
-
-        &--fillSpace {
-          width: 100%;
-        }
+      &--description,
+      &--subTitle {
+        font-weight: 400;
       }
+    }
 
-      &__panel {
-        background-color: #222222;
-        max-height: 0px;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        border: 1px solid white;
-        width: 100%;
-      }
+    &__indicator--content {
+      display: flex;
+      justify-content: center;
+      width: 100%;
 
-      &__indicatorContent {
+      &Item {
         display: flex;
-        justify-content: center;
-        width: 100%;
+        align-items: center;
+        text-align: left;
 
-        &Item {
-          text-align: left;
-
-          &--block {
-            width: 100%;
-          }
-
-          // &--center {
-          //   align-self: center;
-          // }
+        &--block {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
         }
       }
 
-      &__subTitle {
-        font-size: 16px;
+      .Accordion__indicator--icon {
+        width: 14px;
+        margin-left: 5px;
       }
+    }
 
-      &--open
-        > .Accordion__indicator
-        .Accordion__indicatorContentItem--rotate
-        .Icon {
-        transform: rotate(-180deg);
-        width: 100%;
-      }
+    &--open
+      > .Accordion__indicator
+      .Accordion__indicator--contentItem--rotate
+      .Accordion__indicator--icon {
+      transform: rotate(-180deg);
+    }
 
-      &--open > .Accordion__panel {
-        max-height: 10000px;
-        transition: max-height 0.8s ease;
-        padding: 10px;
-      }
+    &--open > .Accordion__panel {
+      max-height: 10000px;
+      transition: max-height 0.8s ease;
+      padding: 10px;
+      border: 1px solid white;
     }
   }
 }
@@ -157,7 +160,7 @@ a {
   }
 
   &__price {
-    width: 35%;
+    width: 300px;
     text-align: center;
     margin-top: 30px;
     padding: 20px;

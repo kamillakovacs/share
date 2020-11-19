@@ -4,6 +4,13 @@ import Select, { ActionMeta, ValueType } from "react-select";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
+const experienceOptions = [
+  { value: "1", label: "Experience 1" },
+  { value: "2", label: "Experience 2" },
+  { value: "3", label: "Experience 3" },
+  { value: "4", label: "Experience 4" },
+];
+
 const numberOfGuestsOptions = [
   { value: "1", label: "1 person" },
   { value: "2", label: "2 people" },
@@ -95,6 +102,15 @@ const Options: FC = () => {
 
   return (
     <>
+      <div className="Options">
+        <label>{"Experience"}:</label>
+        <Select
+          options={experienceOptions}
+          name="experience"
+          onChange={setOption}
+          value={values.experience}
+        />
+      </div>
       <div className="Options">
         <label>{"Number of People"}:</label>
         <Select

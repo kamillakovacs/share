@@ -1,10 +1,13 @@
-import React, { ChangeEvent, FC, memo } from "react";
 import { useFormikContext, ErrorMessage } from "formik";
+import React, { ChangeEvent, FC, memo } from "react";
+import Select, { ActionMeta, ValueType } from "react-select";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
 const Customer: FC = () => {
-  const { setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<
+    Reservation
+  >();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "phoneNumber") {
@@ -15,9 +18,26 @@ const Customer: FC = () => {
     setFieldValue(e.target.name, e.target.value);
   };
 
+  const setOption = (
+    option: ValueType<{ value: string; label: string }>,
+    select: ActionMeta<{ value: string; label: string }>
+  ) => {
+    setFieldValue(select.name!, option);
+  };
+
+  const whereYouHeardOptions = [
+    { value: "webSearch", label: "Web search" },
+    { value: "friendFamily", label: "Friend/Family member" },
+    { value: "advertisement", label: "Advertisement" },
+    { value: "tripAdvisor", label: "Trip Advisor" },
+    { value: "facebook", label: "Facebook" },
+    { value: "instagram", label: "Instagram" },
+    { value: "hotel", label: "Your hotel" },
+  ];
+
   return (
     <section className="Customer">
-      <label className="Reservation__title">Customer Information</label>
+      <label className="Reservation__title">Your Details</label>
       <div className="Options">
         <label>First name:</label>
         <input
@@ -49,8 +69,8 @@ const Customer: FC = () => {
         <input
           className="Customer__input"
           name="phoneNumber"
-          onChange={onChangeInput}
           type="tel"
+          onChange={onChangeInput}
         />
       </div>
       <div className="ErrorMessage">
@@ -68,6 +88,16 @@ const Customer: FC = () => {
       </div>
       <div className="ErrorMessage">
         <ErrorMessage name="email" />
+      </div>
+
+      <div className="Options">
+        <label>Where you heard about us:</label>
+        <Select
+          options={whereYouHeardOptions}
+          name="whereYouHeard"
+          onChange={setOption}
+          value={values.whereYouHeard}
+        />
       </div>
     </section>
   );

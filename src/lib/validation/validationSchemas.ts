@@ -4,6 +4,12 @@ const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
 
 export const reservation = Yup.object().shape({
   date: Yup.date().required("Required"),
+  experience: Yup.object()
+    .shape({
+      value: Yup.string(),
+      label: Yup.string(),
+    })
+    .required(),
   numberOfGuests: Yup.object()
     .shape({
       value: Yup.string(),
@@ -17,6 +23,10 @@ export const reservation = Yup.object().shape({
     })
     .required(),
   price: Yup.string(),
+  whereYouHeard: Yup.object().shape({
+    value: Yup.string(),
+    label: Yup.string(),
+  }),
   additionalTreatments: Yup.object().shape({
     value: Yup.string(),
     label: Yup.string(),

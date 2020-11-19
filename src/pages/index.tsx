@@ -17,6 +17,7 @@ import handler from "./api/paymentApi";
 interface ReservationData {
   date: string;
   time: string;
+  experience: string;
   numberOfGuests: string;
   numberOfTubs: string;
   price: string;
@@ -25,6 +26,7 @@ interface ReservationData {
   lastName: string;
   phoneNumber: string;
   email: string;
+  whereYouHeard?: string;
 }
 
 interface Props {
@@ -35,6 +37,7 @@ const Main: FC<Props> = ({ users }) => {
   const initialValues = {
     date: undefined,
     time: undefined,
+    experience: undefined,
     numberOfGuests: { value: "1", label: "1 person" },
     numberOfTubs: undefined,
     price: "",
@@ -81,6 +84,7 @@ const Main: FC<Props> = ({ users }) => {
     const reservationData: ReservationData = {
       date: values.date.toDateString(),
       time: values.time.toTimeString(),
+      experience: values.experience.label,
       numberOfGuests: values.numberOfGuests.label,
       numberOfTubs: values.numberOfTubs.label,
       price: values.price,
@@ -91,6 +95,7 @@ const Main: FC<Props> = ({ users }) => {
       lastName: values.lastName,
       phoneNumber: values.phoneNumber,
       email: values.email,
+      whereYouHeard: values.whereYouHeard ? values.whereYouHeard.label : "none",
     };
 
     // handler({ method: "POST" }, reservationData);
@@ -99,6 +104,7 @@ const Main: FC<Props> = ({ users }) => {
 
   return (
     <article className="Main">
+      <Header />
       <section className="Main__container">
         <Formik<Reservation>
           initialValues={initialValues}
@@ -113,10 +119,9 @@ const Main: FC<Props> = ({ users }) => {
 
             return (
               <form onSubmit={handleSubmit}>
-                <Header />
                 <section className="Reservation">
                   <label className="Reservation__title">
-                    Reservation Information
+                    Reserve Your Experience
                   </label>
                   <ReservationDate />
                   <Options />
@@ -136,8 +141,8 @@ const Main: FC<Props> = ({ users }) => {
             );
           }}
         </Formik>
+        <Packages />
       </section>
-      {/* <Packages /> */}
     </article>
   );
 };
