@@ -8,10 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "@types/cors": "2.8.8",
     "bootstrap": "4.5.2",
     "classnames": "2.2.6",
-    "cors": "2.8.5",
     "dotenv": "8.2.0",
     "dotenv-webpack": "4.0.0",
     "firebase": "7.23.0",
