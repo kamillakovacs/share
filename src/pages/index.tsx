@@ -11,7 +11,6 @@ import Packages from "../components/packages";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
-import firebaseAdmin from "../lib/firebase-admin";
 
 interface ReservationData {
   date: string;
@@ -214,7 +213,7 @@ const Main: FC<Props> = ({ users }) => {
 };
 
 export async function getStaticProps() {
-  const customers = firebaseAdmin.database().ref("customers");
+  const customers = firebase.database().ref("customers");
   const users: ReservationData[] = await customers
     .once("value")
     .then(function (snapshot) {
