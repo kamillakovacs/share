@@ -97,33 +97,9 @@ const Main: FC<Props> = ({ users }) => {
       whereYouHeard: values.whereYouHeard ? values.whereYouHeard.label : "none",
     };
 
-    // fetch("/api/payment", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     accept: "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: "name",
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
     fetch("https://api.test.barion.com/v2/Payment/Start", {
       method: "POST",
       headers: {
-        "Access-Control-Allow-Origin": "https://localhost:3000",
-        "Access-Control-Allow-Headers":
-          "Origin, Content-Type, Accept, X-Auth-Token",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Expose-Headers": "Content-Length, X-Kuma-Revision",
-        "Access-Control-Allow-Methods":
-          "GET, POST, PUT, DELETE, PATCH, OPTIONS",
         "Content-Type": "application/json; charset=utf-8",
       },
       body: JSON.stringify({
