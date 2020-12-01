@@ -12,7 +12,7 @@
     "dotenv": "8.2.0",
     "dotenv-webpack": "4.0.0",
     "firebase": "7.23.0",
-    "firebase-admin": "9.2.0",
+    "firebase-admin": "9.4.1",
     "formik": "2.1.7",
     "next": "10.0.3",
     "react": "16.13.1",

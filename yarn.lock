@@ -422,7 +422,7 @@
     retry-request "^4.1.1"
     teeny-request "^7.0.0"
 
-"@google-cloud/firestore@^4.0.0":
+"@google-cloud/firestore@^4.5.0":
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-4.7.1.tgz#d170c72ecda6286ebab460765511103362da7b21"
   integrity sha512-Qici+WKB6uRdDS1S3CaxGrIaCl4Bck70DYSzA5dZFkTU03Jj5DKXC4PYeUkfCAiB4haj7tzx+2ye7rhLxPclhQ==
@@ -2516,10 +2516,10 @@ find-up@^4.0.0, find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
-firebase-admin@9.2.0:
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-9.2.0.tgz#df5176e2d0c5711df6dbf7012320492a703538ea"
-  integrity sha512-LhnMYl71B4gP1FlTLfwaYlOWhBCAcNF+byb2CPTfaW/T4hkp4qlXOgo2bws/zbAv5X9GTFqGir3KexMslVGsIA==
+firebase-admin@9.4.1:
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-9.4.1.tgz#9b8704320dd8894dfa4acc70c66237323cba12ed"
+  integrity sha512-y9r2Mz2x1WTr60YrCDqz8Lw70DlwIvRIieVltP+UdRogkVpfnvyd+bi4D0KPlujW3teqcFPmxuzsXB+DP5vGfQ==
   dependencies:
     "@firebase/database" "^0.6.10"
     "@firebase/database-types" "^0.5.2"
@@ -2528,7 +2528,7 @@ firebase-admin@9.2.0:
     jsonwebtoken "^8.5.1"
     node-forge "^0.10.0"
   optionalDependencies:
-    "@google-cloud/firestore" "^4.0.0"
+    "@google-cloud/firestore" "^4.5.0"
     "@google-cloud/storage" "^5.3.0"
 
 firebase@7.23.0:
