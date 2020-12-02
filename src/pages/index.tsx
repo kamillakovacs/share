@@ -82,7 +82,7 @@ const Main: FC<Props> = ({ users }) => {
 
     return firebase.database().ref().update(updates);
   };
-  console.log(router);
+
   const redirectToStartPayment = (reservationData: ReservationData) =>
     fetch("https://api.test.barion.com/v2/Payment/Start", {
       method: "POST",
@@ -115,7 +115,6 @@ const Main: FC<Props> = ({ users }) => {
         },
 
         RedirectUrl: "https://share-gules.vercel.app/thanks",
-        CallbackUrl: "https://share-gules.vercel.app",
 
         Locale: "hu-HU",
         Currency: "HUF",
@@ -124,7 +123,7 @@ const Main: FC<Props> = ({ users }) => {
           {
             POSTransactionId: "tr-25",
             Payee: "kamilla525@yahoo.com",
-            Total: reservationData.price,
+            Total: parseInt(reservationData.price),
             Items: [
               {
                 Name: reservationData.experience,
@@ -199,7 +198,7 @@ const Main: FC<Props> = ({ users }) => {
                     EUR`}
                   </span>
                   <button className="Reservation__submit" type="submit">
-                    Submit Reservation
+                    <img src="/assets/barion.png" alt="shareLogo" />
                   </button>
                 </div>
               </form>

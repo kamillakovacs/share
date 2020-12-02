@@ -169,15 +169,10 @@ a {
   }
 
   &__submit {
+    padding: 0;
+    border: 0;
+    height: 79px;
     margin-top: 40px;
-    min-height: 60px;
-    width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-    background-color: #fdb924;
-    color: #2f3135;
-    border-radius: 10px;
-    border: none;
   }
 }
 
