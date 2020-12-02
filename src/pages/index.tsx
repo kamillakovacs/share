@@ -2,7 +2,6 @@ import { Formik } from "formik";
 import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
 import "firebase/database";
-import firebaseAdmin from "../lib/firebase-admin";
 
 import Options from "../components/options";
 import ReservationDate from "../components/reservationDate";
