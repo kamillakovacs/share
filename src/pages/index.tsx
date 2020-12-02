@@ -1,4 +1,5 @@
 import { Formik } from "formik";
+import { useRouter } from "next/router";
 import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
 import "firebase/database";
@@ -12,7 +13,7 @@ import Packages from "../components/packages";
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 
-interface ReservationData {
+export interface ReservationData {
   date: string;
   time: string;
   experience: string;
@@ -25,6 +26,7 @@ interface ReservationData {
   phoneNumber: string;
   email: string;
   whereYouHeard?: string;
+  paymentStatus: string;
 }
 
 interface Props {
@@ -32,6 +34,7 @@ interface Props {
 }
 
 const Main: FC<Props> = ({ users }) => {
+  const router = useRouter();
   const initialValues = {
     date: undefined,
     time: undefined,
@@ -46,7 +49,10 @@ const Main: FC<Props> = ({ users }) => {
     email: "",
   };
 
-  function makeNewReservation(reservationData: ReservationData) {
+  const makeNewReservation = (
+    reservationData: ReservationData,
+    paymentId: string
+  ) => {
     const customerAlreadyInDatabase = !!Object.values(users).filter(
       (user) =>
         user.firstName.toLowerCase() ===
@@ -66,36 +72,18 @@ const Main: FC<Props> = ({ users }) => {
     };
 
     const customers = firebase.database().ref("customers");
-    const newReservationKey = customers.child("reservations").push().key;
     const newCustomerId = customers.child("customers").push().key;
 
     const updates = {};
-    updates["/reservations/" + newReservationKey] = reservationData;
+    updates["/reservations/" + paymentId] = { ...reservationData, paymentId };
     if (!customerAlreadyInDatabase) {
       updates["/customers/" + newCustomerId] = newCustomer;
     }
 
     return firebase.database().ref().update(updates);
-  }
+  };
 
-  const onSubmit = (values: Reservation) => {
-    const reservationData: ReservationData = {
-      date: values.date.toDateString(),
-      time: values.time.toTimeString(),
-      experience: values.experience.label,
-      numberOfGuests: values.numberOfGuests.label,
-      numberOfTubs: values.numberOfTubs.label,
-      price: values.price,
-      additionalTreatments: values.additionalTreatments
-        ? values.additionalTreatments.label
-        : "none",
-      firstName: values.firstName,
-      lastName: values.lastName,
-      phoneNumber: values.phoneNumber,
-      email: values.email,
-      whereYouHeard: values.whereYouHeard ? values.whereYouHeard.label : "none",
-    };
-
+  const redirectToStartPayment = (reservationData: ReservationData) =>
     fetch("https://api.test.barion.com/v2/Payment/Start", {
       method: "POST",
       headers: {
@@ -126,7 +114,7 @@ const Main: FC<Props> = ({ users }) => {
           Phone: "43259123456789",
         },
 
-        RedirectUrl: "http://localhost:3000",
+        RedirectUrl: "http://localhost:3000/thanks",
         CallbackUrl: "http://localhost:3000",
 
         Locale: "hu-HU",
@@ -136,35 +124,47 @@ const Main: FC<Props> = ({ users }) => {
           {
             POSTransactionId: "tr-25",
             Payee: "kamilla525@yahoo.com",
-            Total: 400,
+            Total: reservationData.price,
             Items: [
               {
-                Name: "Digital Camera",
-                Description: "Canon D500",
+                Name: reservationData.experience,
+                Description: reservationData.experience,
                 Quantity: 1,
                 Unit: "pcs",
-                UnitPrice: 300,
-                ItemTotal: 300,
-                SKU: "cn-d500-fxc3",
-              },
-              {
-                Name: "SD Card",
-                Description: "SanDisk SD mini 512GB - 3 year guarantee",
-                Quantity: 2,
-                Unit: "pcs",
-                UnitPrice: 50,
-                ItemTotal: 100,
-                SKU: "snd-sd-500gm",
+                UnitPrice: parseInt(reservationData.price),
+                ItemTotal: parseInt(reservationData.price),
               },
             ],
           },
         ],
       }),
     })
-      .then((response) => response.json())
-      .then((res) => console.log(res));
+      .then((res) => res.json())
+      .then(async (res) => {
+        await makeNewReservation(reservationData, res.PaymentId);
+        router.replace(res.GatewayUrl);
+      });
 
-    // return makeNewReservation(reservationData);
+  const onSubmit = (values: Reservation) => {
+    const reservationData: ReservationData = {
+      date: values.date.toDateString(),
+      time: values.time.toTimeString(),
+      experience: values.experience.label,
+      numberOfGuests: values.numberOfGuests.label,
+      numberOfTubs: values.numberOfTubs.label,
+      price: values.price,
+      additionalTreatments: values.additionalTreatments
+        ? values.additionalTreatments.label
+        : "none",
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phoneNumber: values.phoneNumber,
+      email: values.email,
+      whereYouHeard: values.whereYouHeard ? values.whereYouHeard.label : "none",
+      paymentStatus: "UNPAID",
+    };
+
+    return redirectToStartPayment(reservationData);
   };
 
   return (
