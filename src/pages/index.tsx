@@ -96,75 +96,75 @@ const Main: FC<Props> = ({ users }) => {
       whereYouHeard: values.whereYouHeard ? values.whereYouHeard.label : "none",
     };
 
-    // fetch("https://api.test.barion.com/v2/Payment/Start", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json; charset=utf-8",
-    //   },
-    //   body: JSON.stringify({
-    //     POSKey: "f971a07db8f0442fbad1361987f004bf",
-    //     PaymentType: "Immediate",
-    //     PaymentWindow: "00:30:00",
+    fetch("https://api.test.barion.com/v2/Payment/Start", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        POSKey: "f971a07db8f0442fbad1361987f004bf",
+        PaymentType: "Immediate",
+        PaymentWindow: "00:30:00",
 
-    //     GuestCheckout: "True",
-    //     FundingSources: ["All"],
+        GuestCheckout: "True",
+        FundingSources: ["All"],
 
-    //     InitiateRecurrence: "True", //If set to True, the Token will be recorder
-    //     RecurrenceId: "345986-25646-3456346", //Token provided by merchant for subsequent payments
+        InitiateRecurrence: "True", //If set to True, the Token will be recorder
+        RecurrenceId: "345986-25646-3456346", //Token provided by merchant for subsequent payments
 
-    //     PaymentRequestId: "payment-25",
-    //     OrderNumber: "order-25",
-    //     PayerHint: "joseph-schmidt@example.com",
-    //     ShippingAddress: {
-    //       Country: "HU",
-    //       City: "Budapest",
-    //       Region: "HU",
-    //       Zip: "1234",
-    //       Street: "13 Etwas Strasse",
-    //       Street2: "",
-    //       FullName: "Joseph Schmidt",
-    //       Phone: "43259123456789",
-    //     },
+        PaymentRequestId: "payment-25",
+        OrderNumber: "order-25",
+        PayerHint: "kamilla525@yahoo.com",
+        ShippingAddress: {
+          Country: "HU",
+          City: "Budapest",
+          Region: "HU",
+          Zip: "1234",
+          Street: "13 Etwas Strasse",
+          Street2: "",
+          FullName: "Kamilla Kovacs",
+          Phone: "43259123456789",
+        },
 
-    //     RedirectUrl: "http://localhost:3000",
-    //     CallbackUrl: "http://localhost:3000",
+        RedirectUrl: "http://localhost:3000",
+        CallbackUrl: "http://localhost:3000",
 
-    //     Locale: "hu",
-    //     Currency: "HUF",
+        Locale: "hu-HU",
+        Currency: "HUF",
 
-    //     Transactions: [
-    //       {
-    //         POSTransactionId: "tr-25",
-    //         Payee: "eshop@example.com",
-    //         Total: 400,
-    //         Items: [
-    //           {
-    //             Name: "Digital Camera",
-    //             Description: "Canon D500",
-    //             Quantity: 1,
-    //             Unit: "pcs",
-    //             UnitPrice: 300,
-    //             ItemTotal: 300,
-    //             SKU: "cn-d500-fxc3",
-    //           },
-    //           {
-    //             Name: "SD Card",
-    //             Description: "SanDisk SD mini 512GB - 3 year guarantee",
-    //             Quantity: 2,
-    //             Unit: "pcs",
-    //             UnitPrice: 50,
-    //             ItemTotal: 100,
-    //             SKU: "snd-sd-500gm",
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((res) => console.log(res));
+        Transactions: [
+          {
+            POSTransactionId: "tr-25",
+            Payee: "kamilla525@yahoo.com",
+            Total: 400,
+            Items: [
+              {
+                Name: "Digital Camera",
+                Description: "Canon D500",
+                Quantity: 1,
+                Unit: "pcs",
+                UnitPrice: 300,
+                ItemTotal: 300,
+                SKU: "cn-d500-fxc3",
+              },
+              {
+                Name: "SD Card",
+                Description: "SanDisk SD mini 512GB - 3 year guarantee",
+                Quantity: 2,
+                Unit: "pcs",
+                UnitPrice: 50,
+                ItemTotal: 100,
+                SKU: "snd-sd-500gm",
+              },
+            ],
+          },
+        ],
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => console.log(res));
 
-    return makeNewReservation(reservationData);
+    // return makeNewReservation(reservationData);
   };
 
   return (
