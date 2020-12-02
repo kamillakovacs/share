@@ -82,7 +82,7 @@ const Main: FC<Props> = ({ users }) => {
 
     return firebase.database().ref().update(updates);
   };
-
+  console.log(router);
   const redirectToStartPayment = (reservationData: ReservationData) =>
     fetch("https://api.test.barion.com/v2/Payment/Start", {
       method: "POST",
@@ -114,8 +114,8 @@ const Main: FC<Props> = ({ users }) => {
           Phone: "43259123456789",
         },
 
-        RedirectUrl: "http://localhost:3000/thanks",
-        CallbackUrl: "http://localhost:3000",
+        RedirectUrl: "https://share-gules.vercel.app/thanks",
+        CallbackUrl: "https://share-gules.vercel.app",
 
         Locale: "hu-HU",
         Currency: "HUF",
