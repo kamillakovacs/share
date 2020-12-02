@@ -214,7 +214,7 @@ const Main: FC<Props> = ({ users }) => {
 };
 
 export async function getStaticProps() {
-  const customers = firebaseAdmin.database().ref("customers");
+  const customers = firebase.database().ref("customers");
   const users: ReservationData[] = await customers
     .once("value")
     .then(function (snapshot) {
