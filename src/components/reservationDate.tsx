@@ -3,8 +3,14 @@ import React, { FC, memo } from "react";
 import DatePicker from "react-datepicker";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
+import { ReservationData } from "../pages";
+import classNames from "classnames";
 
-const ReservationDate: FC = () => {
+interface Props {
+  currentReservations: ReservationData;
+}
+
+const ReservationDate: FC<Props> = ({ currentReservations }) => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
 
   const selectDate = (date: Date) => {
@@ -15,11 +21,16 @@ const ReservationDate: FC = () => {
     setFieldValue("time", time);
   };
 
+  const unavailableDates = Object.values(currentReservations).map(
+    (res) => res.date
+  );
+
   return (
     <section className="ReservationDate">
       <label>Select date:</label>
       <div className="ReservationDate__date">
         <DatePicker
+          dateFormat={"dd/MM/yyyy"}
           selected={values.date}
           onChange={selectDate}
           placeholderText="Select date..."
@@ -28,7 +39,7 @@ const ReservationDate: FC = () => {
       </div>
       <div className="ReservationDate__time">
         <DatePicker
-          selected={values.time && values.time}
+          selected={values.time}
           onChange={selectTime}
           showTimeSelect
           showTimeSelectOnly

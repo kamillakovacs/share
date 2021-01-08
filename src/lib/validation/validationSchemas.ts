@@ -9,24 +9,26 @@ export const reservation = Yup.object().shape({
       value: Yup.string(),
       label: Yup.string(),
     })
-    .required(),
+    .required("Required"),
   numberOfGuests: Yup.object()
     .shape({
       value: Yup.string(),
       label: Yup.string(),
     })
-    .required(),
+    .required("Required"),
   numberOfTubs: Yup.object()
     .shape({
       value: Yup.string(),
       label: Yup.string(),
     })
-    .required(),
+    .required("Required"),
   price: Yup.string(),
-  whereYouHeard: Yup.object().shape({
-    value: Yup.string(),
-    label: Yup.string(),
-  }),
+  whereYouHeard: Yup.object()
+    .shape({
+      value: Yup.string(),
+      label: Yup.string(),
+    })
+    .required("Required"),
   additionalTreatments: Yup.object().shape({
     value: Yup.string(),
     label: Yup.string(),
@@ -39,5 +41,7 @@ export const reservation = Yup.object().shape({
       "Please enter a valid phone number. (1234567890, 123-456-7890, +31636363634)"
     )
     .required("Required"),
-  email: Yup.string().email("Please enter a valid email address"),
+  email: Yup.string()
+    .email("Please enter a valid email address")
+    .required("Required"),
 });
