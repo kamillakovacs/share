@@ -1,0 +1,18 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 1200px;
+  align-items: center;
+  background-color: #222222;
+
+  &__container {
+    display: flex;
+    align-items: center;
+
+    color: white;
+    font-weight: 600;
+
+    width: 80%;
+    margin: 30px 10px 20px 10px;
+  }
+}

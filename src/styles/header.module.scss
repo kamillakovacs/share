@@ -1,0 +1,20 @@
+.Header {
+  width: 80%;
+  padding: 40px;
+  margin-bottom: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background-color: #fdb924;
+  color: #2f3135;
+  font-size: 50px;
+  font-weight: 400;
+
+  &__shareLogo {
+    height: 140px;
+    padding-right: 20px;
+  }
+}

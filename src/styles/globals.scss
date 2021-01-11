@@ -15,43 +15,71 @@ a {
   box-sizing: border-box;
 }
 
-.Main {
-  display: flex;
-  flex-direction: column;
-  height: 1200px;
-  align-items: center;
-  background-color: #222222;
-
-  &__container {
-    display: flex;
-    align-items: center;
-
-    color: white;
-    font-weight: 600;
-
-    width: 80%;
-    margin: 30px 10px 20px 10px;
+.DayPicker {
+  &-wrapper {
+    padding: 20px !important;
   }
-}
 
-.Header {
-  width: 80%;
-  padding: 40px;
-  margin-bottom: 15px;
+  height: 354px;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif !important;
+  &-Caption {
+    height: 64px;
+    margin-bottom: 0 !important;
+    & > div {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      font-weight: 200 !important;
+    }
+  }
+  &-NavBar {
+    left: 20px;
+    position: relative;
+  }
+  &-NavButton {
+    background-size: 75% !important;
+    top: 22px !important;
+    &--prev {
+      background-image: url("/assets/previous.svg") !important;
+    }
+    &--next {
+      background-image: url("/assets/next.svg") !important;
+    }
+  }
+  &-Weekday {
+    color: #ffffff !important;
+  }
+  &-Month {
+    height: 250px;
+    width: 290px;
+    margin: 0 !important;
+  }
+  &-Day {
+    &:hover {
+      color: #222222 !important;
+      background-color: #fcb923 !important;
+    }
+    &--today {
+      color: #fcb923 !important;
+    }
+    &--selected {
+      color: #222222 !important;
+      background-color: #fcb923 !important;
+      &:hover {
+        background-color: #fcb923 !important;
+      }
+    }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 10px;
-  background-color: #fdb924;
-  color: #2f3135;
-  font-size: 50px;
-  font-weight: 400;
-
-  &__shareLogo {
-    height: 140px;
-    padding-right: 20px;
+    &--disabled {
+      color: #707070 !important;
+      background-color: #343434 !important;
+      &:hover {
+        cursor: not-allowed;
+        color: #707070 !important;
+        background-color: inherit !important;
+      }
+    }
   }
 }
 
@@ -144,38 +172,6 @@ a {
   }
 }
 
-.Reservation {
-  width: 100%;
-
-  &__title {
-    font-size: 24px;
-    margin-bottom: 10px;
-    display: inline-block;
-  }
-
-  &__info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  &__price {
-    width: 300px;
-    text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    border: 1px white solid;
-    border-radius: 4px;
-  }
-
-  &__submit {
-    padding: 0;
-    border: 0;
-    height: 79px;
-    margin-top: 40px;
-  }
-}
-
 .Options {
   display: flex;
   align-items: center;
@@ -189,81 +185,6 @@ a {
   .css-2b097c-container {
     width: 500px;
     color: black;
-  }
-}
-
-.ReservationDate {
-  display: flex;
-  align-items: center;
-
-  label {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-  }
-
-  &__date {
-    width: 250px;
-    margin: 0 5px;
-  }
-
-  &__time {
-    width: 250px;
-  }
-
-  .react-datepicker {
-    font-family: inherit;
-
-    &--time-only {
-      width: 145px;
-
-      .react-datepicker__time-container {
-        width: 145px;
-
-        .react-datepicker__time-box {
-          width: 100%;
-          text-align: left;
-        }
-      }
-    }
-
-    &__header {
-      background-color: #fdb924;
-    }
-    &__navigation--previous {
-      border-right-color: #2f3135;
-    }
-    &__navigation--next {
-      border-left-color: #2f3135;
-    }
-
-    &-wrapper {
-      height: 38px;
-      border: 1px solid hsl(0, 0%, 80%);
-      border-radius: 4px;
-
-      .react-datepicker__input-container {
-        display: flex;
-        align-items: center;
-
-        background-color: white;
-        height: 100%;
-
-        border-radius: 3px;
-      }
-
-      input {
-        width: 88%;
-        height: 90%;
-        padding: 0 10px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-          "Helvetica Neue", sans-serif;
-        font-size: 16px;
-        border: none;
-      }
-    }
   }
 }
 

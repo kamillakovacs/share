@@ -11,6 +11,9 @@ import Header from "../components/header";
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 
+import styles from "../styles/Main.module.scss"
+import reservationStyles from "../styles/reservation.module.scss"
+
 export interface ReservationData {
   date: string;
   time: string;
@@ -76,9 +79,9 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
   };
 
   return (
-    <article className="Main">
+    <article className={styles.main}>
       <Header />
-      <section className="Main__container">
+      <section className={styles.main__container}>
         <Formik<Reservation>
           initialValues={initialValues}
           onSubmit={(values) => {
@@ -92,25 +95,25 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
 
             return (
               <form onSubmit={handleSubmit}>
-                <section className="Reservation">
-                  <label className="Reservation__title">
-                    Reserve Your Experience
+                <section className={reservationStyles.reservation}>
+                  <label className={reservationStyles.reservation__title}>
+                    <span>Reserve Your Experience</span>
                   </label>
                   <ReservationDate currentReservations={currentReservations} />
-                  <Options />
+                  {/* <Options /> */}
                 </section>
-                <div className="Reservation__info">
-                  <span className="Reservation__price">
+                {/* <div className={reservationStyles.reservation__info}>
+                  <span className={reservationStyles.reservation__price}>
                     {`Total: ${values.price} Ft /
                     ${parseInt(currency.toString())}
                     EUR`}
                   </span>
                 </div>
-                <div className="Reservation__info">
-                  <button className="Reservation__next" type="submit">
+                <div className={reservationStyles.reservation__info}>
+                  <button className={reservationStyles.reservation__next} type="submit">
                     Next
                   </button>
-                </div>
+                </div> */}
               </form>
             );
           }}

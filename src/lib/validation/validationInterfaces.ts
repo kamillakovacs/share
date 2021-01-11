@@ -1,6 +1,6 @@
 export interface Reservation {
-  date: string;
-  time: string;
+  date: Date;
+  time: Date;
   experience: { label: string; value: string };
   numberOfGuests: { label: string; value: string };
   numberOfTubs: { label: string; value: string };
