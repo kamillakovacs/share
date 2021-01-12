@@ -1,8 +1,11 @@
+import { Slider } from "@material-ui/core";
 import { useFormikContext } from "formik";
 import React, { FC, memo, useEffect } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
+
+import optionStyles from "../styles/options.module.scss"
 
 const experienceOptions = [
   { value: "1", label: "Experience 1" },
@@ -102,34 +105,23 @@ const Options: FC = () => {
 
   return (
     <>
-      <div className="Options">
-        <label>{"Experience"}:</label>
-        <Select
-          options={experienceOptions}
-          name="experience"
-          onChange={setOption}
-          value={values.experience}
-        />
+      <div className={optionStyles.options}>
+        <label>Number of People & Tubs</label>
       </div>
-      <div className="Options">
-        <label>{"Number of People"}:</label>
-        <Select
-          options={numberOfGuestsOptions}
-          name="numberOfGuests"
-          onChange={setOption}
-          value={values.numberOfGuests}
-        />
-      </div>
-      <div className="Options">
-        <label>{"Number of Tubs"}:</label>
-        <Select
-          options={getTubOptions()}
-          name="numberOfTubs"
-          onChange={setOption}
-          value={values.numberOfTubs}
-        />
-      </div>
-    </>
+      <div className={optionStyles.options__sliderContainer}>
+      <Slider 
+        defaultValue={30}
+        // getAriaValueText={valuetext}
+        aria-labelledby="discrete-slider"
+        valueLabelDisplay="auto"
+        step={1}
+        marks
+        min={1}
+        max={6}
+        disabled />
+    </div>
+      </>
+    
   );
 };
 

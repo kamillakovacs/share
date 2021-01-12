@@ -94,6 +94,10 @@ a {
   }
 }
 
+.MuiSlider-root {
+  margin: 30px !important;
+}
+
 .Packages {
   display: flex;
   flex-direction: column;
@@ -180,22 +184,6 @@ a {
       padding: 10px;
       border: 1px solid white;
     }
-  }
-}
-
-.Options {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-
-  label {
-    width: 100%;
-  }
-
-  .css-2b097c-container {
-    width: 500px;
-    color: black;
   }
 }
 

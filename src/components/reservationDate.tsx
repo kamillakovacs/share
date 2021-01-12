@@ -41,7 +41,6 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       <div className={dateStyles.reservationDate__label}>
         <label>Date & Time</label>
       </div>
-      
       <div className={dateStyles.reservationDate__calendar}>
       <div className={dateStyles.reservationDate__date}>
       <span className={dateStyles.reservationDate__calendarIcon}/>

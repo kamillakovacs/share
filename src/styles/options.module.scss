@@ -1,0 +1,21 @@
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  label {
+    width: 100%;
+    margin-top: 48px;
+  }
+
+  &__sliderContainer {
+    display: flex;
+    align-items: center;
+    width: 480px;
+    height: 113px;
+    margin: 0 30px;
+    background-color: #343434 !important;
+    border-radius: 10px;
+  }
+}

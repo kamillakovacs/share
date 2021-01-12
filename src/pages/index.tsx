@@ -82,15 +82,15 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
     <article className={styles.main}>
       <Header />
       <label className={reservationStyles.reservation__title}>
-                    <span>Reserve Your Experience</span>
-                  </label>
+        <span>Reserve Your Experience</span>
+      </label>
       <section className={styles.main__container}>
         
       <div className={styles.navigators}>
         <img src="/assets/checkmark.svg" />
         <div className={styles.verticalLine}/>
+        <div className={styles.numberIcon}>2</div>
       </div>
-      
         <Formik<Reservation>
           initialValues={initialValues}
           onSubmit={(values) => {
@@ -106,7 +106,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
               <form onSubmit={handleSubmit}>
                 <section className={reservationStyles.reservation}>
                   <ReservationDate currentReservations={currentReservations} />
-                  {/* <Options /> */}
+                  <Options />
                 </section>
                 {/* <div className={reservationStyles.reservation__info}>
                   <span className={reservationStyles.reservation__price}>
