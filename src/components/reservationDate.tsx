@@ -23,8 +23,13 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
   };
 
   const selectTime = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(e.currentTarget.innerText)
-    // setFieldValue("time", time);
+    const previousSelected = document.querySelector(`.${dateStyles.selected}`)
+    if (previousSelected) {
+      previousSelected.classList.remove(dateStyles.selected)
+    }
+    e.currentTarget.className += `button ${dateStyles.selected}`
+
+    setFieldValue("time", e.currentTarget.innerText);
   };
 
   const unavailableDates = Object.values(currentReservations).map(
@@ -34,18 +39,19 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
   return (
     <section className={dateStyles.reservationDate}>
       <div className={dateStyles.reservationDate__label}>
-        <img src="/assets/checkmark.svg" />
         <label>Date & Time</label>
       </div>
+      
       <div className={dateStyles.reservationDate__calendar}>
       <div className={dateStyles.reservationDate__date}>
+      <span className={dateStyles.reservationDate__calendarIcon}/>
         <DayPicker
           selectedDays={values.date}
           onDayClick={selectDate}
           fromMonth={new Date()}
           initialMonth={new Date()}
           firstDayOfWeek={1}
-          disabledDays={{daysOfWeek: [0]}}
+          disabledDays={day => day < (new Date())}
         />
       
       </div>
@@ -55,7 +61,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
           <span>14:00</span></div>
         <div className={dateStyles.reservationDate__timeOptions}>
         {timeOptions.map((t, idx) => 
-          <button key={idx} type="button" onClick={selectTime} >{t}</button>
+          <button  key={idx} type="button" onClick={selectTime} >{t}</button>
         )}
         </div>
       </div>

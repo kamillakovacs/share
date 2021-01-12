@@ -58,7 +58,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
 
   const onSubmit = (values: Reservation) => {
     const reservationData: ReservationData = {
-      date: values.date,
+      date: values.date.toDateString(),
       time: values.time,
       experience: values.experience.label,
       numberOfGuests: values.numberOfGuests.label,
@@ -81,7 +81,16 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
   return (
     <article className={styles.main}>
       <Header />
+      <label className={reservationStyles.reservation__title}>
+                    <span>Reserve Your Experience</span>
+                  </label>
       <section className={styles.main__container}>
+        
+      <div className={styles.navigators}>
+        <img src="/assets/checkmark.svg" />
+        <div className={styles.verticalLine}/>
+      </div>
+      
         <Formik<Reservation>
           initialValues={initialValues}
           onSubmit={(values) => {
@@ -96,9 +105,6 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <section className={reservationStyles.reservation}>
-                  <label className={reservationStyles.reservation__title}>
-                    <span>Reserve Your Experience</span>
-                  </label>
                   <ReservationDate currentReservations={currentReservations} />
                   {/* <Options /> */}
                 </section>

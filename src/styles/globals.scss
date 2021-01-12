@@ -16,14 +16,16 @@ a {
 }
 
 .DayPicker {
+  height: 354px;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif !important;
+
   &-wrapper {
     padding: 20px !important;
   }
 
-  height: 354px;
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-    Helvetica Neue, sans-serif !important;
   &-Caption {
+    padding-left: 40px !important;
     height: 64px;
     margin-bottom: 0 !important;
     & > div {
@@ -33,10 +35,12 @@ a {
       font-weight: 200 !important;
     }
   }
+
   &-NavBar {
     left: 20px;
     position: relative;
   }
+
   &-NavButton {
     background-size: 75% !important;
     top: 22px !important;
@@ -47,25 +51,31 @@ a {
       background-image: url("/assets/next.svg") !important;
     }
   }
+
   &-Weekday {
     color: #ffffff !important;
   }
+
   &-Month {
     height: 250px;
     width: 290px;
     margin: 0 !important;
   }
+
   &-Day {
+    outline: none;
+
     &:hover {
-      color: #222222 !important;
-      background-color: #fcb923 !important;
+      background-color: inherit !important;
     }
     &--today {
-      color: #fcb923 !important;
+      color: inherit !important;
+      font-weight: inherit !important;
     }
     &--selected {
       color: #222222 !important;
       background-color: #fcb923 !important;
+
       &:hover {
         background-color: #fcb923 !important;
       }
@@ -74,6 +84,7 @@ a {
     &--disabled {
       color: #707070 !important;
       background-color: #343434 !important;
+
       &:hover {
         cursor: not-allowed;
         color: #707070 !important;

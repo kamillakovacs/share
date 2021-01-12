@@ -8,7 +8,6 @@ const Header = () => (
       alt="shareLogo"
       className={headerStyles.Header__shareLogo}
     />
-    Reservation
   </section>
 );
 
