@@ -17,7 +17,6 @@ import reservationStyles from "../styles/reservation.module.scss"
 export interface ReservationData {
   date: string;
   time: string;
-  experience: string;
   numberOfGuests: string;
   numberOfTubs: string;
   price: string;
@@ -40,11 +39,9 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
   const initialValues = {
     date: undefined,
     time: undefined,
-    experience: undefined,
-    numberOfGuests: { value: "1", label: "1 person" },
-    numberOfTubs: undefined,
+    numberOfGuests: "1",
+    numberOfTubs: "1",
     price: "",
-    additionalTreatments: undefined,
     firstName: "",
     lastName: "",
     phoneNumber: "",
@@ -57,16 +54,13 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
   };
 
   const onSubmit = (values: Reservation) => {
+    console.log("hi")
     const reservationData: ReservationData = {
       date: values.date.toDateString(),
       time: values.time,
-      experience: values.experience.label,
-      numberOfGuests: values.numberOfGuests.label,
-      numberOfTubs: values.numberOfTubs.label,
+      numberOfGuests: values.numberOfGuests,
+      numberOfTubs: values.numberOfTubs,
       price: values.price,
-      additionalTreatments: values.additionalTreatments
-        ? values.additionalTreatments.label
-        : "none",
       firstName: "firstName",
       lastName: "lastName",
       phoneNumber: "222222222222",
@@ -90,6 +84,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
         <img src="/assets/checkmark.svg" />
         <div className={styles.verticalLine}/>
         <div className={styles.numberIcon}>2</div>
+        {/* <div className={styles.verticalLine2}/> */}
       </div>
         <Formik<Reservation>
           initialValues={initialValues}
@@ -107,6 +102,9 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
                 <section className={reservationStyles.reservation}>
                   <ReservationDate currentReservations={currentReservations} />
                   <Options />
+                  <button className={reservationStyles.reservation__continue} type="submit">
+                    Continue
+                  </button>
                 </section>
                 {/* <div className={reservationStyles.reservation__info}>
                   <span className={reservationStyles.reservation__price}>
@@ -114,12 +112,8 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
                     ${parseInt(currency.toString())}
                     EUR`}
                   </span>
-                </div>
-                <div className={reservationStyles.reservation__info}>
-                  <button className={reservationStyles.reservation__next} type="submit">
-                    Next
-                  </button>
                 </div> */}
+                
               </form>
             );
           }}

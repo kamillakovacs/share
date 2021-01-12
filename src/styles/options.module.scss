@@ -9,13 +9,29 @@
     margin-top: 48px;
   }
 
-  &__sliderContainer {
-    display: flex;
-    align-items: center;
+  &__container {
     width: 480px;
     height: 113px;
-    margin: 0 30px;
     background-color: #343434 !important;
     border-radius: 10px;
+    margin: 0 0 10px 32px;
+
+    img {
+      margin: 20px 0 -10px 20px;
+    }
+  }
+
+  &__peopleCounter {
+    margin-left: 20px;
+    top: 4px;
+    position: relative;
+    font-weight: 200;
+  }
+
+  &__sliderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 30px;
   }
 }

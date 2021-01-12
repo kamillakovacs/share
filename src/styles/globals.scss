@@ -94,8 +94,34 @@ a {
   }
 }
 
-.MuiSlider-root {
-  margin: 30px !important;
+.MuiSlider {
+  &-root {
+    margin: 30px !important;
+    color: #707070 !important;
+  }
+
+  &-track,
+  &-rail {
+    height: 4px !important;
+    opacity: 0.1 !important;
+  }
+
+  &-thumb {
+    background-color: #fcb923 !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-top: -7px !important;
+  }
+  &-mark {
+    width: 4px !important;
+    height: 4px !important;
+    border-radius: 50% !important;
+    bottom: 11px;
+  }
+
+  &-markActive {
+    opacity: 0.3 !important;
+  }
 }
 
 .Packages {

@@ -66,11 +66,7 @@
         font-size: 15px;
         height: 43px;
         font-weight: 200;
-
-        // &:hover {
-        //   color: #222222;
-        //   background-color: #fcb923;
-        // }
+        cursor: pointer;
 
         &.selected {
           color: #222222;
