@@ -7,6 +7,7 @@ import { ReservationData } from "../pages";
 import classNames from "classnames";
 
 import dateStyles from "../styles/reservationDate.module.scss"
+import styles from "../styles/main.module.scss"
 import 'react-day-picker/lib/style.css';
 
 interface Props {
@@ -39,7 +40,11 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
   return (
     <section className={dateStyles.reservationDate}>
       <div className={dateStyles.reservationDate__label}>
-        <label>Date & Time</label>
+      <div className={classNames(`${styles.todoitem} ${styles.todoitem__one}`, {
+        [styles.todoitem__done]: values.date && values.time
+      })} />
+      
+      <label>Date & Time</label>
       </div>
       <div className={dateStyles.reservationDate__calendar}>
       <div className={dateStyles.reservationDate__date}>
@@ -55,9 +60,9 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       
       </div>
       <div className={dateStyles.reservationDate__time}>
-        <div className={dateStyles.reservationDate__timeCurrent}>
+        <div className={dateStyles.reservationDate__timeTitle}>
           <img src="/assets/clock.svg" />
-          <span>14:00</span></div>
+          <span>Time</span></div>
         <div className={dateStyles.reservationDate__timeOptions}>
         {timeOptions.map((t, idx) => 
           <button  key={idx} type="button" onClick={selectTime} >{t}</button>

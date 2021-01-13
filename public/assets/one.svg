@@ -1,0 +1,22 @@
+<svg id="Group_3" data-name="Group 3" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="10 10 50 50">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: #222;
+      }
+
+      .cls-2 {
+        fill: #fcb923;
+      }
+
+      .cls-3 {
+        font-size: 20px;
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <rect id="Rectangle_267" data-name="Rectangle 267" class="cls-1" width="50" height="50"/>
+  <rect id="Rectangle_254" data-name="Rectangle 254" class="cls-2" width="30" height="30" rx="15" transform="translate(10 10)"/>
+  <text id="_2" data-name="2" class="cls-3" transform="translate(24 32)"><tspan x="-4.171" y="0">1</tspan></text>
+</svg>

@@ -20,8 +20,8 @@
   .navigators {
     .verticalLine {
       border-left: 1px solid #343434;
-      height: 400px;
-      margin: 3px 0 10px 12px;
+      height: 360px;
+      margin: 32px 0 10px 12px;
     }
     .verticalLineDetails {
       border-left: 1px solid #343434;
@@ -39,6 +39,44 @@
       margin-top: 40px;
     }
   }
+  @keyframes example {
+    from {
+      background-image: url("/assets/one.svg");
+    }
+    to {
+      background-image: url("/assets/checkmark.svg");
+    }
+  }
+
+  .todoitem {
+    width: 26px;
+    height: 26px;
+    position: relative;
+    left: -13px;
+
+    &__one {
+      background-image: url("/assets/one.svg");
+    }
+
+    &__two {
+      background-image: url("/assets/two.svg");
+    }
+
+    &__three {
+      background-image: url("/assets/three.svg");
+    }
+
+    &__four {
+      background-image: url("/assets/cashier.svg");
+    }
+
+    &__done {
+      background-image: url("/assets/checkmark.svg");
+      animation-name: example;
+      animation-duration: 0.5s;
+    }
+  }
+
   .numberIcon {
     display: flex;
     align-items: center;
@@ -49,5 +87,7 @@
     width: 24px;
     height: 24px;
     color: #222222;
+    position: relative;
+    left: -13px;
   }
 }

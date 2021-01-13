@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useFormikContext, ErrorMessage } from "formik";
 import React, { ChangeEvent, FC, memo } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
@@ -25,7 +26,7 @@ const Customer: FC = () => {
     option: ValueType<{ value: string; label: string }>,
     select: ActionMeta<{ value: string; label: string }>
   ) => {
-    setFieldValue(select.name!, option);
+    setFieldValue(select.name, option);
   };
 
   const whereYouHeardOptions = [
@@ -40,8 +41,12 @@ const Customer: FC = () => {
 
   return (
     <section className={customerStyles.customer}>
-      <img className={customerStyles.checkmark} src="/assets/checkmark.svg" />
+      <div className={customerStyles.detailTitle}>
+      <div className={classNames(`${styles.todoitem} ${styles.todoitem__one}`, {
+        [styles.todoitem__done]: values.firstName && values.lastName
+      })} />
       <label>Personal Information</label>
+      </div>
       <div className={customerStyles.detail}>  
         <input
           className={customerStyles.customer__input}
@@ -65,7 +70,9 @@ const Customer: FC = () => {
         </div>
       </div>
       <div className={customerStyles.detailTitle}>
-      <div className={customerStyles.numberIcon}>2</div>
+      <div className={classNames(`${styles.todoitem} ${styles.todoitem__two}`, {
+        [styles.todoitem__done]: values.email && values.phoneNumber
+      })} />
       <label>Contact Information</label>
       </div>
       <div className={customerStyles.detail}>
@@ -92,12 +99,14 @@ const Customer: FC = () => {
       </div>
 
       <div className={customerStyles.detailTitle}>
-      <div className={customerStyles.numberIcon}>3</div>
+      <div className={classNames(`${styles.todoitem} ${styles.todoitem__three}`, {
+        [styles.todoitem__done]: values.whereYouHeard
+      })} />
       <label>Where did you hear about us?</label>
       </div>
       <div className={customerStyles.detail}>
         <Select
-        className={customerStyles.select}
+          className={customerStyles.select}
           options={whereYouHeardOptions}
           name="whereYouHeard"
           onChange={setOption}
@@ -106,7 +115,7 @@ const Customer: FC = () => {
       </div>
 
       <div className={customerStyles.detailTitle}>
-      <div className={customerStyles.numberIcon}>4</div>
+      <div className={`${styles.todoitem} ${styles.todoitem__four}`}/>
       <label>Payment Methods</label>
       </div>
       <div className={customerStyles.detail}>
@@ -115,7 +124,7 @@ const Customer: FC = () => {
             Bank Transfer Information
         </button>
         <button className={`${customerStyles.paymentButton} ${customerStyles.barion}`} type="button">
-          Barion Pay
+          Card Payment
         </button>
           
         </div>

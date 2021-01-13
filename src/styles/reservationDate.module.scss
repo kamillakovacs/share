@@ -23,6 +23,10 @@
     margin-bottom: 10px;
     display: flex;
     align-items: center;
+
+    label {
+      margin-left: 10px;
+    }
   }
 
   &__date {
@@ -45,10 +49,10 @@
     font-size: 20px;
     padding: 23px 1em;
 
-    &Current {
+    &Title {
       height: 56px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
     }
 
@@ -71,6 +75,10 @@
         &.selected {
           color: #222222;
           background-color: #fcb923;
+        }
+
+        &:focus {
+          outline: none;
         }
       }
     }

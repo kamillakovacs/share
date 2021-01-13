@@ -80,10 +80,8 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
       <section className={styles.main__container}>
         
       <div className={styles.navigators}>
-        <img src="/assets/checkmark.svg" />
         <div className={styles.verticalLine}/>
-        <div className={styles.numberIcon}>2</div>
-        {/* <div className={styles.verticalLine2}/> */}
+        
       </div>
         <Formik<Reservation>
           initialValues={initialValues}
@@ -101,17 +99,11 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
                 <section className={reservationStyles.reservation}>
                   <ReservationDate currentReservations={currentReservations} />
                   <Options />
-                  <button className={`${reservationStyles.reservation__button} ${reservationStyles.continue}`} type="submit">
+                  <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__continue}`} type="submit">
                     Continue
                   </button>
                 </section>
-                {/* <div className={reservationStyles.reservation__info}>
-                  <span className={reservationStyles.reservation__price}>
-                    {`Total: ${values.price} Ft /
-                    ${parseInt(currency.toString())}
-                    EUR`}
-                  </span>
-                </div> */}
+             
                 
               </form>
             );

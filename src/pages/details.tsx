@@ -16,11 +16,9 @@ import reservationStyles from "../styles/reservation.module.scss"
 export interface ReservationData {
   date: string;
   time: string;
-  experience: string;
   numberOfGuests: string;
   numberOfTubs: string;
   price: string;
-  additionalTreatments?: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -37,20 +35,23 @@ interface Props {
 const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
 
+  const dateAndPackageData = JSON.parse(localStorage.getItem("reservation"));
+
   const initialValues = {
-    date: undefined,
-    time: undefined,
-    experience: undefined,
-    numberOfGuests: { value: "1", label: "1 person" },
-    numberOfTubs: undefined,
+    date: dateAndPackageData.date,
+    time: dateAndPackageData.time,
+    numberOfGuests: dateAndPackageData.numberOfGuests,
+    numberOfTubs: dateAndPackageData.numberOfTubs,
     price: "",
-    additionalTreatments: undefined,
     firstName: "",
     lastName: "",
     phoneNumber: "",
     email: "",
   };
-  const dateAndPackageData = JSON.parse(localStorage.getItem("reservation"));
+
+
+  const goBack = () => router.replace("/")
+
 
   const makeNewReservation = (
     reservationData: ReservationData,
@@ -129,8 +130,8 @@ const Details: FC<Props> = ({ users }) => {
             Total: parseInt(reservationData.price),
             Items: [
               {
-                Name: reservationData.experience,
-                Description: reservationData.experience,
+                Name: reservationData.lastName,
+                Description: `Spa reservation for ${reservationData.numberOfGuests}`,
                 Quantity: 1,
                 Unit: "pcs",
                 UnitPrice: parseInt(reservationData.price),
@@ -151,13 +152,9 @@ const Details: FC<Props> = ({ users }) => {
     const reservationData: ReservationData = {
       date: dateAndPackageData.date,
       time: dateAndPackageData.time,
-      experience: dateAndPackageData.experience,
       numberOfGuests: dateAndPackageData.numberOfGuests,
       numberOfTubs: dateAndPackageData.numberOfTubs,
       price: dateAndPackageData.price,
-      additionalTreatments: values.additionalTreatments
-        ? values.additionalTreatments.label
-        : "none",
       firstName: values.firstName,
       lastName: values.lastName,
       phoneNumber: values.phoneNumber,
@@ -195,7 +192,7 @@ const Details: FC<Props> = ({ users }) => {
               <form onSubmit={handleSubmit}>
                 <Customer />
                 <div className={reservationStyles.reservation__info}>
-                <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`} type="button">
+                <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`} type="button" onClick={goBack}>
                   Back
                 </button>
                 <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`} type="submit">

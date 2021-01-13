@@ -44,6 +44,8 @@ a {
   &-NavButton {
     background-size: 75% !important;
     top: 22px !important;
+    outline: none;
+
     &--prev {
       background-image: url("/assets/previous.svg") !important;
     }
