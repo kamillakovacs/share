@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import { useRouter } from "next/router";
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect } from "react";
 import firebase from "../lib/firebase";
 import "firebase/database";
 
@@ -9,6 +9,9 @@ import Header from "../components/header";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
+
+import styles from "../styles/main.module.scss"
+import reservationStyles from "../styles/reservation.module.scss"
 
 export interface ReservationData {
   date: string;
@@ -33,6 +36,7 @@ interface Props {
 
 const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
+
   const initialValues = {
     date: undefined,
     time: undefined,
@@ -166,9 +170,18 @@ const Details: FC<Props> = ({ users }) => {
   };
 
   return (
-    <article className="Main">
+    <article className={styles.main}>
       <Header />
-      <section className="Main__container">
+      <label className={reservationStyles.reservation__title}>
+        <span>Your Details</span>
+      </label>
+      <section className={styles.main__container}>
+      <div className={styles.navigators}>
+        
+        <div className={styles.verticalLineDetails}/>
+        <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails2}`}/>
+        <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails3}`}/>
+      </div>
         <Formik<Reservation>
           initialValues={initialValues}
           onSubmit={(values) => {
@@ -181,10 +194,13 @@ const Details: FC<Props> = ({ users }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <Customer />
-                <div className="Reservation__info">
-                  <button className="Reservation__submit" type="submit">
-                    <img src="/assets/barion.png" alt="shareLogo" />
-                  </button>
+                <div className={reservationStyles.reservation__info}>
+                <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`} type="button">
+                  Back
+                </button>
+                <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`} type="submit">
+                  Finish & Pay
+                </button>
                 </div>
               </form>
             );

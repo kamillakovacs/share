@@ -11,7 +11,7 @@ import Header from "../components/header";
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 
-import styles from "../styles/Main.module.scss"
+import styles from "../styles/main.module.scss"
 import reservationStyles from "../styles/reservation.module.scss"
 
 export interface ReservationData {
@@ -54,7 +54,6 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
   };
 
   const onSubmit = (values: Reservation) => {
-    console.log("hi")
     const reservationData: ReservationData = {
       date: values.date.toDateString(),
       time: values.time,
@@ -102,7 +101,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
                 <section className={reservationStyles.reservation}>
                   <ReservationDate currentReservations={currentReservations} />
                   <Options />
-                  <button className={reservationStyles.reservation__continue} type="submit">
+                  <button className={`${reservationStyles.reservation__button} ${reservationStyles.continue}`} type="submit">
                     Continue
                   </button>
                 </section>

@@ -110,7 +110,7 @@ const Options: FC = () => {
         <label>Number of People & Tubs</label>
       </div>
       <div className={optionStyles.options__container}>
-      <img src="/assets/people.svg" />
+      <img className={optionStyles.options__checkmark}src="/assets/people.svg" />
       <span className={optionStyles.options__peopleCounter}>{`${values.numberOfGuests} people`}</span>
       <div className={optionStyles.options__sliderContainer}>
         <Slider 

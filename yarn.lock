@@ -4314,6 +4314,11 @@ node-libs-browser@^2.2.1:
     util "^0.11.0"
     vm-browserify "^1.0.1"
 
+node-localStorage@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/node-localStorage/-/node-localStorage-0.0.1.tgz#8d33ac8a4f119b9e19c4631809f8af0eaf33dd0e"
+  integrity sha1-jTOsik8Rm54ZxGMYCfivDq8z3Q4=
+
 node-releases@^1.1.65:
   version "1.1.67"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.67.tgz#28ebfcccd0baa6aad8e8d4d8fe4cbc49ae239c12"
