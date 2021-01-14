@@ -6,6 +6,7 @@ import "firebase/database";
 
 import Options from "../components/options";
 import ReservationDate from "../components/reservationDate";
+import Summary from "../components/summary";
 import Header from "../components/header";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
@@ -39,8 +40,8 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
   const initialValues = {
     date: undefined,
     time: undefined,
-    numberOfGuests: "1",
-    numberOfTubs: "1",
+    numberOfGuests: undefined,
+    numberOfTubs: undefined,
     price: "",
     firstName: "",
     lastName: "",
@@ -57,8 +58,8 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
     const reservationData: ReservationData = {
       date: values.date.toDateString(),
       time: values.time,
-      numberOfGuests: values.numberOfGuests,
-      numberOfTubs: values.numberOfTubs,
+      numberOfGuests: values.numberOfGuests.label,
+      numberOfTubs: values.numberOfTubs.label,
       price: values.price,
       firstName: "firstName",
       lastName: "lastName",
@@ -81,6 +82,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
         
       <div className={styles.navigators}>
         <div className={styles.verticalLine}/>
+        <div className={styles.verticalLine2}/>
         
       </div>
         <Formik<Reservation>
@@ -99,6 +101,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
                 <section className={reservationStyles.reservation}>
                   <ReservationDate currentReservations={currentReservations} />
                   <Options />
+                  <Summary />
                   <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__continue}`} type="submit">
                     Continue
                   </button>

@@ -1,6 +1,6 @@
 import { Slider } from "@material-ui/core";
 import { useFormikContext } from "formik";
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect } from "react";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
@@ -8,35 +8,89 @@ import optionStyles from "../styles/options.module.scss"
 import styles from "../styles/main.module.scss"
 import classNames from "classnames";
 
+import Select, { ActionMeta, ValueType } from "react-select";
+
 const Options: FC = () => {
   const { values, touched, setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
 
-  const setPrice = () => {
-    if (values.numberOfGuests) {
-      switch (values.numberOfGuests) {
+  useEffect(() => {
+    setFieldValue("numberOfTubs", getTubOptions()[0]);
+  }, [values.numberOfGuests]);
+
+  const numberOfGuestsOptions = [
+    { value: "1", label: "1 person" },
+    { value: "2", label: "2 people" },
+    { value: "3", label: "3 people" },
+    { value: "4", label: "4 people" },
+    { value: "5", label: "5 people" },
+    { value: "6", label: "6 people" },
+  ];
+  
+  const onePersonTubOptions = [{ value: "1", label: "1 tub" }];
+  const twoPeopleTubOptions = [
+    { value: "1", label: "2 people in 1 tub" },
+    { value: "2", label: "2 people in 2 tubs" },
+  ];
+  const threePeopleTubOptions = [
+    { value: "2", label: "3 people in 2 tubs" },
+    { value: "3", label: "3 people in 3 tubs" },
+  ];
+  const fourPeopleTubOptions = [
+    { value: "2", label: "4 people in 2 tubs" },
+    { value: "3", label: "4 people in 3 tubs" },
+  ];
+  const fivePeopleTubOptions = [{ value: "3", label: "3 tubs" }];
+  const sixPeopleTubOptions = [{ value: "3", label: "3 tubs" }];
+
+  const getTubOptions = () => {
+    if (!values.numberOfGuests) {
+      return onePersonTubOptions;
+    } else {
+      switch (values.numberOfGuests.value) {
         case "1":
-          return "18000";
+          return onePersonTubOptions;
         case "2":
-          return values.numberOfTubs === "1" ? "22000" : "32000";
+          return twoPeopleTubOptions;
         case "3":
-          return values.numberOfTubs === "2" ? "40000" : "54000";
+          return threePeopleTubOptions;
         case "4":
-          return values.numberOfTubs === "2" ? "44000" : "58000";
+          return fourPeopleTubOptions;
         case "5":
-          return "62000";
+          return fivePeopleTubOptions;
         case "6":
-          return "66000";
+          return sixPeopleTubOptions;
       }
     }
   };
-  const setNumberOfGuests = (_e: React.ChangeEvent, value: number ) => {
-    setFieldValue("numberOfGuests", value);
-    setFieldTouched("numberOfGuests")
-    setFieldValue("price", setPrice());
+
+  const setPrice = () => {
+    switch (values.numberOfTubs.label) {
+      case "1 tub":
+        return "18 000";
+      case "2 people in 1 tub":
+        return "22 000";
+      case "2 people in 2 tubs":
+        return "32 000";
+      case "3 people in 2 tubs":
+        return "40 000";
+      case "3 people in 3 tubs":
+        return "54 000";
+      case "4 people in 2 tubs":
+        return "44 000";
+      case "4 people in 3 tubs":
+        return "58 000";
+      case "3 tubs":
+        return "62 000";
+      case "3 tubs":
+        return "66 000";
+    }
   };
-  const setNumberOfTubs = (_e: React.ChangeEvent, value: number ) => {
-    setFieldValue("numberOfTubs"!, value);
-    setFieldTouched("numberOfTubs")
+
+  const setOption = (
+    option: ValueType<{ value: string; label: string }>,
+    select: ActionMeta<{ value: string; label: string }>
+  ) => {
+    setFieldValue(select.name!, option);
     setFieldValue("price", setPrice());
   };
 
@@ -50,35 +104,23 @@ const Options: FC = () => {
       </div>
       <div className={optionStyles.options__container}>
       <img src="/assets/people.svg" />
-      <span className={optionStyles.options__peopleCounter}>{`${values.numberOfGuests} people`}</span>
-      <div className={optionStyles.options__sliderContainer}>
-        <Slider 
-          aria-labelledby="discrete-slider"
-          step={1}
-          marks
-          min={1}
-          max={6}
-          valueLabelDisplay="off"
-          onChange={setNumberOfGuests}
-          />
-      </div>
-    </div>
-    <div className={optionStyles.options__container}>
+      <Select
+          className={optionStyles.select}
+          options={numberOfGuestsOptions}
+          placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : "1 person"}</>}
+          name="numberOfGuests"
+          onChange={setOption}
+          value={values.numberOfGuests}
+        />
       <img src="/assets/hottub.svg" />
-      <span className={optionStyles.options__peopleCounter}>{`${values.numberOfTubs} hot tubs`}</span>
-      <div className={optionStyles.options__sliderContainer}>
-        <Slider 
-          name={"numberOfTubs"}
-          aria-labelledby="discrete-slider"
-          step={1}
-          marks
-          min={1}
-          max={3}
-          valueLabelDisplay="off"
-          onChange={setNumberOfTubs}
-          />
-      </div>
-      
+      <Select
+          className={optionStyles.select}
+          options={getTubOptions()}
+          placeholder={<>{values.numberOfTubs ? values.numberOfTubs.label : "1 hot tub"}</>}
+          name="numberOfTubs"
+          onChange={setOption}
+          value={values.numberOfTubs}
+        />
     </div>
       </>
     

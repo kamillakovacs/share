@@ -1,0 +1,23 @@
+<svg id="Group_174" data-name="Group 174" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="15 10 40 50">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #222;
+      }
+
+      .cls-2 {
+        fill: #fcb923;
+      }
+
+      .cls-3 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <rect id="Rectangle_267" data-name="Rectangle 267" class="cls-1" width="40" height="40"/>
+  <rect id="Rectangle_254" data-name="Rectangle 254" class="cls-2" width="30" height="30" rx="15" transform="translate(10 10)"/>
+  <g id="shopping_cart-24px" transform="translate(16.404 16.404)">
+    <path id="Path_71" data-name="Path 71" class="cls-3" d="M0,0H17.191V17.191H0Z"/>
+    <path id="Path_72" data-name="Path 72" class="cls-1" d="M5.3,13.461A1.433,1.433,0,1,0,6.73,14.894,1.431,1.431,0,0,0,5.3,13.461ZM1,2V3.433H2.433L5.011,8.869l-.967,1.755a1.385,1.385,0,0,0-.179.688A1.437,1.437,0,0,0,5.3,12.745h8.6V11.312H5.6a.177.177,0,0,1-.179-.179l.021-.086.645-1.168h5.336a1.426,1.426,0,0,0,1.254-.738L15.24,4.493a.7.7,0,0,0,.086-.344.718.718,0,0,0-.716-.716H4.016L3.342,2H1ZM12.461,13.461a1.433,1.433,0,1,0,1.433,1.433A1.431,1.431,0,0,0,12.461,13.461Z" transform="translate(-0.284 -0.567)"/>
+  </g>
+</svg>

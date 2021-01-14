@@ -1,9 +1,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  height: 1200px;
   align-items: center;
   background-color: #222222;
+  padding-bottom: 50px;
 
   label {
     font-weight: 400;
@@ -20,9 +20,16 @@
   .navigators {
     .verticalLine {
       border-left: 1px solid #343434;
-      height: 360px;
+      height: 390px;
       margin: 32px 0 10px 12px;
     }
+
+    .verticalLine2 {
+      border-left: 1px solid #343434;
+      height: 300px;
+      margin: 40px 0 10px 12px;
+    }
+
     .verticalLineDetails {
       border-left: 1px solid #343434;
       height: 150px;
@@ -39,13 +46,22 @@
       margin-top: 40px;
     }
   }
-  @keyframes example {
+
+  @keyframes setToDoDone {
     from {
       background-image: url("/assets/one.svg");
     }
     to {
       background-image: url("/assets/checkmark.svg");
     }
+  }
+
+  .cart {
+    width: 26px;
+    height: 26px;
+    background-image: url("/assets/cart.svg");
+    position: relative;
+    left: -18px;
   }
 
   .todoitem {
@@ -72,7 +88,7 @@
 
     &__done {
       background-image: url("/assets/checkmark.svg");
-      animation-name: example;
+      animation-name: setToDoDone;
       animation-duration: 0.5s;
     }
   }

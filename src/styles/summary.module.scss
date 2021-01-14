@@ -1,0 +1,29 @@
+.label {
+  display: flex;
+  align-items: center;
+  margin: 40px 0 10px 5px;
+}
+
+.container {
+  width: 480px;
+  color: #bcbcbc;
+  font-weight: 300;
+  margin: 0 0 10px 32px;
+  line-height: 30px;
+}
+
+.bold {
+  font-weight: 400;
+}
+
+.vat {
+  font-size: 10px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid;
+  margin-top: 15px;
+  font-weight: 400;
+}
