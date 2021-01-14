@@ -20,8 +20,16 @@ a {
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
     Helvetica Neue, sans-serif !important;
 
+  &:focus {
+    outline: none !important;
+  }
+
   &-wrapper {
     padding: 20px !important;
+
+    &:focus {
+      outline: none !important;
+    }
   }
 
   &-Caption {
