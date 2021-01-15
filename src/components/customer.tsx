@@ -3,14 +3,14 @@ import { useFormikContext, ErrorMessage } from "formik";
 import React, { ChangeEvent, FC, memo } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 
-import { Reservation } from "../lib/validation/validationInterfaces";
+import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
 import customerStyles from "../styles/customer.module.scss"
 import styles from "../styles/main.module.scss"
 
 const Customer: FC = () => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<
-    Reservation
+    ReservationWithDetails
   >();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +38,8 @@ const Customer: FC = () => {
     { value: "instagram", label: "Instagram" },
     { value: "hotel", label: "Your hotel" },
   ];
+
+  const setPaymentMethod = (e: React.MouseEvent<HTMLButtonElement>) => setFieldValue("paymentMethod", e.currentTarget.name)
 
   return (
     <section className={customerStyles.customer}>
@@ -120,13 +122,12 @@ const Customer: FC = () => {
       </div>
       <div className={customerStyles.detail}>
         <div className="paymentButtonContainer">
-        <button className={`${customerStyles.paymentButton} ${customerStyles.banktransfer}`} type="button">
+        <button className={`${customerStyles.paymentButton} ${customerStyles.banktransfer}`} type="button" name="bankTransfer" onClick={setPaymentMethod}>
             Bank Transfer Information
         </button>
-        <button className={`${customerStyles.paymentButton} ${customerStyles.barion}`} type="button">
+        <button className={`${customerStyles.paymentButton} ${customerStyles.barion}`} type="button" name="barion" onClick={setPaymentMethod}>
           Card Payment
         </button>
-          
         </div>
       </div>
 

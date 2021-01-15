@@ -1,10 +1,11 @@
 import { useFormikContext } from "formik";
 import React, { FC, memo } from "react";
 import DayPicker from "react-day-picker";
+import classNames from "classnames";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { ReservationData } from "../pages";
-import classNames from "classnames";
+import firebase from "../lib/firebase";
 
 import dateStyles from "../styles/reservationDate.module.scss"
 import styles from "../styles/main.module.scss"
@@ -33,9 +34,11 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
     setFieldValue("time", e.currentTarget.innerText);
   };
 
-  const unavailableDates = Object.values(currentReservations).map(
-    (res) => res.date
-  );
+  // const unavailableDates = Object.values(currentReservations).map(
+  //   (res) => res.date
+  // );
+
+  console.log(currentReservations);
 
   return (
     <section className={dateStyles.reservationDate}>

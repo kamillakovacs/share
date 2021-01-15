@@ -18,7 +18,10 @@ const Options: FC = () => {
   }, [values.numberOfGuests]);
 
   useEffect(() => {
-    setFieldValue("price", setPrice());
+    if (values.numberOfTubs) {
+      setFieldValue("price", setPrice());
+    }
+    
   }, [values.numberOfTubs, values.numberOfGuests] )
 
   const numberOfGuestsOptions = [

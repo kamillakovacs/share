@@ -1,14 +1,14 @@
 import { Formik } from "formik";
 import { useRouter } from "next/router";
-import React, { FC, memo, useEffect } from "react";
+import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
 import "firebase/database";
 
 import Customer from "../components/customer";
 import Header from "../components/header";
 
-import { Reservation } from "../lib/validation/validationInterfaces";
-import { reservation } from "../lib/validation/validationSchemas";
+import { ReservationWithDetails, Reservation } from "../lib/validation/validationInterfaces";
+import { details, reservation } from "../lib/validation/validationSchemas";
 
 import styles from "../styles/main.module.scss"
 import reservationStyles from "../styles/reservation.module.scss"
@@ -25,6 +25,7 @@ export interface ReservationData {
   email: string;
   whereYouHeard?: string;
   paymentStatus: string;
+  paymentMethod: string;
 }
 
 interface Props {
@@ -47,6 +48,7 @@ const Details: FC<Props> = ({ users }) => {
     lastName: "",
     phoneNumber: "",
     email: "",
+    paymentMethod: ""
   };
 
 
@@ -148,7 +150,7 @@ const Details: FC<Props> = ({ users }) => {
         router.replace(res.GatewayUrl);
       });
 
-  const onSubmit = (values: Reservation) => {
+  const onSubmit = (values: ReservationWithDetails) => {
     const reservationData: ReservationData = {
       date: dateAndPackageData.date,
       time: dateAndPackageData.time,
@@ -161,9 +163,12 @@ const Details: FC<Props> = ({ users }) => {
       email: values.email,
       whereYouHeard: values.whereYouHeard ? values.whereYouHeard.label : "none",
       paymentStatus: "UNPAID",
+      paymentMethod: values.paymentMethod
     };
 
-    return redirectToStartPayment(reservationData);
+    if (values.paymentMethod === "barion") {
+      return redirectToStartPayment(reservationData);
+    }  
   };
 
   return (
@@ -179,7 +184,7 @@ const Details: FC<Props> = ({ users }) => {
         <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails2}`}/>
         <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails3}`}/>
       </div>
-        <Formik<Reservation>
+        <Formik<ReservationWithDetails>
           initialValues={initialValues}
           onSubmit={(values) => {
             onSubmit(values);
@@ -195,7 +200,7 @@ const Details: FC<Props> = ({ users }) => {
                 <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`} type="button" onClick={goBack}>
                   Back
                 </button>
-                <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`} type="submit">
+                <button type="submit" className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}>
                   Finish & Pay
                 </button>
                 </div>
@@ -215,14 +220,6 @@ export async function getServerSideProps() {
     .then(function (snapshot) {
       return snapshot.val() || "Anonymous";
     });
-
-  //   const reservations = firebase.database().ref("reservations");
-
-  //   const currentReservations: ReservationData[] = await reservations
-  //     .once("value")
-  //     .then(function (snapshot) {
-  //       return snapshot.val() || "Anonymous";
-  //     });
 
   return { props: { users } };
 }

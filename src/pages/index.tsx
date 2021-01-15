@@ -28,6 +28,7 @@ export interface ReservationData {
   email: string;
   whereYouHeard?: string;
   paymentStatus: string;
+  paymentMethod: string;
 }
 
 interface Props {
@@ -47,6 +48,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
     lastName: "",
     phoneNumber: "",
     email: "",
+    paymentMethod: ""
   };
 
   const redirectToDetailsPage = (reservationData: ReservationData) => {
@@ -67,6 +69,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
       email: "email@email.com",
       whereYouHeard: "none",
       paymentStatus: "",
+      paymentMethod: ""
     };
 
     return redirectToDetailsPage(reservationData);

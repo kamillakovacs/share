@@ -17,25 +17,32 @@ export const reservation = Yup.object().shape({
       label: Yup.string(),
     })
     .required("Required"),
-  price: Yup.string(),
+  price: Yup.string().required("Required"),
+});
+
+
+export const details = Yup.object().shape({
+  date: Yup.date().required("Required"),
+  time: Yup.string().required("Required"),
+  numberOfGuests: Yup.string()
+    .required("Required"),
+  numberOfTubs: Yup.string()
+    .required("Required"),
+  price: Yup.string().required("Required"),
   whereYouHeard: Yup.object()
     .shape({
       value: Yup.string(),
       label: Yup.string(),
     })
     .required("Required"),
-  additionalTreatments: Yup.object().shape({
-    value: Yup.string(),
-    label: Yup.string(),
-  }),
-  firstName: Yup.string(),
-  lastName: Yup.string(),
+  firstName: Yup.string().required("Required"),
+  lastName: Yup.string().required("Required"),
   phoneNumber: Yup.string()
     .matches(
       phoneRegex,
       "Please enter a valid phone number. (1234567890, 123-456-7890, +31636363634)"
-    ),
+    ).required("Required"),
   email: Yup.string()
-    .email("Please enter a valid email address")
-   
+    .email("Please enter a valid email address").required("Required"),
+  paymentMethod: Yup.string().required("Required")
 });
