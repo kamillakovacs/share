@@ -17,6 +17,10 @@ const Options: FC = () => {
     setFieldValue("numberOfTubs", getTubOptions()[0]);
   }, [values.numberOfGuests]);
 
+  useEffect(() => {
+    setFieldValue("price", setPrice());
+  }, [values.numberOfTubs, values.numberOfGuests] )
+
   const numberOfGuestsOptions = [
     { value: "1", label: "1 person" },
     { value: "2", label: "2 people" },
@@ -80,9 +84,7 @@ const Options: FC = () => {
       case "4 people in 3 tubs":
         return "58 000";
       case "3 tubs":
-        return "62 000";
-      case "3 tubs":
-        return "66 000";
+        return values.numberOfGuests.value === "5" ? "62 000" : "66 000";
     }
   };
 
@@ -90,8 +92,8 @@ const Options: FC = () => {
     option: ValueType<{ value: string; label: string }>,
     select: ActionMeta<{ value: string; label: string }>
   ) => {
-    setFieldValue(select.name!, option);
-    setFieldValue("price", setPrice());
+    setFieldValue(select.name, option);
+    setFieldTouched(select.name)
   };
 
   return (
