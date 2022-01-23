@@ -12,21 +12,21 @@ import Header from "../components/header";
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 
-import styles from "../styles/main.module.scss"
-import reservationStyles from "../styles/reservation.module.scss"
+import styles from "../styles/main.module.scss";
+import reservationStyles from "../styles/reservation.module.scss";
 
 export interface ReservationData {
   date: string;
   time: string;
-  numberOfGuests: string;
-  numberOfTubs: string;
+  numberOfGuests: { label: string; value: string };
+  numberOfTubs: { label: string; value: string };
   price: string;
   additionalTreatments?: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email: string;
-  whereYouHeard?: string;
+  whereYouHeard?: { label: string; value: string };
   paymentStatus: string;
   paymentMethod: string;
 }
@@ -48,7 +48,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
     lastName: "",
     phoneNumber: "",
     email: "",
-    paymentMethod: ""
+    paymentMethod: "",
   };
 
   const redirectToDetailsPage = (reservationData: ReservationData) => {
@@ -60,16 +60,16 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
     const reservationData: ReservationData = {
       date: values.date.toDateString(),
       time: values.time,
-      numberOfGuests: values.numberOfGuests.label,
-      numberOfTubs: values.numberOfTubs.label,
+      numberOfGuests: values.numberOfGuests,
+      numberOfTubs: values.numberOfTubs,
       price: values.price,
       firstName: "firstName",
       lastName: "lastName",
       phoneNumber: "222222222222",
       email: "email@email.com",
-      whereYouHeard: "none",
+      whereYouHeard: { value: "none", label: "None" },
       paymentStatus: "",
-      paymentMethod: ""
+      paymentMethod: "",
     };
 
     return redirectToDetailsPage(reservationData);
@@ -82,12 +82,10 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
         <span>Reserve Your Experience</span>
       </label>
       <section className={styles.main__container}>
-        
-      <div className={styles.navigators}>
-        <div className={styles.verticalLine}/>
-        <div className={styles.verticalLine2}/>
-        
-      </div>
+        <div className={styles.navigators}>
+          <div className={styles.verticalLine} />
+          <div className={styles.verticalLine2} />
+        </div>
         <Formik<Reservation>
           initialValues={initialValues}
           onSubmit={(values) => {
@@ -105,12 +103,13 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
                   <ReservationDate currentReservations={currentReservations} />
                   <Options />
                   <Summary />
-                  <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__continue}`} type="submit">
+                  <button
+                    className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__continue}`}
+                    type="submit"
+                  >
                     Continue
                   </button>
                 </section>
-             
-                
               </form>
             );
           }}
