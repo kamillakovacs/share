@@ -106,7 +106,7 @@ const Details: FC<Props> = ({ users }) => {
 
         PaymentRequestId: "payment-25",
         OrderNumber: "order-25",
-        PayerHint: "kamilla525@yahoo.com",
+        PayerHint: reservationData.email,
         ShippingAddress: {
           Country: "HU",
           City: "Budapest",
@@ -126,7 +126,7 @@ const Details: FC<Props> = ({ users }) => {
         Transactions: [
           {
             POSTransactionId: "tr-25",
-            Payee: "kamilla525@yahoo.com",
+            Payee: reservationData.email,
             Total: parseInt(reservationData.price),
             Items: [
               {
@@ -164,7 +164,7 @@ const Details: FC<Props> = ({ users }) => {
       paymentMethod: values.paymentMethod,
     };
 
-    if (values.paymentMethod === "barion") {
+    if (values.paymentMethod === "card") {
       return redirectToStartPayment(reservationData);
     }
   };
