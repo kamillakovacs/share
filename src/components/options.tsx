@@ -4,25 +4,31 @@ import React, { FC, memo, useEffect } from "react";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
-import optionStyles from "../styles/options.module.scss"
-import styles from "../styles/main.module.scss"
+import optionStyles from "../styles/options.module.scss";
+import styles from "../styles/main.module.scss";
 import classNames from "classnames";
 
 import Select, { ActionMeta, ValueType } from "react-select";
 
 const Options: FC = () => {
-  const { values, touched, setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
+  const {
+    values,
+    touched,
+    setFieldValue,
+    setFieldTouched,
+  } = useFormikContext<Reservation>();
 
   useEffect(() => {
-    setFieldValue("numberOfTubs", getTubOptions()[0]);
+    if (values.numberOfGuests) {
+      setFieldValue("numberOfTubs", getTubOptions());
+    }
   }, [values.numberOfGuests]);
 
   useEffect(() => {
     if (values.numberOfTubs) {
       setFieldValue("price", setPrice());
     }
-    
-  }, [values.numberOfTubs, values.numberOfGuests] )
+  }, [values.numberOfTubs, values.numberOfGuests]);
 
   const numberOfGuestsOptions = [
     { value: "1", label: "1 person" },
@@ -32,7 +38,7 @@ const Options: FC = () => {
     { value: "5", label: "5 people" },
     { value: "6", label: "6 people" },
   ];
-  
+
   const onePersonTubOptions = [{ value: "1", label: "1 tub" }];
   const twoPeopleTubOptions = [
     { value: "1", label: "2 people in 1 tub" },
@@ -96,39 +102,54 @@ const Options: FC = () => {
     select: ActionMeta<{ value: string; label: string }>
   ) => {
     setFieldValue(select.name, option);
-    setFieldTouched(select.name)
+    setFieldTouched(select.name);
   };
 
   return (
     <>
       <div className={optionStyles.options}>
-      <div className={classNames(`${styles.todoitem} ${styles.todoitem__two}`, {
-        [styles.todoitem__done]: values.numberOfGuests && values.numberOfTubs && touched.numberOfGuests && touched.numberOfTubs
-      })} />
+        <div
+          className={classNames(`${styles.todoitem} ${styles.todoitem__two}`, {
+            [styles.todoitem__done]:
+              values.numberOfGuests &&
+              values.numberOfTubs &&
+              touched.numberOfGuests &&
+              touched.numberOfTubs,
+          })}
+        />
         <label>Number of People & Tubs</label>
       </div>
       <div className={optionStyles.options__container}>
-      <img src="/assets/people.svg" />
-      <Select
+        <img src="/assets/people.svg" />
+        <Select
           className={optionStyles.select}
           options={numberOfGuestsOptions}
-          placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : "1 person"}</>}
+          placeholder={
+            <>
+              {values.numberOfGuests
+                ? values.numberOfGuests.label
+                : "Select guests"}
+            </>
+          }
           name="numberOfGuests"
           onChange={setOption}
           value={values.numberOfGuests}
         />
-      <img src="/assets/hottub.svg" />
-      <Select
+        <img src="/assets/hottub.svg" />
+        <Select
           className={optionStyles.select}
           options={getTubOptions()}
-          placeholder={<>{values.numberOfTubs ? values.numberOfTubs.label : "1 hot tub"}</>}
+          placeholder={
+            <>
+              {values.numberOfTubs ? values.numberOfTubs.label : "Select tubs"}
+            </>
+          }
           name="numberOfTubs"
           onChange={setOption}
           value={values.numberOfTubs}
         />
-    </div>
-      </>
-    
+      </div>
+    </>
   );
 };
 

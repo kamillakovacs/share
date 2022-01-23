@@ -7,13 +7,13 @@ import "firebase/database";
 import Customer from "../components/customer";
 import Header from "../components/header";
 
-import { ReservationWithDetails, Reservation } from "../lib/validation/validationInterfaces";
-import { details, reservation } from "../lib/validation/validationSchemas";
+import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { reservation } from "../lib/validation/validationSchemas";
 
-import styles from "../styles/main.module.scss"
-import reservationStyles from "../styles/reservation.module.scss"
+import styles from "../styles/main.module.scss";
+import reservationStyles from "../styles/reservation.module.scss";
 
-export interface ReservationData {
+export interface ReservationDataForSaving {
   date: string;
   time: string;
   numberOfGuests: string;
@@ -29,8 +29,8 @@ export interface ReservationData {
 }
 
 interface Props {
-  users: ReservationData[];
-  currentReservations: ReservationData;
+  users: ReservationDataForSaving[];
+  currentReservations: ReservationDataForSaving;
 }
 
 const Details: FC<Props> = ({ users }) => {
@@ -43,20 +43,18 @@ const Details: FC<Props> = ({ users }) => {
     time: dateAndPackageData.time,
     numberOfGuests: dateAndPackageData.numberOfGuests,
     numberOfTubs: dateAndPackageData.numberOfTubs,
-    price: "",
+    price: dateAndPackageData.price,
     firstName: "",
     lastName: "",
     phoneNumber: "",
     email: "",
-    paymentMethod: ""
+    paymentMethod: "",
   };
 
-
-  const goBack = () => router.replace("/")
-
+  const goBack = () => router.replace("/");
 
   const makeNewReservation = (
-    reservationData: ReservationData,
+    reservationData: ReservationDataForSaving,
     paymentId: string
   ) => {
     const customerAlreadyInDatabase = !!Object.values(users).filter(
@@ -89,7 +87,7 @@ const Details: FC<Props> = ({ users }) => {
     return firebase.database().ref().update(updates);
   };
 
-  const redirectToStartPayment = (reservationData: ReservationData) =>
+  const redirectToStartPayment = (reservationData: ReservationDataForSaving) =>
     fetch("https://api.test.barion.com/v2/Payment/Start", {
       method: "POST",
       headers: {
@@ -151,7 +149,7 @@ const Details: FC<Props> = ({ users }) => {
       });
 
   const onSubmit = (values: ReservationWithDetails) => {
-    const reservationData: ReservationData = {
+    const reservationData: ReservationDataForSaving = {
       date: dateAndPackageData.date,
       time: dateAndPackageData.time,
       numberOfGuests: dateAndPackageData.numberOfGuests,
@@ -163,12 +161,12 @@ const Details: FC<Props> = ({ users }) => {
       email: values.email,
       whereYouHeard: values.whereYouHeard ? values.whereYouHeard.label : "none",
       paymentStatus: "UNPAID",
-      paymentMethod: values.paymentMethod
+      paymentMethod: values.paymentMethod,
     };
 
     if (values.paymentMethod === "barion") {
       return redirectToStartPayment(reservationData);
-    }  
+    }
   };
 
   return (
@@ -178,12 +176,15 @@ const Details: FC<Props> = ({ users }) => {
         <span>Your Details</span>
       </label>
       <section className={styles.main__container}>
-      <div className={styles.navigators}>
-        
-        <div className={styles.verticalLineDetails}/>
-        <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails2}`}/>
-        <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails3}`}/>
-      </div>
+        <div className={styles.navigators}>
+          <div className={styles.verticalLineDetails} />
+          <div
+            className={`${styles.verticalLineDetails} ${styles.verticalLineDetails2}`}
+          />
+          <div
+            className={`${styles.verticalLineDetails} ${styles.verticalLineDetails3}`}
+          />
+        </div>
         <Formik<ReservationWithDetails>
           initialValues={initialValues}
           onSubmit={(values) => {
@@ -192,17 +193,26 @@ const Details: FC<Props> = ({ users }) => {
           validationSchema={reservation}
           validateOnChange
         >
-          {({ handleSubmit }) => {
+          {({ values, handleSubmit }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <Customer />
                 <div className={reservationStyles.reservation__info}>
-                <button className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`} type="button" onClick={goBack}>
-                  Back
-                </button>
-                <button type="submit" className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}>
-                  Finish & Pay
-                </button>
+                  <button
+                    className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`}
+                    type="button"
+                    onClick={goBack}
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}
+                  >
+                    {values.paymentMethod === "bankTransfer"
+                      ? "Complete"
+                      : "Finish & Pay"}
+                  </button>
                 </div>
               </form>
             );
@@ -215,7 +225,7 @@ const Details: FC<Props> = ({ users }) => {
 
 export async function getServerSideProps() {
   const customers = firebase.database().ref("customers");
-  const users: ReservationData[] = await customers
+  const users: ReservationDataForSaving[] = await customers
     .once("value")
     .then(function (snapshot) {
       return snapshot.val() || "Anonymous";

@@ -3,15 +3,18 @@ import { useFormikContext, ErrorMessage } from "formik";
 import React, { ChangeEvent, FC, memo } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 
+import Payment from "./payment";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
-import customerStyles from "../styles/customer.module.scss"
-import styles from "../styles/main.module.scss"
+import customerStyles from "../styles/customer.module.scss";
+import styles from "../styles/main.module.scss";
 
 const Customer: FC = () => {
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<
-    ReservationWithDetails
-  >();
+  const {
+    values,
+    setFieldValue,
+    setFieldTouched,
+  } = useFormikContext<ReservationWithDetails>();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "phoneNumber") {
@@ -27,6 +30,7 @@ const Customer: FC = () => {
     select: ActionMeta<{ value: string; label: string }>
   ) => {
     setFieldValue(select.name, option);
+    setFieldTouched(select.name);
   };
 
   const whereYouHeardOptions = [
@@ -39,17 +43,17 @@ const Customer: FC = () => {
     { value: "hotel", label: "Your hotel" },
   ];
 
-  const setPaymentMethod = (e: React.MouseEvent<HTMLButtonElement>) => setFieldValue("paymentMethod", e.currentTarget.name)
-
   return (
     <section className={customerStyles.customer}>
       <div className={customerStyles.detailTitle}>
-      <div className={classNames(`${styles.todoitem} ${styles.todoitem__one}`, {
-        [styles.todoitem__done]: values.firstName && values.lastName
-      })} />
-      <label>Personal Information</label>
+        <div
+          className={classNames(`${styles.todoitem} ${styles.todoitem__one}`, {
+            [styles.todoitem__done]: values.firstName && values.lastName,
+          })}
+        />
+        <label>Personal Information</label>
       </div>
-      <div className={customerStyles.detail}>  
+      <div className={customerStyles.detail}>
         <input
           className={customerStyles.customer__input}
           name="firstName"
@@ -58,7 +62,7 @@ const Customer: FC = () => {
           onChange={onChangeInput}
         />
         <div className={customerStyles.ErrorMessage}>
-        <ErrorMessage name="firstName" />
+          <ErrorMessage name="firstName" />
         </div>
         <input
           className={customerStyles.customer__input}
@@ -72,39 +76,45 @@ const Customer: FC = () => {
         </div>
       </div>
       <div className={customerStyles.detailTitle}>
-      <div className={classNames(`${styles.todoitem} ${styles.todoitem__two}`, {
-        [styles.todoitem__done]: values.email && values.phoneNumber
-      })} />
-      <label>Contact Information</label>
+        <div
+          className={classNames(`${styles.todoitem} ${styles.todoitem__two}`, {
+            [styles.todoitem__done]: values.email && values.phoneNumber,
+          })}
+        />
+        <label>Contact Information</label>
       </div>
       <div className={customerStyles.detail}>
         <input
           className={customerStyles.customer__input}
-          name="phoneNumber"
-          placeholder="Email address"
-          type="tel"
-          onChange={onChangeInput}
-        />
-      <div className={customerStyles.ErrorMessage}>
-        <ErrorMessage name="phoneNumber" />
-      </div>
-        <input
-          className={customerStyles.customer__input}
           name="email"
-          placeholder="Phone number"
+          placeholder="Email address"
           type="email"
           onChange={onChangeInput}
         />
+        <div className={customerStyles.ErrorMessage}>
+          <ErrorMessage name="email" />
+        </div>
+        <input
+          className={customerStyles.customer__input}
+          name="phoneNumber"
+          placeholder="Phone number"
+          type="tel"
+          onChange={onChangeInput}
+        />
       </div>
       <div className={customerStyles.ErrorMessage}>
-        <ErrorMessage name="email" />
+        <ErrorMessage name="phoneNumber" />
       </div>
-
       <div className={customerStyles.detailTitle}>
-      <div className={classNames(`${styles.todoitem} ${styles.todoitem__three}`, {
-        [styles.todoitem__done]: values.whereYouHeard
-      })} />
-      <label>Where did you hear about us?</label>
+        <div
+          className={classNames(
+            `${styles.todoitem} ${styles.todoitem__three}`,
+            {
+              [styles.todoitem__done]: values.whereYouHeard,
+            }
+          )}
+        />
+        <label>Where did you hear about us?</label>
       </div>
       <div className={customerStyles.detail}>
         <Select
@@ -116,21 +126,7 @@ const Customer: FC = () => {
         />
       </div>
 
-      <div className={customerStyles.detailTitle}>
-      <div className={`${styles.todoitem} ${styles.todoitem__four}`}/>
-      <label>Payment Methods</label>
-      </div>
-      <div className={customerStyles.detail}>
-        <div className="paymentButtonContainer">
-        <button className={`${customerStyles.paymentButton} ${customerStyles.banktransfer}`} type="button" name="bankTransfer" onClick={setPaymentMethod}>
-            Bank Transfer Information
-        </button>
-        <button className={`${customerStyles.paymentButton} ${customerStyles.barion}`} type="button" name="barion" onClick={setPaymentMethod}>
-          Card Payment
-        </button>
-        </div>
-      </div>
-
+      <Payment />
     </section>
   );
 };
