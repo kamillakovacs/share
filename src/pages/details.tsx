@@ -1,12 +1,12 @@
 import { Formik } from "formik";
 import { useRouter } from "next/router";
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect } from "react";
 import firebase from "../lib/firebase";
 import "firebase/database";
 
 import Customer from "../components/customer";
 import Header from "../components/header";
-
+import * as payment from "../api/paymentRequest";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 
@@ -28,6 +28,11 @@ export interface ReservationDataForSaving {
   paymentMethod: string;
 }
 
+interface BarionResponse {
+  PaymentId: string;
+  GatewayUrl: string;
+}
+
 interface Props {
   users: ReservationDataForSaving[];
   currentReservations: ReservationDataForSaving;
@@ -35,8 +40,13 @@ interface Props {
 
 const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
-
   const dateAndPackageData = JSON.parse(localStorage.getItem("reservation"));
+
+  useEffect(() => {
+    if (!dateAndPackageData.numberOfGuests) {
+      router.replace("/");
+    }
+  });
 
   const initialValues = {
     date: dateAndPackageData.date,
@@ -53,102 +63,11 @@ const Details: FC<Props> = ({ users }) => {
 
   const goBack = () => router.replace("/");
 
-  const makeNewReservation = (
-    reservationData: ReservationDataForSaving,
-    paymentId: string
-  ) => {
-    const customerAlreadyInDatabase = !!Object.values(users).filter(
-      (user) =>
-        user.firstName.toLowerCase() ===
-          reservationData.firstName.toLowerCase() &&
-        user.lastName.toLowerCase() ===
-          reservationData.lastName.toLowerCase() &&
-        user.phoneNumber.toLowerCase() ===
-          reservationData.phoneNumber.toLowerCase() &&
-        user.email.toLowerCase() === reservationData.email.toLowerCase()
-    ).length;
+  const redirectToStartPayment = async (
+    reservationData: ReservationDataForSaving
+  ) => payment.useSendPaymentRequest(reservationData, users, router);
 
-    const newCustomer = {
-      firstName: reservationData.firstName,
-      lastName: reservationData.lastName,
-      phoneNumber: reservationData.phoneNumber,
-      email: reservationData.email,
-    };
-
-    const customers = firebase.database().ref("customers");
-    const newCustomerId = customers.child("customers").push().key;
-
-    const updates = {};
-    updates["/reservations/" + paymentId] = { ...reservationData, paymentId };
-    if (!customerAlreadyInDatabase) {
-      updates["/customers/" + newCustomerId] = newCustomer;
-    }
-
-    return firebase.database().ref().update(updates);
-  };
-
-  const redirectToStartPayment = (reservationData: ReservationDataForSaving) =>
-    fetch("https://api.test.barion.com/v2/Payment/Start", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({
-        POSKey: "f971a07db8f0442fbad1361987f004bf",
-        PaymentType: "Immediate",
-        PaymentWindow: "00:30:00",
-
-        GuestCheckout: "True",
-        FundingSources: ["All"],
-
-        InitiateRecurrence: "True", //If set to True, the Token will be recorder
-        RecurrenceId: "345986-25646-3456346", //Token provided by merchant for subsequent payments
-
-        PaymentRequestId: "payment-25",
-        OrderNumber: "order-25",
-        PayerHint: reservationData.email,
-        ShippingAddress: {
-          Country: "HU",
-          City: "Budapest",
-          Region: "HU",
-          Zip: "1234",
-          Street: "13 Etwas Strasse",
-          Street2: "",
-          FullName: "Kamilla Kovacs",
-          Phone: "43259123456789",
-        },
-
-        RedirectUrl: "http://localhost:3000/thanks",
-
-        Locale: "hu-HU",
-        Currency: "HUF",
-
-        Transactions: [
-          {
-            POSTransactionId: "tr-25",
-            Payee: reservationData.email,
-            Total: parseInt(reservationData.price),
-            Items: [
-              {
-                Name: reservationData.lastName,
-                Description: `Spa reservation for ${reservationData.numberOfGuests}`,
-                Quantity: 1,
-                Unit: "pcs",
-                UnitPrice: parseInt(reservationData.price),
-                ItemTotal: parseInt(reservationData.price),
-              },
-            ],
-          },
-        ],
-      }),
-    })
-      .then((res) => res.json())
-      .then(async (res) => {
-        await makeNewReservation(reservationData, res.PaymentId);
-        router.replace(res.GatewayUrl);
-      });
-
-  const onSubmit = (values: ReservationWithDetails) => {
+  const onSubmit = async (values: ReservationWithDetails) => {
     const reservationData: ReservationDataForSaving = {
       date: dateAndPackageData.date,
       time: dateAndPackageData.time,
