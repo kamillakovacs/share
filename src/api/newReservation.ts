@@ -1,6 +1,7 @@
 import firebase from "../lib/firebase";
 import "firebase/database";
 import { ReservationData } from "../pages";
+import axios from "axios";
 
 export const makeNewReservation = (reservationData: ReservationData, paymentId: string, users: ReservationData[]) => {
   const customerAlreadyInDatabase = !!Object.values(users).filter(
@@ -18,16 +19,9 @@ export const makeNewReservation = (reservationData: ReservationData, paymentId: 
     email: reservationData.email,
   };
 
-  const customers = firebase.database().ref("customers");
-  const newCustomerId = customers.child("customers").push().key;
-  console.log("reservationdate", reservationData);
-  console.log("paymentid", paymentId);
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+  };
 
-  const updates = {};
-  updates["/reservations/" + paymentId] = { ...reservationData, paymentId };
-  if (!customerAlreadyInDatabase) {
-    updates["/customers/" + newCustomerId] = newCustomer;
-  }
-
-  return firebase.database().ref().update(updates);
+  axios.post("/api/reservation", { reservationData, newCustomer, paymentId, customerAlreadyInDatabase }, { headers });
 };

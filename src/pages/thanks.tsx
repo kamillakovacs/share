@@ -5,17 +5,15 @@ import { useRouter } from "next/router";
 import mailgun from "mailgun-js";
 
 import { ThankYouEmail } from "../components/thankYouEmail";
-import email from "../lib/thankYouEmail/thankYouEmail.html";
 
 interface Props {
-  reservations: { [key: string]: { paymentId: string } };
+  reservations: { [key: string]: { paymentId: string; paymentStatus: string } };
 }
 
 const Thanks: FC<Props> = ({ reservations }) => {
   const { query } = useRouter();
   const reservationPaymentId = Object.keys(reservations).find((key) => key === query.paymentId);
-  const reservation = Object.values(reservations).filter((res) => res.paymentId === reservationPaymentId)[0];
-  console.log("reservation", reservation);
+  const reservation = Object.values(reservations).find(() => reservations[reservationPaymentId]);
 
   const messageContent =
     "<html><body><div>Thank you for your reservation. " +
@@ -42,14 +40,7 @@ const Thanks: FC<Props> = ({ reservations }) => {
     });
   };
 
-  const setPaymentPaid = () =>
-    firebase
-      .database()
-      .ref("/reservations/" + reservationPaymentId)
-      .update({ paymentStatus: "PAID" });
-
-  if (reservationPaymentId) {
-    setPaymentPaid();
+  if (reservationPaymentId && reservation.paymentStatus === "Success") {
     sendThankYouEmail();
   }
 

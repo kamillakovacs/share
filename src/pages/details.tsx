@@ -21,6 +21,7 @@ interface Props {
 
 const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
+
   const dateAndPackageData = JSON.parse(localStorage.getItem("reservation"));
 
   useEffect(() => {

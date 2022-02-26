@@ -1,21 +1,30 @@
 export default function handler(req, res) {
   const axios = require("axios");
+  const firebase = require("../../../lib/firebase").default;
 
-  console.log(req.query);
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
   };
 
-  const body = {
+  const params = {
     POSKey: process.env.BARION_POS_KEY,
     PaymentId: req.query.paymentId,
   };
 
+  const savePaymentStatus = (id, status) =>
+    firebase
+      .database()
+      .ref("/reservations/" + id)
+      .update({ paymentStatus: status });
+
   return axios
-    .post(process.env.BARION_GET_PAYMENT_STATE_URL, body, {
+    .get(process.env.BARION_GET_PAYMENT_STATE_URL, {
       headers,
+      params,
     })
-    .then(async (res) => {
-      res.status(200).json();
+    .then(async (response) => {
+      console.log("saving payment status");
+      savePaymentStatus(response.data.PaymentId, response.data.Status);
+      return res.status(200).json({ success: true });
     });
 }
