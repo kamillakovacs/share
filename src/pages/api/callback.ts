@@ -1,6 +1,7 @@
 export default function handler(req, res) {
   const axios = require("axios");
-
+  console.log("req: ", req);
+  console.log("res: ", res);
   res.status(200).json({ name: "John Doe" });
 
   // const headers = {
