@@ -1,13 +1,14 @@
-export default function handler({ query: { PaymentId } }, res) {
+export default function handler(req, res) {
   const axios = require("axios");
 
+  console.log(req.query);
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
   };
 
   const body = {
     POSKey: process.env.BARION_POS_KEY,
-    PaymentId: PaymentId,
+    PaymentId: req.query.paymentId,
   };
 
   return axios
