@@ -12,7 +12,7 @@ export default function handler(req, res) {
   };
 
   return axios
-    .get(process.env.BARION_GET_PAYMENT_STATE_URL, body, {
+    .post(process.env.BARION_GET_PAYMENT_STATE_URL, body, {
       headers,
     })
     .then(async (res) => {
