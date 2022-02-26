@@ -1,19 +1,13 @@
-import { ReservationDataForSaving } from "../pages/details";
 import firebase from "../lib/firebase";
 import "firebase/database";
+import { ReservationData } from "../pages";
 
-export const makeNewReservation = (
-  reservationData: ReservationDataForSaving,
-  paymentId: string,
-  users: ReservationDataForSaving[]
-) => {
+export const makeNewReservation = (reservationData: ReservationData, paymentId: string, users: ReservationData[]) => {
   const customerAlreadyInDatabase = !!Object.values(users).filter(
     (user) =>
-      user.firstName.toLowerCase() ===
-        reservationData.firstName.toLowerCase() &&
+      user.firstName.toLowerCase() === reservationData.firstName.toLowerCase() &&
       user.lastName.toLowerCase() === reservationData.lastName.toLowerCase() &&
-      user.phoneNumber.toLowerCase() ===
-        reservationData.phoneNumber.toLowerCase() &&
+      user.phoneNumber.toLowerCase() === reservationData.phoneNumber.toLowerCase() &&
       user.email.toLowerCase() === reservationData.email.toLowerCase()
   ).length;
 
@@ -26,8 +20,8 @@ export const makeNewReservation = (
 
   const customers = firebase.database().ref("customers");
   const newCustomerId = customers.child("customers").push().key;
-  console.log(reservationData);
-  console.log(paymentId);
+  console.log("reservationdate", reservationData);
+  console.log("paymentid", paymentId);
 
   const updates = {};
   updates["/reservations/" + paymentId] = { ...reservationData, paymentId };

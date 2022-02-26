@@ -12,30 +12,11 @@ import { reservation } from "../lib/validation/validationSchemas";
 
 import styles from "../styles/main.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
-
-export interface ReservationDataForSaving {
-  date: string;
-  time: string;
-  numberOfGuests: string;
-  numberOfTubs: string;
-  price: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  whereYouHeard?: string;
-  paymentStatus: string;
-  paymentMethod: string;
-}
-
-interface BarionResponse {
-  PaymentId: string;
-  GatewayUrl: string;
-}
+import { ReservationData } from ".";
 
 interface Props {
-  users: ReservationDataForSaving[];
-  currentReservations: ReservationDataForSaving;
+  users: ReservationData[];
+  currentReservations: ReservationData;
 }
 
 const Details: FC<Props> = ({ users }) => {
@@ -63,12 +44,11 @@ const Details: FC<Props> = ({ users }) => {
 
   const goBack = () => router.replace("/");
 
-  const redirectToStartPayment = async (
-    reservationData: ReservationDataForSaving
-  ) => payment.useSendPaymentRequest(reservationData, users, router);
+  const redirectToStartPayment = async (reservationData: ReservationData) =>
+    payment.useSendPaymentRequest(reservationData, users, router);
 
   const onSubmit = async (values: ReservationWithDetails) => {
-    const reservationData: ReservationDataForSaving = {
+    const reservationData: ReservationData = {
       date: dateAndPackageData.date,
       time: dateAndPackageData.time,
       numberOfGuests: dateAndPackageData.numberOfGuests,
@@ -78,7 +58,7 @@ const Details: FC<Props> = ({ users }) => {
       lastName: values.lastName,
       phoneNumber: values.phoneNumber,
       email: values.email,
-      whereYouHeard: values.whereYouHeard ? values.whereYouHeard.label : "none",
+      whereYouHeard: values.whereYouHeard ? values.whereYouHeard : null,
       paymentStatus: "UNPAID",
       paymentMethod: values.paymentMethod,
     };
@@ -97,12 +77,8 @@ const Details: FC<Props> = ({ users }) => {
       <section className={styles.main__container}>
         <div className={styles.navigators}>
           <div className={styles.verticalLineDetails} />
-          <div
-            className={`${styles.verticalLineDetails} ${styles.verticalLineDetails2}`}
-          />
-          <div
-            className={`${styles.verticalLineDetails} ${styles.verticalLineDetails3}`}
-          />
+          <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails2}`} />
+          <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails3}`} />
         </div>
         <Formik<ReservationWithDetails>
           initialValues={initialValues}
@@ -128,9 +104,7 @@ const Details: FC<Props> = ({ users }) => {
                     type="submit"
                     className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}
                   >
-                    {values.paymentMethod === "bankTransfer"
-                      ? "Complete"
-                      : "Finish & Pay"}
+                    {values.paymentMethod === "bankTransfer" ? "Complete" : "Finish & Pay"}
                   </button>
                 </div>
               </form>
@@ -144,11 +118,9 @@ const Details: FC<Props> = ({ users }) => {
 
 export async function getServerSideProps() {
   const customers = firebase.database().ref("customers");
-  const users: ReservationDataForSaving[] = await customers
-    .once("value")
-    .then(function (snapshot) {
-      return snapshot.val() || "Anonymous";
-    });
+  const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
+    return snapshot.val() || "Anonymous";
+  });
 
   return { props: { users } };
 }

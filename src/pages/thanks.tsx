@@ -4,46 +4,51 @@ import firebase from "../lib/firebase";
 import { useRouter } from "next/router";
 import mailgun from "mailgun-js";
 
+import { ThankYouEmail } from "../components/thankYouEmail";
+import email from "../lib/thankYouEmail/thankYouEmail.html";
+
 interface Props {
   reservations: { [key: string]: { paymentId: string } };
 }
 
 const Thanks: FC<Props> = ({ reservations }) => {
-  const router = useRouter();
-  const specificPaymentId = Object.keys(reservations).find(
-    (key) => key === router.query.paymentId
-  );
+  const { query } = useRouter();
+  const reservationPaymentId = Object.keys(reservations).find((key) => key === query.paymentId);
+  const reservation = Object.values(reservations).filter((res) => res.paymentId === reservationPaymentId)[0];
+  console.log("reservation", reservation);
+
+  const messageContent =
+    "<html><body><div>Thank you for your reservation. " +
+    "We look forward to seeing you at Share Spa - Oko-Park</div></body></html>";
 
   const sendThankYouEmail = () => {
-    const DOMAIN = "sandbox97b9f03d0cf74d1c8fd3d3649ebc702b.mailgun.org";
     const mg = mailgun({
-      apiKey: "4e64c3fa2699875a4f16dcc49fe49804-3d0809fb-3771aa30",
-      domain: DOMAIN,
+      apiKey: process.env.MAILGUN_API_KEY,
+      domain: process.env.MAILGUN_DOMAIN,
     });
     // const path = require('path');
     // var filepath = path.join(__dirname, 'sample.jpg');
     const data = {
-      from:
-        "Mailgun Sandbox <postmaster@sandbox97b9f03d0cf74d1c8fd3d3649ebc702b.mailgun.org>",
+      from: `Mailgun Sandbox <${process.env.MAILGUN_EMAIL_ADDRESS}>`,
       to: "kamilla525@yahoo.com",
       subject: "Your Reservation at Share Spa",
-      text: "Thank you for your reservation at Share Spa in Szarvasko.",
-      html: "<html>HTML version of the body</html>",
+      html: ThankYouEmail,
       // attachment: filepath
     };
-    mg.messages().send(data, function (error, body) {
-      console.log(body);
-      console.log(reservations);
+
+    mg.messages().send(data, (_error, body) => {
+      console.log("body", body);
+      console.log("reservations", reservations);
     });
   };
 
   const setPaymentPaid = () =>
     firebase
       .database()
-      .ref("/reservations/" + specificPaymentId)
+      .ref("/reservations/" + reservationPaymentId)
       .update({ paymentStatus: "PAID" });
 
-  if (specificPaymentId) {
+  if (reservationPaymentId) {
     setPaymentPaid();
     sendThankYouEmail();
   }

@@ -20,6 +20,10 @@ module.exports = {
       net: "empty",
       tls: "empty",
     };
+    config.module.rules.push({
+      test: /\.html$/i,
+      loader: "html-loader",
+    });
     return config;
   },
 };

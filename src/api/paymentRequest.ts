@@ -1,64 +1,60 @@
 import { NextRouter } from "next/router";
 
-import { ReservationDataForSaving } from "../pages/details";
 import * as newReservation from "../api/newReservation";
+import axios from "axios";
+import { ReservationData } from "../pages";
 
 export const useSendPaymentRequest = async (
-  reservationData: ReservationDataForSaving,
-  users: ReservationDataForSaving[],
+  reservationData: ReservationData,
+  users: ReservationData[],
   router: NextRouter
 ) => {
-  fetch(process.env.BARION_PAYMENT_REQUEST_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-    },
-    body: JSON.stringify({
-      POSKey: "01b81e7a2ef04864bcc228a4255c88f1",
-      PaymentType: "Immediate",
-      FundingSources: ["All"],
-      TraceId: "",
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+  };
 
-      PaymentRequestId: `share-payment-request-${
-        reservationData.date
-      }-${Date.now()}`,
-      OrderNumber: "order-25",
-      PayerHint: reservationData.email,
+  const data = {
+    POSKey: process.env.BARION_POS_KEY,
+    PaymentType: "Immediate",
+    FundingSources: ["All"],
+    TraceId: "",
 
-      RedirectUrl: "http://localhost:3000/thanks",
+    PaymentRequestId: `share-payment-request-${reservationData.date}-${Date.now()}`,
+    OrderNumber: "order-25",
+    PayerHint: reservationData.email,
 
-      Locale: "hu-HU",
-      Currency: "HUF",
+    RedirectUrl: process.env.BARION_PAYMENT_REDIRECT_URL,
+    CallbackUrl: process.env.BARION_PAYMENT_CALLBACK_URL,
 
-      Transactions: [
-        {
-          POSTransactionId: `share-pos-transaction-${
-            reservationData.date
-          }-${Date.now()}`,
-          Payee: "knkovacs@gmail.com",
-          Total: parseInt(reservationData.price),
-          Items: [
-            {
-              Name: reservationData.lastName,
-              Description: `Spa reservation for ${reservationData.numberOfGuests}`,
-              Quantity: 1,
-              Unit: "pcs",
-              UnitPrice: parseInt(reservationData.price),
-              ItemTotal: parseInt(reservationData.price),
-            },
-          ],
-        },
-      ],
-    }),
-  })
-    .then((res) => res.json())
-    .then(async (res) => {
-      await newReservation.makeNewReservation(
-        reservationData,
-        res.PaymentId,
-        users
-      );
+    Locale: "hu-HU",
+    Currency: "HUF",
 
-      router.replace(res.GatewayUrl);
+    Transactions: [
+      {
+        POSTransactionId: `share-pos-transaction-${reservationData.date}-${Date.now()}`,
+        Payee: "kamilla525@yahoo.com",
+        Total: parseInt(reservationData.price),
+        Items: [
+          {
+            Name: reservationData.lastName,
+            Description: `Spa reservation for ${reservationData.numberOfGuests.label}`,
+            Quantity: 1,
+            Unit: "pcs",
+            UnitPrice: parseInt(reservationData.price),
+            ItemTotal: parseInt(reservationData.price),
+          },
+        ],
+      },
+    ],
+  };
+
+  return axios
+    .post(process.env.BARION_PAYMENT_REQUEST_URL, data, {
+      headers,
+    })
+    .then(async (res: any) => {
+      console.log("paymentrequest:", res);
+      await newReservation.makeNewReservation(reservationData, res.data.PaymentId, users);
+      router.replace(res.data.GatewayUrl);
     });
 };
