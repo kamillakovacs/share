@@ -11,6 +11,7 @@
     "axios": "0.25.0",
     "bootstrap": "4.5.2",
     "classnames": "2.2.6",
+    "crypto": "1.0.1",
     "dotenv": "8.2.0",
     "dotenv-webpack": "4.0.0",
     "firebase": "7.23.0",
