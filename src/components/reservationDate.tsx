@@ -5,7 +5,6 @@ import classNames from "classnames";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { ReservationData } from "../pages";
-import firebase from "../lib/firebase";
 
 import dateStyles from "../styles/reservationDate.module.scss";
 import styles from "../styles/main.module.scss";

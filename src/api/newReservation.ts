@@ -1,5 +1,3 @@
-import firebase from "../lib/firebase";
-import "firebase/database";
 import { ReservationData } from "../pages";
 import axios from "axios";
 

@@ -1,5 +1,4 @@
 import Document, { Html, Head } from "next/document";
-import firebase from "../lib/firebase";
 
 export class ThankYouEmail extends Document {
   static async getInitialProps(ctx) {

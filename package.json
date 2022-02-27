@@ -1,6 +1,7 @@
 {
   "name": "share",
   "version": "0.1.0",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
