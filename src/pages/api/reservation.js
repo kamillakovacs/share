@@ -1,5 +1,5 @@
 export default function handler(req, res) {
-  const firebase = require("../../../lib/firebase").default;
+  const firebase = require("../../lib/firebase").default;
   const { reservationData, newCustomer, paymentId, customerAlreadyInDatabase } = req.body;
 
   const database = firebase.database();

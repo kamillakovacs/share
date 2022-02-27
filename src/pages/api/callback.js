@@ -1,6 +1,6 @@
 export default function handler(req, res) {
   const axios = require("axios");
-  const firebase = require("../../../lib/firebase").default;
+  const firebase = require("../../lib/firebase").default;
 
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
