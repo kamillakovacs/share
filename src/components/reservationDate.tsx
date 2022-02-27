@@ -33,9 +33,8 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
     setFieldValue("time", e.currentTarget.innerText);
   };
 
-  // const unavailableDates = Object.values(currentReservations).map(
-  //   (res) => res.date
-  // );
+  const unavailableDates = Object.values(currentReservations).map((res) => res.date);
+  console.log(unavailableDates);
 
   return (
     <section className={dateStyles.reservationDate}>
@@ -57,7 +56,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
             fromMonth={new Date()}
             initialMonth={new Date()}
             firstDayOfWeek={1}
-            disabledDays={(day) => day < new Date()}
+            disabledDays={(day) => day < new Date() || !!unavailableDates.includes(day)}
           />
         </div>
         <div className={dateStyles.reservationDate__time}>

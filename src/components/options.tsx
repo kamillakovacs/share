@@ -11,12 +11,7 @@ import classNames from "classnames";
 import Select, { ActionMeta, ValueType } from "react-select";
 
 const Options: FC = () => {
-  const {
-    values,
-    touched,
-    setFieldValue,
-    setFieldTouched,
-  } = useFormikContext<Reservation>();
+  const { values, touched, setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
 
   useEffect(() => {
     if (values.numberOfGuests) {
@@ -111,10 +106,7 @@ const Options: FC = () => {
         <div
           className={classNames(`${styles.todoitem} ${styles.todoitem__two}`, {
             [styles.todoitem__done]:
-              values.numberOfGuests &&
-              values.numberOfTubs &&
-              touched.numberOfGuests &&
-              touched.numberOfTubs,
+              values.numberOfGuests && values.numberOfTubs && touched.numberOfGuests && touched.numberOfTubs,
           })}
         />
         <label>Number of People & Tubs</label>
@@ -124,29 +116,21 @@ const Options: FC = () => {
         <Select
           className={optionStyles.select}
           options={numberOfGuestsOptions}
-          placeholder={
-            <>
-              {values.numberOfGuests
-                ? values.numberOfGuests.label
-                : "Select guests"}
-            </>
-          }
+          placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : "Select guests"}</>}
           name="numberOfGuests"
           onChange={setOption}
           value={values.numberOfGuests}
+          instanceId="number-of-guests"
         />
         <img src="/assets/hottub.svg" />
         <Select
           className={optionStyles.select}
           options={getTubOptions()}
-          placeholder={
-            <>
-              {values.numberOfTubs ? values.numberOfTubs.label : "Select tubs"}
-            </>
-          }
+          placeholder={<>{values.numberOfTubs ? values.numberOfTubs.label : "Select tubs"}</>}
           name="numberOfTubs"
           onChange={setOption}
           value={values.numberOfTubs}
+          instanceId="number-of-tubs"
         />
       </div>
     </>

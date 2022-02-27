@@ -16,7 +16,7 @@ import styles from "../styles/main.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
 
 export interface ReservationData {
-  date: string;
+  date: Date;
   time: string;
   numberOfGuests: { label: string; value: string };
   numberOfTubs: { label: string; value: string };
@@ -58,7 +58,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
 
   const onSubmit = (values: Reservation) => {
     const reservationData: ReservationData = {
-      date: values.date.toDateString(),
+      date: values.date,
       time: values.time,
       numberOfGuests: values.numberOfGuests,
       numberOfTubs: values.numberOfTubs,
@@ -121,19 +121,15 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
 
 export async function getServerSideProps() {
   const customers = firebase.database().ref("customers");
-  const users: ReservationData[] = await customers
-    .once("value")
-    .then(function (snapshot) {
-      return snapshot.val() || "Anonymous";
-    });
+  const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
+    return snapshot.val() || "Anonymous";
+  });
 
   const reservations = firebase.database().ref("reservations");
 
-  const currentReservations: ReservationData[] = await reservations
-    .once("value")
-    .then(function (snapshot) {
-      return snapshot.val() || "Anonymous";
-    });
+  const currentReservations: ReservationData[] = await reservations.once("value").then(function (snapshot) {
+    return snapshot.val() || "Anonymous";
+  });
 
   return { props: { users, currentReservations } };
 }

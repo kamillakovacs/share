@@ -10,11 +10,7 @@ import customerStyles from "../styles/customer.module.scss";
 import styles from "../styles/main.module.scss";
 
 const Customer: FC = () => {
-  const {
-    values,
-    setFieldValue,
-    setFieldTouched,
-  } = useFormikContext<ReservationWithDetails>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "phoneNumber") {
@@ -107,12 +103,9 @@ const Customer: FC = () => {
       </div>
       <div className={customerStyles.detailTitle}>
         <div
-          className={classNames(
-            `${styles.todoitem} ${styles.todoitem__three}`,
-            {
-              [styles.todoitem__done]: values.whereYouHeard,
-            }
-          )}
+          className={classNames(`${styles.todoitem} ${styles.todoitem__three}`, {
+            [styles.todoitem__done]: values.whereYouHeard,
+          })}
         />
         <label>Where did you hear about us?</label>
       </div>
@@ -123,6 +116,7 @@ const Customer: FC = () => {
           name="whereYouHeard"
           onChange={setOption}
           value={values.whereYouHeard}
+          instanceId="where-you-heard"
         />
       </div>
 
