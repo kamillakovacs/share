@@ -9,7 +9,8 @@
     margin-left: 32px;
 
     &Icon {
-      background-image: url("/assets/calendar.svg");
+      mask-image: url("/assets/calendar.svg");
+      background-color: white;
       position: absolute;
       top: 40px;
       left: 27px;
@@ -17,6 +18,13 @@
       width: 24px;
       height: 24px;
     }
+  }
+
+  &__clockIcon {
+    mask-image: url("/assets/clock.svg");
+    background-color: white;
+    width: 24px;
+    height: 24px;
   }
 
   &__label {
@@ -54,6 +62,8 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+      top: 5px;
+      position: relative;
     }
 
     &Options {

@@ -24,6 +24,9 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
   const selectDate = (date: Date) => {
     date.setHours(0);
     setFieldValue("date", date);
+    (
+      document.querySelector(".reservationDate_reservationDate__calendarIcon__3IX_z") as HTMLElement
+    ).style.backgroundColor = "#00d531";
   };
 
   const selectTime = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,9 +41,12 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
     const dateTime = values.date;
     dateTime.setHours(parseInt(e.currentTarget.innerText));
     setFieldValue("date", dateTime);
+    (
+      document.querySelector(".reservationDate_reservationDate__clockIcon__2iEMn") as HTMLElement
+    ).style.backgroundColor = "#00d531";
   };
 
-  const allTubsAreReservedForGivenDay = (day: Date) => {
+  const allTubsAreReservedForGivenEntireDay = (day: Date) => {
     const reservationsOnDate = Object.values(currentReservations).filter((res) => {
       // find if there are reservations on given day
       let givenDay = new Date(day.getFullYear(), day.getMonth(), day.getDate());
@@ -52,10 +58,22 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       );
       return reservationDate.toISOString() === givenDay.toISOString();
     });
-    // find if all tubs are reserved on given day
-    let tubsReserved = 0;
-    reservationsOnDate.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs.value)));
-    return tubsReserved >= AVAILABLE_TUBS;
+    const hoursReservedOnGivenDay = reservationsOnDate.map((res) => new Date(res.date).getHours()).sort();
+    const allTimesAreReservedOnGivenDay =
+      [10, 12, 14, 16, 18, 20].sort().toString() ===
+      hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay.indexOf(hour) == -index).toString();
+
+    const areAllTubsReservedAtAllTimesOfGivenDay = () => {
+      if (!allTimesAreReservedOnGivenDay) {
+        return false;
+      }
+
+      let tubsReserved = 0;
+      reservationsOnDate.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs.value)));
+      return tubsReserved >= AVAILABLE_TUBS;
+    };
+
+    return areAllTubsReservedAtAllTimesOfGivenDay();
   };
 
   const allTubsAreReservedForGivenDayAndTime = (time: string): boolean => {
@@ -88,7 +106,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       <div className={dateStyles.reservationDate__label}>
         <div
           className={classNames(`${styles.todoitem} ${styles.todoitem__one}`, {
-            [styles.todoitem__done]: values.date,
+            [styles.todoitem__done]: values.date && values.date.getHours() !== 0,
           })}
         />
 
@@ -103,13 +121,13 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
             fromMonth={new Date()}
             initialMonth={new Date()}
             firstDayOfWeek={1}
-            disabledDays={(day) => day < new Date() || allTubsAreReservedForGivenDay(day)}
+            disabledDays={(day) => day < new Date() || allTubsAreReservedForGivenEntireDay(day)}
           />
         </div>
         {values.date && (
           <div className={dateStyles.reservationDate__time}>
             <div className={dateStyles.reservationDate__timeTitle}>
-              <img src="/assets/clock.svg" />
+              <span className={dateStyles.reservationDate__clockIcon} />
               <span>Time</span>
             </div>
             <div className={dateStyles.reservationDate__timeOptions}>

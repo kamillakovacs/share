@@ -140,6 +140,12 @@ const Options: FC<Props> = ({ currentReservations }) => {
     setFieldTouched(select.name);
   };
 
+  const numberOfTubsAvailableText =
+    numberOfAvailableTubs() > 0
+      ? `(${numberOfAvailableTubs()} tubs for max ${numberOfAvailableTubs() * 2} people are available at selected
+  time.)`
+      : "No tubs are available at selected time.";
+
   return (
     <>
       <div className={optionStyles.options}>
@@ -149,13 +155,12 @@ const Options: FC<Props> = ({ currentReservations }) => {
               values.numberOfGuests && values.numberOfTubs && touched.numberOfGuests && touched.numberOfTubs,
           })}
         />
-        <label>Number of People & Tubs</label>
-        {values.date && values.date.getHours() !== 0 && (
-          <div className={optionStyles.options__availableTubs}>
-            ({numberOfAvailableTubs()} tubs for max {numberOfAvailableTubs() * 2} people are available at selected
-            time.)
-          </div>
-        )}
+        <div style={{ display: "flex" }}>
+          <label>Number of People & Tubs</label>
+          {values.date && values.date.getHours() !== 0 && (
+            <div className={optionStyles.options__availableTubs}>{numberOfTubsAvailableText}</div>
+          )}
+        </div>
       </div>
 
       <div className={optionStyles.options__container}>
