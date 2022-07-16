@@ -17,7 +17,6 @@ import reservationStyles from "../styles/reservation.module.scss";
 
 export interface ReservationData {
   date: Date;
-  time: string;
   numberOfGuests: { label: string; value: string };
   numberOfTubs: { label: string; value: string };
   price: string;
@@ -39,8 +38,7 @@ interface Props {
 const Main: FC<Props> = ({ users, currentReservations }) => {
   const router = useRouter();
   const initialValues = {
-    date: undefined,
-    time: undefined,
+    date: null,
     numberOfGuests: undefined,
     numberOfTubs: undefined,
     price: "",
@@ -59,7 +57,6 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
   const onSubmit = (values: Reservation) => {
     const reservationData: ReservationData = {
       date: values.date,
-      time: values.time,
       numberOfGuests: values.numberOfGuests,
       numberOfTubs: values.numberOfTubs,
       price: values.price,
@@ -122,13 +119,13 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
 export async function getServerSideProps() {
   const customers = firebase.database().ref("customers");
   const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
-    return snapshot.val() || "Anonymous";
+    return snapshot.val() || [];
   });
 
   const reservations = firebase.database().ref("reservations");
 
   const currentReservations: ReservationData[] = await reservations.once("value").then(function (snapshot) {
-    return snapshot.val() || "Anonymous";
+    return snapshot.val() || [];
   });
 
   return { props: { users, currentReservations } };

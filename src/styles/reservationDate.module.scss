@@ -65,7 +65,7 @@
       button {
         background-color: #343434;
         border-radius: 5px;
-        color: #ffffff;
+        color: #fafafa;
         border: none;
         font-size: 15px;
         height: 43px;
@@ -80,6 +80,11 @@
         &:focus {
           outline: none;
         }
+      }
+
+      &Disabled {
+        color: #707070 !important;
+        cursor: not-allowed !important;
       }
     }
   }

@@ -32,7 +32,6 @@ const Details: FC<Props> = ({ users }) => {
 
   const initialValues = {
     date: dateAndPackageData.date,
-    time: dateAndPackageData.time,
     numberOfGuests: dateAndPackageData.numberOfGuests,
     numberOfTubs: dateAndPackageData.numberOfTubs,
     price: dateAndPackageData.price,
@@ -51,7 +50,6 @@ const Details: FC<Props> = ({ users }) => {
   const onSubmit = async (values: ReservationWithDetails) => {
     const reservationData: ReservationData = {
       date: dateAndPackageData.date,
-      time: dateAndPackageData.time,
       numberOfGuests: dateAndPackageData.numberOfGuests,
       numberOfTubs: dateAndPackageData.numberOfTubs,
       price: dateAndPackageData.price,

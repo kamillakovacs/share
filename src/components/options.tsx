@@ -111,6 +111,9 @@ const Options: FC = () => {
         />
         <label>Number of People & Tubs</label>
       </div>
+      <div className={optionStyles.options}>
+        XX tubs, fitting a maximum of YY people, are available at selected time.
+      </div>
       <div className={optionStyles.options__container}>
         <img src="/assets/people.svg" />
         <Select
