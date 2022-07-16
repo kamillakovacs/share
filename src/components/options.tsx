@@ -16,6 +16,25 @@ interface Props {
 const Options: FC<Props> = ({ currentReservations }) => {
   const { values, touched, setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
   const AVAILABLE_TUBS = 3;
+  const reservationsSelectedOnDateAndTime = Object.values(currentReservations).filter((res) => {
+    if (!values.date) {
+      return [];
+    }
+    let selectedDateAndTime = new Date(
+      values.date.getFullYear(),
+      values.date.getMonth(),
+      values.date.getDate(),
+      values.date.getHours()
+    );
+    let reservationDateAndTime = new Date(res.date);
+    let reservationDate = new Date(
+      reservationDateAndTime.getFullYear(),
+      reservationDateAndTime.getMonth(),
+      reservationDateAndTime.getDate(),
+      reservationDateAndTime.getHours()
+    );
+    return reservationDate.toISOString() === selectedDateAndTime.toISOString();
+  });
 
   useEffect(() => {
     if (values.numberOfGuests) {
@@ -30,27 +49,8 @@ const Options: FC<Props> = ({ currentReservations }) => {
   }, [values.numberOfTubs, values.numberOfGuests]);
 
   const numberOfAvailableTubs = (): number => {
-    const reservationsOnDateAndTime = Object.values(currentReservations).filter((res) => {
-      // find if there are reservations on given day and time
-      let givenDayAndTime = new Date(
-        values.date.getFullYear(),
-        values.date.getMonth(),
-        values.date.getDate(),
-        values.date.getHours()
-      );
-      let reservationDateAndTime = new Date(res.date);
-      let reservationDate = new Date(
-        reservationDateAndTime.getFullYear(),
-        reservationDateAndTime.getMonth(),
-        reservationDateAndTime.getDate(),
-        reservationDateAndTime.getHours()
-      );
-      return reservationDate.toISOString() === givenDayAndTime.toISOString();
-    });
-
-    // find the number of tubs available on given day and time
     let tubsReserved = 0;
-    reservationsOnDateAndTime.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs.value)));
+    reservationsSelectedOnDateAndTime.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs.value)));
     return AVAILABLE_TUBS - tubsReserved;
   };
 
@@ -62,6 +62,10 @@ const Options: FC<Props> = ({ currentReservations }) => {
     { value: "5", label: "5 people" },
     { value: "6", label: "6 people" },
   ];
+
+  const availableNumberOfGuestsOptions = numberOfGuestsOptions.filter(
+    (option) => numberOfAvailableTubs() * 2 >= parseInt(option.value)
+  );
 
   const onePersonTubOptions = [{ value: "1", label: "1 tub" }];
   const twoPeopleTubOptions = [
@@ -79,23 +83,30 @@ const Options: FC<Props> = ({ currentReservations }) => {
   const fivePeopleTubOptions = [{ value: "3", label: "3 tubs" }];
   const sixPeopleTubOptions = [{ value: "3", label: "3 tubs" }];
 
+  const availableTubOptions = (
+    tubOptions: {
+      value: string;
+      label: string;
+    }[]
+  ) => tubOptions.filter((option) => numberOfAvailableTubs() >= parseInt(option.value));
+
   const getTubOptions = () => {
     if (!values.numberOfGuests) {
       return onePersonTubOptions;
     } else {
       switch (values.numberOfGuests.value) {
         case "1":
-          return onePersonTubOptions;
+          return availableTubOptions(onePersonTubOptions);
         case "2":
-          return twoPeopleTubOptions;
+          return availableTubOptions(twoPeopleTubOptions);
         case "3":
-          return threePeopleTubOptions;
+          return availableTubOptions(threePeopleTubOptions);
         case "4":
-          return fourPeopleTubOptions;
+          return availableTubOptions(fourPeopleTubOptions);
         case "5":
-          return fivePeopleTubOptions;
+          return availableTubOptions(fivePeopleTubOptions);
         case "6":
-          return sixPeopleTubOptions;
+          return availableTubOptions(sixPeopleTubOptions);
       }
     }
   };
@@ -151,7 +162,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
         <img src="/assets/people.svg" />
         <Select
           className={optionStyles.select}
-          options={numberOfGuestsOptions}
+          options={availableNumberOfGuestsOptions}
           placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : "Select guests"}</>}
           name="numberOfGuests"
           onChange={setOption}
