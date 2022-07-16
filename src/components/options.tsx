@@ -1,6 +1,7 @@
-import { Slider } from "@material-ui/core";
 import { useFormikContext } from "formik";
 import React, { FC, memo, useEffect } from "react";
+import Select, { ActionMeta, ValueType } from "react-select";
+import { ReservationData } from "../pages";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
@@ -8,10 +9,13 @@ import optionStyles from "../styles/options.module.scss";
 import styles from "../styles/main.module.scss";
 import classNames from "classnames";
 
-import Select, { ActionMeta, ValueType } from "react-select";
+interface Props {
+  currentReservations: ReservationData;
+}
 
-const Options: FC = () => {
+const Options: FC<Props> = ({ currentReservations }) => {
   const { values, touched, setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
+  const AVAILABLE_TUBS = 3;
 
   useEffect(() => {
     if (values.numberOfGuests) {
@@ -24,6 +28,31 @@ const Options: FC = () => {
       setFieldValue("price", setPrice());
     }
   }, [values.numberOfTubs, values.numberOfGuests]);
+
+  const numberOfAvailableTubs = (): number => {
+    const reservationsOnDateAndTime = Object.values(currentReservations).filter((res) => {
+      // find if there are reservations on given day and time
+      let givenDayAndTime = new Date(
+        values.date.getFullYear(),
+        values.date.getMonth(),
+        values.date.getDate(),
+        values.date.getHours()
+      );
+      let reservationDateAndTime = new Date(res.date);
+      let reservationDate = new Date(
+        reservationDateAndTime.getFullYear(),
+        reservationDateAndTime.getMonth(),
+        reservationDateAndTime.getDate(),
+        reservationDateAndTime.getHours()
+      );
+      return reservationDate.toISOString() === givenDayAndTime.toISOString();
+    });
+
+    // find the number of tubs available on given day and time
+    let tubsReserved = 0;
+    reservationsOnDateAndTime.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs.value)));
+    return AVAILABLE_TUBS - tubsReserved;
+  };
 
   const numberOfGuestsOptions = [
     { value: "1", label: "1 person" },
@@ -110,10 +139,14 @@ const Options: FC = () => {
           })}
         />
         <label>Number of People & Tubs</label>
+        {values.date && values.date.getHours() !== 0 && (
+          <div className={optionStyles.options__availableTubs}>
+            ({numberOfAvailableTubs()} tubs for max {numberOfAvailableTubs() * 2} people are available at selected
+            time.)
+          </div>
+        )}
       </div>
-      <div className={optionStyles.options}>
-        XX tubs, fitting a maximum of YY people, are available at selected time.
-      </div>
+
       <div className={optionStyles.options__container}>
         <img src="/assets/people.svg" />
         <Select

@@ -98,7 +98,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
               <form onSubmit={handleSubmit}>
                 <section className={reservationStyles.reservation}>
                   <ReservationDate currentReservations={currentReservations} />
-                  <Options />
+                  <Options currentReservations={currentReservations} />
                   <Summary />
                   <button
                     className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__continue}`}
