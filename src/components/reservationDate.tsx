@@ -1,18 +1,18 @@
+import "react-day-picker/lib/style.css";
+import DayPicker from "react-day-picker";
+import React, { FC, memo } from "react";
 import classnames from "classnames";
 import { useFormikContext } from "formik";
-import React, { FC, memo } from "react";
-import DayPicker from "react-day-picker";
-import "react-day-picker/lib/style.css";
 
 //@ts-ignore
-import ClockIcon from "../../public/assets/clock.svg";
-//@ts-ignore
 import CalendarIcon from "../../public/assets/calendar.svg";
+//@ts-ignore
+import ClockIcon from "../../public/assets/clock.svg";
 import { Reservation } from "../lib/validation/validationInterfaces";
-import { ReservationData } from "../pages";
 
 import dateStyles from "../styles/reservationDate.module.scss";
 import styles from "../styles/main.module.scss";
+import { ReservationData } from "../pages";
 
 interface Props {
   currentReservations: ReservationData;

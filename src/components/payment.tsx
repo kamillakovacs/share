@@ -1,8 +1,10 @@
-import { useFormikContext } from "formik";
 import React, { FC, memo } from "react";
+import { useFormikContext } from "formik";
+
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
-import paymentStyles from "../styles/payment.module.scss";
+
 import customerStyles from "../styles/customer.module.scss";
+import paymentStyles from "../styles/payment.module.scss";
 import styles from "../styles/main.module.scss";
 
 const Payment: FC = () => {
@@ -41,16 +43,13 @@ const Payment: FC = () => {
           <div>
             {values.paymentMethod === "bankTransfer" && (
               <div className={paymentStyles.info}>
-                Upon clicking Complete, you will receive an email from us with
-                bank transfer details.
+                Upon clicking Complete, you will receive an email from us with bank transfer details.
               </div>
             )}
           </div>
           <div>
             {values.paymentMethod === "card" && (
-              <div className={paymentStyles.info}>
-                Click on Finish & Pay to complete card payment using Barion.
-              </div>
+              <div className={paymentStyles.info}>Click on Finish & Pay to complete card payment using Barion.</div>
             )}
           </div>
         </div>
