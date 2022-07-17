@@ -2,14 +2,15 @@ import classnames from "classnames";
 import { useFormikContext } from "formik";
 import React, { FC, memo } from "react";
 import DayPicker from "react-day-picker";
-import classNames from "classnames";
+import "react-day-picker/lib/style.css";
 
+import ClockIcon from "../../public/assets/clock.svg";
+import CalendarIcon from "../../public/assets/calendar.svg";
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { ReservationData } from "../pages";
 
 import dateStyles from "../styles/reservationDate.module.scss";
 import styles from "../styles/main.module.scss";
-import "react-day-picker/lib/style.css";
 
 interface Props {
   currentReservations: ReservationData;
@@ -24,9 +25,9 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
   const selectDate = (date: Date) => {
     date.setHours(0);
     setFieldValue("date", date);
-    (
-      document.querySelector(".reservationDate_reservationDate__calendarIcon__3IX_z") as HTMLElement
-    ).style.backgroundColor = "#00d531";
+    setFieldValue("numberOfGuests", null);
+    setFieldValue("numberOfTubs", null);
+    handleIconColors(".calendarIcon");
   };
 
   const selectTime = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,10 +42,20 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
     const dateTime = values.date;
     dateTime.setHours(parseInt(e.currentTarget.innerText));
     setFieldValue("date", dateTime);
-    (
-      document.querySelector(".reservationDate_reservationDate__clockIcon__2iEMn") as HTMLElement
-    ).style.backgroundColor = "#00d531";
+    setFieldValue("numberOfGuests", null);
+    setFieldValue("numberOfTubs", null);
+    handleIconColors(".clockIcon");
   };
+
+  const handleIconColors = (selector: string) => {
+    colorIconGreen(selector);
+    resetIconColor(".numberOfGuests");
+    resetIconColor(".numberOfTubs");
+  };
+
+  const colorIconGreen = (selector: string) =>
+    ((document.querySelector(selector) as HTMLElement).style.fill = "#00d531");
+  const resetIconColor = (selector: string) => ((document.querySelector(selector) as HTMLElement).style.fill = "white");
 
   const allTubsAreReservedForGivenEntireDay = (day: Date) => {
     const reservationsOnDate = Object.values(currentReservations).filter((res) => {
@@ -105,7 +116,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
     <section className={dateStyles.reservationDate}>
       <div className={dateStyles.reservationDate__label}>
         <div
-          className={classNames(`${styles.todoitem} ${styles.todoitem__one}`, {
+          className={classnames(`${styles.todoitem} ${styles.todoitem__one}`, {
             [styles.todoitem__done]: values.date && values.date.getHours() !== 0,
           })}
         />
@@ -114,7 +125,9 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       </div>
       <div className={dateStyles.reservationDate__calendar}>
         <div className={dateStyles.reservationDate__date}>
-          <span className={dateStyles.reservationDate__calendarIcon} />
+          <div className={styles.iconContainer}>
+            <CalendarIcon className={classnames(`${dateStyles.reservationDate__calendarIcon} calendarIcon`)} />
+          </div>
           <DayPicker
             selectedDays={values.date}
             onDayClick={selectDate}
@@ -127,7 +140,10 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
         {values.date && (
           <div className={dateStyles.reservationDate__time}>
             <div className={dateStyles.reservationDate__timeTitle}>
-              <span className={dateStyles.reservationDate__clockIcon} />
+              <div className={styles.iconContainer}>
+                <ClockIcon className={classnames(`${dateStyles.reservationDate__clockIcon} clockIcon`)} />
+              </div>
+              {/* <span className={dateStyles.reservationDate__clockIcon} /> */}
               <span>Time</span>
             </div>
             <div className={dateStyles.reservationDate__timeOptions}>
@@ -135,7 +151,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
                 <button
                   key={index}
                   type="button"
-                  className={classNames({
+                  className={classnames({
                     [dateStyles.reservationDate__timeOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(t),
                   })}
                   onClick={selectTime}

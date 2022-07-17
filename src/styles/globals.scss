@@ -2,8 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-    Helvetica Neue, sans-serif;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -17,8 +16,7 @@ a {
 
 .DayPicker {
   height: 354px;
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-    Helvetica Neue, sans-serif !important;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 
   &:focus {
     outline: none !important;
@@ -207,10 +205,7 @@ a {
       }
     }
 
-    &--open
-      > .Accordion__indicator
-      .Accordion__indicator--contentItem--rotate
-      .Accordion__indicator--icon {
+    &--open > .Accordion__indicator .Accordion__indicator--contentItem--rotate .Accordion__indicator--icon {
       transform: rotate(-180deg);
     }
 
@@ -247,4 +242,9 @@ a {
 
 .css-g1d714-ValueContainer {
   margin-left: 40px;
+}
+
+.iconContainer {
+  width: 24px;
+  height: 24px;
 }

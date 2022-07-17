@@ -2,6 +2,8 @@ import { useFormikContext } from "formik";
 import React, { FC, memo, useEffect } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 import { ReservationData } from "../pages";
+import PeopleIcon from "../../public/assets/people.svg";
+import HottubIcon from "../../public/assets/hottub.svg";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
@@ -138,7 +140,11 @@ const Options: FC<Props> = ({ currentReservations }) => {
   ) => {
     setFieldValue(select.name, option);
     setFieldTouched(select.name);
+    colorIconGreen(select.name);
   };
+
+  const colorIconGreen = (selector: string) =>
+    ((document.querySelector(`.${selector}`) as HTMLElement).style.fill = "#00d531");
 
   const numberOfTubsAvailableText =
     numberOfAvailableTubs() > 0
@@ -155,7 +161,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
               values.numberOfGuests && values.numberOfTubs && touched.numberOfGuests && touched.numberOfTubs,
           })}
         />
-        <div style={{ display: "flex" }}>
+        <div className={optionStyles.options__tubsLabel}>
           <label>Number of People & Tubs</label>
           {values.date && values.date.getHours() !== 0 && (
             <div className={optionStyles.options__availableTubs}>{numberOfTubsAvailableText}</div>
@@ -164,7 +170,10 @@ const Options: FC<Props> = ({ currentReservations }) => {
       </div>
 
       <div className={optionStyles.options__container}>
-        <img src="/assets/people.svg" />
+        <div className={styles.iconContainer}>
+          <PeopleIcon className={classNames(`${optionStyles.options__icon} numberOfGuests`)} />
+        </div>
+
         <Select
           className={optionStyles.select}
           options={availableNumberOfGuestsOptions}
@@ -174,7 +183,9 @@ const Options: FC<Props> = ({ currentReservations }) => {
           value={values.numberOfGuests}
           instanceId="number-of-guests"
         />
-        <img src="/assets/hottub.svg" />
+        <div className={styles.iconContainer}>
+          <HottubIcon className={classNames(`${optionStyles.options__icon} numberOfTubs`)} />
+        </div>
         <Select
           className={optionStyles.select}
           options={getTubOptions()}

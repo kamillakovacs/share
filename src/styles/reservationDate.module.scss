@@ -3,28 +3,24 @@
   flex-direction: column;
   font-weight: 200;
 
+  &__calendarIcon {
+    position: absolute;
+    top: 40px;
+    left: 27px;
+    right: auto;
+    width: 24px;
+    height: 24px;
+  }
+
   &__calendar {
     display: flex;
     flex-direction: row;
     margin-left: 32px;
-
-    &Icon {
-      mask-image: url("/assets/calendar.svg");
-      background-color: white;
-      position: absolute;
-      top: 40px;
-      left: 27px;
-      right: auto;
-      width: 24px;
-      height: 24px;
-    }
   }
 
   &__clockIcon {
-    mask-image: url("/assets/clock.svg");
-    background-color: white;
-    width: 24px;
-    height: 24px;
+    position: relative;
+    top: 2px;
   }
 
   &__label {

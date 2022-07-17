@@ -39,8 +39,8 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
   const router = useRouter();
   const initialValues = {
     date: null,
-    numberOfGuests: undefined,
-    numberOfTubs: undefined,
+    numberOfGuests: null,
+    numberOfTubs: null,
     price: "",
     firstName: "",
     lastName: "",
