@@ -1,20 +1,20 @@
+import "firebase/database";
+import React, { FC, memo } from "react";
 import classnames from "classnames";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
-import React, { FC, memo } from "react";
-import firebase from "../lib/firebase";
-import "firebase/database";
 
+import firebase from "../lib/firebase";
+import { Reservation } from "../lib/validation/validationInterfaces";
+import { reservation } from "../lib/validation/validationSchemas";
+import { useAppContext } from "../../context/appContext";
+
+import Header from "../components/header";
 import Options from "../components/options";
 import ReservationDate from "../components/reservationDate";
 import Summary from "../components/summary";
-import Header from "../components/header";
-
-import { Reservation } from "../lib/validation/validationInterfaces";
-import { reservation } from "../lib/validation/validationSchemas";
-
-import styles from "../styles/main.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
+import styles from "../styles/main.module.scss";
 
 export interface ReservationData {
   date: Date;
@@ -38,6 +38,7 @@ interface Props {
 
 const Main: FC<Props> = ({ currentReservations }) => {
   const router = useRouter();
+  const [data, setData] = useAppContext();
   const initialValues = {
     date: null,
     numberOfGuests: null,
@@ -51,7 +52,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
   };
 
   const redirectToDetailsPage = (reservationData: ReservationData) => {
-    localStorage.setItem("reservation", JSON.stringify(reservationData));
+    setData(reservationData);
     router.replace("/details");
   };
 
@@ -92,7 +93,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
           validationSchema={reservation}
           validateOnChange
         >
-          {({ values, errors, dirty, handleSubmit }) => {
+          {({ errors, dirty, handleSubmit }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <section className={reservationStyles.reservation}>

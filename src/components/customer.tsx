@@ -3,9 +3,9 @@ import { useFormikContext, ErrorMessage } from "formik";
 import React, { ChangeEvent, FC, memo } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 
-import Payment from "./payment";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
+import Payment from "./payment";
 import customerStyles from "../styles/customer.module.scss";
 import styles from "../styles/main.module.scss";
 

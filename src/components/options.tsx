@@ -1,17 +1,17 @@
-import { useFormikContext } from "formik";
 import React, { FC, memo, useEffect } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
-import { ReservationData } from "../pages";
-//@ts-ignore
-import PeopleIcon from "../../public/assets/people.svg";
+import classNames from "classnames";
+import { useFormikContext } from "formik";
+
 //@ts-ignore
 import HottubIcon from "../../public/assets/hottub.svg";
-
+//@ts-ignore
+import PeopleIcon from "../../public/assets/people.svg";
 import { Reservation } from "../lib/validation/validationInterfaces";
 
 import optionStyles from "../styles/options.module.scss";
 import styles from "../styles/main.module.scss";
-import classNames from "classnames";
+import { ReservationData } from "../pages";
 
 interface Props {
   currentReservations: ReservationData;

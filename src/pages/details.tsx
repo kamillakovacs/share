@@ -1,17 +1,18 @@
+import "firebase/database";
+import React, { FC, memo, useEffect } from "react";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
-import React, { FC, memo, useEffect } from "react";
-import firebase from "../lib/firebase";
-import "firebase/database";
 
-import Customer from "../components/customer";
-import Header from "../components/header";
-import * as payment from "../api/paymentRequest";
+import firebase from "../lib/firebase";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
+import { useAppContext } from "../../context/appContext";
 
-import styles from "../styles/main.module.scss";
+import * as payment from "../api/paymentRequest";
+import Customer from "../components/customer";
+import Header from "../components/header";
 import reservationStyles from "../styles/reservation.module.scss";
+import styles from "../styles/main.module.scss";
 import { ReservationData } from ".";
 
 interface Props {
@@ -21,20 +22,19 @@ interface Props {
 
 const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
-
-  const dateAndPackageData = JSON.parse(localStorage.getItem("reservation"));
+  const [data, setData] = useAppContext();
 
   useEffect(() => {
-    if (!dateAndPackageData.numberOfGuests) {
+    if (!data.numberOfGuests) {
       router.replace("/");
     }
   });
 
   const initialValues = {
-    date: dateAndPackageData.date,
-    numberOfGuests: dateAndPackageData.numberOfGuests,
-    numberOfTubs: dateAndPackageData.numberOfTubs,
-    price: dateAndPackageData.price,
+    date: data.date,
+    numberOfGuests: data.numberOfGuests,
+    numberOfTubs: data.numberOfTubs,
+    price: data.price,
     firstName: "",
     lastName: "",
     phoneNumber: "",
@@ -49,10 +49,10 @@ const Details: FC<Props> = ({ users }) => {
 
   const onSubmit = async (values: ReservationWithDetails) => {
     const reservationData: ReservationData = {
-      date: dateAndPackageData.date,
-      numberOfGuests: dateAndPackageData.numberOfGuests,
-      numberOfTubs: dateAndPackageData.numberOfTubs,
-      price: dateAndPackageData.price,
+      date: data.date,
+      numberOfGuests: data.numberOfGuests,
+      numberOfTubs: data.numberOfTubs,
+      price: data.price,
       firstName: values.firstName,
       lastName: values.lastName,
       phoneNumber: values.phoneNumber,
