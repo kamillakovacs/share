@@ -127,7 +127,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       </div>
       <div className={dateStyles.reservationDate__calendar}>
         <div className={dateStyles.reservationDate__date}>
-          <div className={styles.iconContainer}>
+          <div>
             <CalendarIcon className={classnames(`${dateStyles.reservationDate__calendarIcon} calendarIcon`)} />
           </div>
           <DayPicker

@@ -96,7 +96,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const getTubOptions = () => {
     if (!values.numberOfGuests) {
-      return onePersonTubOptions;
+      return [];
     } else {
       switch (values.numberOfGuests.value) {
         case "1":
@@ -184,6 +184,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
           onChange={setOption}
           value={values.numberOfGuests}
           instanceId="number-of-guests"
+          isSearchable={false}
         />
         <div className={styles.iconContainer}>
           <HottubIcon className={classNames(`${optionStyles.options__icon} numberOfTubs`)} />
@@ -196,6 +197,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
           onChange={setOption}
           value={values.numberOfTubs}
           instanceId="number-of-tubs"
+          isSearchable={false}
         />
       </div>
     </>
