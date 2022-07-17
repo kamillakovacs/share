@@ -93,8 +93,6 @@ const Main: FC<Props> = ({ currentReservations }) => {
           validateOnChange
         >
           {({ values, errors, dirty, handleSubmit }) => {
-            const currency = parseInt(values.price) / 356.33;
-
             return (
               <form onSubmit={handleSubmit}>
                 <section className={reservationStyles.reservation}>
