@@ -2,7 +2,9 @@ import "firebase/database";
 import React, { FC, memo } from "react";
 import classnames from "classnames";
 import { Formik } from "formik";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 import firebase from "../lib/firebase";
 import { Reservation } from "../lib/validation/validationInterfaces";
@@ -38,6 +40,8 @@ interface Props {
 const Main: FC<Props> = ({ currentReservations }) => {
   const router = useRouter();
   const [data, setData] = useAppContext();
+  const { t } = useTranslation("common");
+
   const initialValues = {
     date: null,
     numberOfGuests: null,
@@ -76,7 +80,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
   return (
     <article className={styles.main}>
       <label className={reservationStyles.reservation__title}>
-        <span>Reserve Your Experience</span>
+        <span>{t("index.reserveYourExperience")}</span>
       </label>
       <section className={styles.main__container}>
         <div className={styles.navigators}>
@@ -119,7 +123,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ locale }) {
   const customers = firebase.database().ref("customers");
   const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
     return snapshot.val() || [];
@@ -131,7 +135,13 @@ export async function getServerSideProps() {
     return snapshot.val() || [];
   });
 
-  return { props: { users, currentReservations } };
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+      users,
+      currentReservations,
+    },
+  };
 }
 
 export default memo(Main);

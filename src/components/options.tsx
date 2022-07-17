@@ -2,6 +2,7 @@ import React, { FC, memo, useEffect } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 import classNames from "classnames";
 import { useFormikContext } from "formik";
+import { useTranslation } from "next-i18next";
 
 //@ts-ignore
 import HottubIcon from "../../public/assets/hottub.svg";
@@ -19,6 +20,7 @@ interface Props {
 
 const Options: FC<Props> = ({ currentReservations }) => {
   const { values, touched, setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
+  const { t } = useTranslation("common");
   const AVAILABLE_TUBS = 3;
   const reservationsSelectedOnDateAndTime = Object.values(currentReservations).filter((res) => {
     if (!values.date) {
@@ -59,33 +61,33 @@ const Options: FC<Props> = ({ currentReservations }) => {
   };
 
   const numberOfGuestsOptions = [
-    { value: "1", label: "1 person" },
-    { value: "2", label: "2 people" },
-    { value: "3", label: "3 people" },
-    { value: "4", label: "4 people" },
-    { value: "5", label: "5 people" },
-    { value: "6", label: "6 people" },
+    { value: "1", label: t("options.onePerson") },
+    { value: "2", label: t("options.twoPeople") },
+    { value: "3", label: t("options.threePeople") },
+    { value: "4", label: t("options.fourPeople") },
+    { value: "5", label: t("options.fivePeople") },
+    { value: "6", label: t("options.sixPeople") },
   ];
 
   const availableNumberOfGuestsOptions = numberOfGuestsOptions.filter(
     (option) => numberOfAvailableTubs() * 2 >= parseInt(option.value)
   );
 
-  const onePersonTubOptions = [{ value: "1", label: "1 tub" }];
+  const onePersonTubOptions = [{ value: "1", label: t("options.oneTub") }];
   const twoPeopleTubOptions = [
-    { value: "1", label: "2 people in 1 tub" },
-    { value: "2", label: "2 people in 2 tubs" },
+    { value: "1", label: t("options.twoPeopleInOneTub") },
+    { value: "2", label: t("options.twoPeopleInTwoTubs") },
   ];
   const threePeopleTubOptions = [
-    { value: "2", label: "3 people in 2 tubs" },
-    { value: "3", label: "3 people in 3 tubs" },
+    { value: "2", label: t("options.threePeopleInTwoTubs") },
+    { value: "3", label: t("options.threePeopleInThreeTubs") },
   ];
   const fourPeopleTubOptions = [
-    { value: "2", label: "4 people in 2 tubs" },
-    { value: "3", label: "4 people in 3 tubs" },
+    { value: "2", label: t("options.fourPeopleInTwoTubs") },
+    { value: "3", label: t("options.fourPeopleInThreeTubs") },
   ];
-  const fivePeopleTubOptions = [{ value: "3", label: "3 tubs" }];
-  const sixPeopleTubOptions = [{ value: "3", label: "3 tubs" }];
+  const fivePeopleTubOptions = [{ value: "3", label: t("options.threeTubs") }];
+  const sixPeopleTubOptions = [{ value: "3", label: t("options.threeTubs") }];
 
   const availableTubOptions = (
     tubOptions: {
@@ -117,21 +119,21 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const setPrice = () => {
     switch (values.numberOfTubs.label) {
-      case "1 tub":
+      case t("options.oneTub"):
         return "18 000";
-      case "2 people in 1 tub":
+      case t("options.twoPeopleInOneTub"):
         return "22 000";
-      case "2 people in 2 tubs":
+      case t("options.twoPeopleInTwoTubs"):
         return "32 000";
-      case "3 people in 2 tubs":
+      case t("options.threePeopleInTwoTubs"):
         return "40 000";
-      case "3 people in 3 tubs":
+      case t("options.threePeopleInThreeTubs"):
         return "54 000";
-      case "4 people in 2 tubs":
+      case t("options.fourPeopleInTwoTubs"):
         return "44 000";
-      case "4 people in 3 tubs":
+      case t("options.fourPeopleInThreeTubs"):
         return "58 000";
-      case "3 tubs":
+      case t("options.threeTubs"):
         return values.numberOfGuests.value === "5" ? "62 000" : "66 000";
     }
   };
@@ -150,11 +152,10 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const numberOfTubsAvailableText =
     numberOfAvailableTubs() > 0
-      ? `(${numberOfAvailableTubs()} ${numberOfAvailableTubs() > 1 ? "tubs" : "tub"} for max ${
-          numberOfAvailableTubs() * 2
-        } people are available at selected
-  time.)`
-      : "No tubs are available at selected time.";
+      ? `${t("options.openParentheses")}${numberOfAvailableTubs()} ${
+          numberOfAvailableTubs() > 1 ? t("options.tubs") : t("options.tub")
+        } ${t("options.forMax")} ${numberOfAvailableTubs() * 2} ${t("options.peopleAtSelectedTime")}`
+      : t("options.noTubsAtSelectedTime");
 
   return (
     <>
@@ -166,7 +167,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
           })}
         />
         <div className={optionStyles.options__tubsLabel}>
-          <label>Number of People & Tubs</label>
+          <label>{t("options.numberOfPeopleAndTubs")}</label>
           {values.date && values.date.getHours() !== 0 && (
             <div className={optionStyles.options__availableTubs}>{numberOfTubsAvailableText}</div>
           )}
@@ -181,7 +182,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
         <Select
           className={optionStyles.select}
           options={availableNumberOfGuestsOptions}
-          placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : "Select guests"}</>}
+          placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : t("options.selectGuests")}</>}
           name="numberOfGuests"
           onChange={setOption}
           value={values.numberOfGuests}
@@ -194,7 +195,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
         <Select
           className={optionStyles.select}
           options={getTubOptions()}
-          placeholder={<>{values.numberOfTubs ? values.numberOfTubs.label : "Select tubs"}</>}
+          placeholder={<>{values.numberOfTubs ? values.numberOfTubs.label : t("options.selectTubs")}</>}
           name="numberOfTubs"
           onChange={setOption}
           value={values.numberOfTubs}

@@ -1,0 +1,30 @@
+{
+  "index": {
+    "reserveYourExperience": "Reserve Your Experience"
+  },
+  "options": {
+    "numberOfPeopleAndTubs": "Number of People & Tubs",
+    "selectGuests": "Select guests",
+    "selectTubs": "Select tubs",
+    "openParentheses": "(",
+    "tubs": "tubs",
+    "tub": "tub",
+    "forMax": "for max",
+    "peopleAtSelectedTime": "people are available at selected time.)",
+    "noTubsAtSelectedTime": "No tubs are available at selected time.",
+    "oneTub": "1 tub",
+    "twoPeopleInOneTub": "2 people in 1 tub",
+    "twoPeopleInTwoTubs": "2 people in 2 tubs",
+    "threePeopleInTwoTubs": "3 people in 2 tubs",
+    "threePeopleInThreeTubs": "3 people in 3 tubs",
+    "fourPeopleInTwoTubs": "4 people in 2 tubs",
+    "fourPeopleInThreeTubs": "4 people in 3 tubs",
+    "threeTubs": "3 tubs",
+    "onePerson": "1 person",
+    "twoPeople": "2 people",
+    "threePeople": "3 people",
+    "fourPeople": "4 people",
+    "fivePeople": "5 people",
+    "sixPeople": "6 people"
+  }
+}
