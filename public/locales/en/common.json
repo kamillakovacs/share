@@ -1,6 +1,10 @@
 {
   "index": {
-    "reserveYourExperience": "Reserve Your Experience"
+    "reserveYourExperience": "Reserve Your Experience",
+    "continue": "Continue"
+  },
+  "reservationDate": {
+    "dateAndTime": "Date & Time"
   },
   "options": {
     "numberOfPeopleAndTubs": "Number of People & Tubs",
@@ -26,5 +30,23 @@
     "fourPeople": "4 people",
     "fivePeople": "5 people",
     "sixPeople": "6 people"
+  },
+  "summary": {
+    "yourExperience": "Your Experience",
+    "infraredSauna": "- 15 minute pre-treatment in infrared sauna",
+    "soakFor": "- 40 minute soak for",
+    "people": "people",
+    "person": "person",
+    "in": " in ",
+    "tubs": "tubs",
+    "tub": "tub",
+    "ofBeerBath": " of beer bath",
+    "strawBed": "- 15 minute relaxation on straw bed",
+    "unlimitedBeer": "- Unlimited beer on tap throughout your stay",
+    "towelsAndRobes": "- Towels and bathrobes",
+    "exclusiveUse": "- Exclusive use of our beer spa facility (the whole spa is yours!)",
+    "total": "Total: ",
+    "vat": "(incl.VAT)",
+    "huf": "HUF"
   }
 }

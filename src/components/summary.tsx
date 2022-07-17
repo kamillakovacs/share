@@ -1,5 +1,6 @@
 import React, { FC, memo } from "react";
 import { useFormikContext } from "formik";
+import { useTranslation } from "next-i18next";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
@@ -8,30 +9,35 @@ import summaryStyles from "../styles/summary.module.scss";
 
 const Summary: FC = () => {
   const { values } = useFormikContext<Reservation>();
+  const { t } = useTranslation("common");
 
   return (
     <>
       <div className={summaryStyles.label}>
         <div className={styles.cart} />
-        <label>Your Experience</label>
+        <label>{t("summary.yourExperience")}</label>
       </div>
 
       <div className={summaryStyles.container}>
-        <div>- 15 minute pre-treatment in infra sauna</div>
-        <div>{`- 40 minute soak for ${values.numberOfGuests ? values.numberOfGuests.value : 1} ${
-          values.numberOfGuests ? (parseInt(values.numberOfGuests.value) > 1 ? "people" : "person") : "person"
-        } in ${values.numberOfTubs ? values.numberOfTubs.value : "1"} tub${
-          parseInt(values.numberOfTubs ? values.numberOfTubs.value : "1") > 1 ? "s" : ""
-        } of beer bath`}</div>
-        <div>- 15 minute relaxation on straw bed</div>
-        <div>- Unlimited beer on tap throughout your stay</div>
-        <div>- Towels and bathrobes</div>
-        <div>- Exclusive use of our beer spa facility (the whole spa is yours!)</div>
+        <div>{t("summary.infraredSauna")}</div>
+        <div>{`${t("summary.soakFor")} ${values.numberOfGuests ? values.numberOfGuests.value : 1} ${
+          values.numberOfGuests
+            ? parseInt(values.numberOfGuests.value) > 1
+              ? t("summary.people")
+              : t("summary.person")
+            : t("summary.person")
+        } in ${values.numberOfTubs ? values.numberOfTubs.value : "1"} ${
+          parseInt(values.numberOfTubs ? values.numberOfTubs.value : "1") > 1 ? t("summary.tubs") : t("summary.tub")
+        } ${t("summary.ofBeerBath")} `}</div>
+        <div>{t("summary.strawBed")} </div>
+        <div>{t("summary.unlimitedBeer")} </div>
+        <div>{t("summary.towelsAndRobes")} </div>
+        <div>{t("summary.exclusiveUse")} </div>
         <div className={summaryStyles.total}>
           <div>
-            Total: <span className={summaryStyles.vat}>(incl.VAT)</span>
+            {t("summary.total")} <span className={summaryStyles.vat}>{t("summary.vat")} </span>
           </div>
-          {values.price && <div>{`${values.price} HUF`}</div>}
+          {values.price && <div>{`${values.price} ${t("summary.huf")} `}</div>}
         </div>
       </div>
     </>

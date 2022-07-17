@@ -3,6 +3,7 @@ import DayPicker from "react-day-picker";
 import React, { FC, memo } from "react";
 import classnames from "classnames";
 import { useFormikContext } from "formik";
+import { useTranslation } from "next-i18next";
 
 //@ts-ignore
 import CalendarIcon from "../../public/assets/calendar.svg";
@@ -23,6 +24,7 @@ const AVAILABLE_TUBS = 3;
 
 const ReservationDate: FC<Props> = ({ currentReservations }) => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
+  const { t } = useTranslation("common");
 
   const selectDate = (date: Date) => {
     date.setHours(0);
@@ -123,7 +125,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
           })}
         />
 
-        <label>Date & Time</label>
+        <label>{t("reservationDate.dateAndTime")}</label>
       </div>
       <div className={dateStyles.reservationDate__calendar}>
         <div className={dateStyles.reservationDate__date}>

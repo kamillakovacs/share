@@ -111,7 +111,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
                     )}
                     type="submit"
                   >
-                    Continue
+                    {t("index.continue")}
                   </button>
                 </section>
               </form>
