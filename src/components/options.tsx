@@ -150,7 +150,9 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const numberOfTubsAvailableText =
     numberOfAvailableTubs() > 0
-      ? `(${numberOfAvailableTubs()} tubs for max ${numberOfAvailableTubs() * 2} people are available at selected
+      ? `(${numberOfAvailableTubs()} ${numberOfAvailableTubs() > 1 ? "tubs" : "tub"} for max ${
+          numberOfAvailableTubs() * 2
+        } people are available at selected
   time.)`
       : "No tubs are available at selected time.";
 

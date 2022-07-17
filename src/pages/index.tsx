@@ -9,7 +9,6 @@ import { Reservation } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 import { useAppContext } from "../../context/appContext";
 
-import Header from "../components/header";
 import Options from "../components/options";
 import ReservationDate from "../components/reservationDate";
 import Summary from "../components/summary";
@@ -76,7 +75,6 @@ const Main: FC<Props> = ({ currentReservations }) => {
 
   return (
     <article className={styles.main}>
-      <Header />
       <label className={reservationStyles.reservation__title}>
         <span>Reserve Your Experience</span>
       </label>
