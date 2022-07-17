@@ -2,7 +2,9 @@ import { useFormikContext } from "formik";
 import React, { FC, memo, useEffect } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
 import { ReservationData } from "../pages";
+//@ts-ignore
 import PeopleIcon from "../../public/assets/people.svg";
+//@ts-ignore
 import HottubIcon from "../../public/assets/hottub.svg";
 
 import { Reservation } from "../lib/validation/validationInterfaces";

@@ -4,7 +4,9 @@ import React, { FC, memo } from "react";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
+//@ts-ignore
 import ClockIcon from "../../public/assets/clock.svg";
+//@ts-ignore
 import CalendarIcon from "../../public/assets/calendar.svg";
 import { Reservation } from "../lib/validation/validationInterfaces";
 import { ReservationData } from "../pages";
