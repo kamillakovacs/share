@@ -1,3 +1,4 @@
+import classnames from "classnames";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
 import React, { FC, memo } from "react";
@@ -35,7 +36,7 @@ interface Props {
   currentReservations: ReservationData;
 }
 
-const Main: FC<Props> = ({ users, currentReservations }) => {
+const Main: FC<Props> = ({ currentReservations }) => {
   const router = useRouter();
   const initialValues = {
     date: null,
@@ -91,7 +92,7 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
           validationSchema={reservation}
           validateOnChange
         >
-          {({ values, handleSubmit }) => {
+          {({ values, errors, dirty, handleSubmit }) => {
             const currency = parseInt(values.price) / 356.33;
 
             return (
@@ -101,7 +102,12 @@ const Main: FC<Props> = ({ users, currentReservations }) => {
                   <Options currentReservations={currentReservations} />
                   <Summary />
                   <button
-                    className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__continue}`}
+                    className={classnames(
+                      `${reservationStyles.reservation__button} ${reservationStyles.reservation__continue}`,
+                      {
+                        [reservationStyles.reservation__continue__enabled]: !!dirty && !Object.keys(errors).length,
+                      }
+                    )}
                     type="submit"
                   >
                     Continue
