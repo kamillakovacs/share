@@ -7,6 +7,7 @@
     "dateAndTime": "Date & Time"
   },
   "options": {
+    "noOptions": "No options",
     "numberOfPeopleAndTubs": "Number of People & Tubs",
     "selectGuests": "Select guests",
     "selectTubs": "Select tubs",
@@ -48,5 +49,37 @@
     "total": "Total: ",
     "vat": "(incl.VAT)",
     "huf": "HUF"
+  },
+  "details": {
+    "yourDetails": "Your Details",
+    "complete": "Complete",
+    "finishAndPay": "Finish & Pay"
+  },
+  "customer": {
+    "personalInformation": "Personal Information",
+    "contactInformation": "Contact Information",
+    "webSearch": "Web search",
+    "friendOrFamily": "Friend/Family member",
+    "advertisement": "Advertisement",
+    "tripAdvisor": "Trip Advisor",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "hotel": "Your hotel",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email address",
+    "phone": "Phone number",
+    "whereDidYouHearAboutUs": "Where did you hear about us?",
+    "select": "Select..."
+  },
+  "price": {
+    "paymentMethods": "Payment Methods",
+    "bankTransfer": "Bank Transfer",
+    "creditCard": "Credit Card"
+  },
+  "thanks": {
+    "thankYou": "Thank you for your reservation!",
+    "yourReservation": "Your Reservation at Share Spa",
+    "lookForwardToSeeingYou": "We look forward to seeing you at Share Spa"
   }
 }

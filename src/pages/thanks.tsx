@@ -1,8 +1,9 @@
-import React, { FC, memo } from "react";
 import Header from "../components/header";
+import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
-import { useRouter } from "next/router";
 import mailgun from "mailgun-js";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 import { ThankYouEmail } from "../components/thankYouEmail";
 
@@ -12,12 +13,12 @@ interface Props {
 
 const Thanks: FC<Props> = ({ reservations }) => {
   const { query } = useRouter();
+  const { t } = useTranslation("common");
   const reservationPaymentId = Object.keys(reservations).find((key) => key === query.paymentId);
   const reservation = Object.values(reservations).find(() => reservations[reservationPaymentId]);
 
   const messageContent =
-    "<html><body><div>Thank you for your reservation. " +
-    "We look forward to seeing you at Share Spa - Oko-Park</div></body></html>";
+    "<html><body><div>" + " " + t("thanks.thankYou") + t("thanks.lookForwardToSeeingYou") + "</div></body></html>";
 
   const sendThankYouEmail = () => {
     const mg = mailgun({
@@ -29,7 +30,7 @@ const Thanks: FC<Props> = ({ reservations }) => {
     const data = {
       from: `Mailgun Sandbox <${process.env.MAILGUN_EMAIL_ADDRESS}>`,
       to: "kamilla525@yahoo.com",
-      subject: "Your Reservation at Share Spa",
+      subject: t("thanks.yourReservation"),
       html: ThankYouEmail,
       // attachment: filepath
     };
@@ -46,9 +47,8 @@ const Thanks: FC<Props> = ({ reservations }) => {
 
   return (
     <article className="Main">
-      <Header />
       <section className="Main__container">
-        <div className="Thanks">Thank you for your reservation!</div>
+        <div className="Thanks">{t("thanks.thankYou")}</div>
       </section>
     </article>
   );

@@ -188,6 +188,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
           value={values.numberOfGuests}
           instanceId="number-of-guests"
           isSearchable={false}
+          noOptionsMessage={() => t("options.noOptions")}
         />
         <div className={styles.iconContainer}>
           <HottubIcon className={classNames(`${optionStyles.options__icon} numberOfTubs`)} />
@@ -201,6 +202,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
           value={values.numberOfTubs}
           instanceId="number-of-tubs"
           isSearchable={false}
+          noOptionsMessage={() => t("options.noOptions")}
         />
       </div>
     </>

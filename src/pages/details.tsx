@@ -1,16 +1,17 @@
 import "firebase/database";
 import React, { FC, memo, useEffect } from "react";
 import { Formik } from "formik";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
+import * as payment from "../api/paymentRequest";
 import firebase from "../lib/firebase";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 import { useAppContext } from "../../context/appContext";
 
-import * as payment from "../api/paymentRequest";
 import Customer from "../components/customer";
-import Header from "../components/header";
 import reservationStyles from "../styles/reservation.module.scss";
 import styles from "../styles/main.module.scss";
 import { ReservationData } from ".";
@@ -23,6 +24,7 @@ interface Props {
 const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
   const [data, setData] = useAppContext();
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     if (!data.numberOfGuests) {
@@ -69,9 +71,8 @@ const Details: FC<Props> = ({ users }) => {
 
   return (
     <article className={styles.main}>
-      <Header />
       <label className={reservationStyles.reservation__title}>
-        <span>Your Details</span>
+        <span>{t("details.yourDetails")}</span>
       </label>
       <section className={styles.main__container}>
         <div className={styles.navigators}>
@@ -103,7 +104,7 @@ const Details: FC<Props> = ({ users }) => {
                     type="submit"
                     className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}
                   >
-                    {values.paymentMethod === "bankTransfer" ? "Complete" : "Finish & Pay"}
+                    {values.paymentMethod === "bankTransfer" ? t("details.complete") : t("details.finishAndPay")}
                   </button>
                 </div>
               </form>
@@ -115,13 +116,18 @@ const Details: FC<Props> = ({ users }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ locale }) {
   const customers = firebase.database().ref("customers");
   const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
     return snapshot.val() || "Anonymous";
   });
 
-  return { props: { users } };
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+      users,
+    },
+  };
 }
 
 export default memo(Details);

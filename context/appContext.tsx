@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 const AppContext = createContext(null);
 
-export function AppProvider({ children }) {
+export const AppProvider = ({ children }) => {
   const [data, setData] = useState({
     date: null,
     numberOfGuests: null,
@@ -16,8 +16,8 @@ export function AppProvider({ children }) {
   });
 
   return <AppContext.Provider value={[data, setData]}>{children}</AppContext.Provider>;
-}
+};
 
-export function useAppContext() {
+export const useAppContext = () => {
   return useContext(AppContext);
-}
+};

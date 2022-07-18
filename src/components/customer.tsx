@@ -1,7 +1,8 @@
-import classNames from "classnames";
-import { useFormikContext, ErrorMessage } from "formik";
 import React, { ChangeEvent, FC, memo } from "react";
 import Select, { ActionMeta, ValueType } from "react-select";
+import classNames from "classnames";
+import { useFormikContext, ErrorMessage } from "formik";
+import { useTranslation } from "next-i18next";
 
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
@@ -10,6 +11,7 @@ import customerStyles from "../styles/customer.module.scss";
 import styles from "../styles/main.module.scss";
 
 const Customer: FC = () => {
+  const { t } = useTranslation("common");
   const { values, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,13 +32,13 @@ const Customer: FC = () => {
   };
 
   const whereYouHeardOptions = [
-    { value: "webSearch", label: "Web search" },
-    { value: "friendFamily", label: "Friend/Family member" },
-    { value: "advertisement", label: "Advertisement" },
-    { value: "tripAdvisor", label: "Trip Advisor" },
-    { value: "facebook", label: "Facebook" },
-    { value: "instagram", label: "Instagram" },
-    { value: "hotel", label: "Your hotel" },
+    { value: "webSearch", label: t("customer.webSearch") },
+    { value: "friendFamily", label: t("customer.friendOrFamily") },
+    { value: "advertisement", label: t("customer.advertisement") },
+    { value: "tripAdvisor", label: t("customer.tripAdvisor") },
+    { value: "facebook", label: t("customer.facebook") },
+    { value: "instagram", label: t("customer.instagram") },
+    { value: "hotel", label: t("customer.hotel") },
   ];
 
   return (
@@ -47,13 +49,13 @@ const Customer: FC = () => {
             [styles.todoitem__done]: values.firstName && values.lastName,
           })}
         />
-        <label>Personal Information</label>
+        <label>{t("customer.personalInformation")}</label>
       </div>
       <div className={customerStyles.detail}>
         <input
           className={customerStyles.customer__input}
           name="firstName"
-          placeholder="First Name"
+          placeholder={t("customer.firstName")}
           type="text"
           onChange={onChangeInput}
         />
@@ -63,7 +65,7 @@ const Customer: FC = () => {
         <input
           className={customerStyles.customer__input}
           name="lastName"
-          placeholder="Last Name"
+          placeholder={t("customer.lastName")}
           type="text"
           onChange={onChangeInput}
         />
@@ -77,13 +79,13 @@ const Customer: FC = () => {
             [styles.todoitem__done]: values.email && values.phoneNumber,
           })}
         />
-        <label>Contact Information</label>
+        <label>{t("customer.contactInformation")}</label>
       </div>
       <div className={customerStyles.detail}>
         <input
           className={customerStyles.customer__input}
           name="email"
-          placeholder="Email address"
+          placeholder={t("customer.email")}
           type="email"
           onChange={onChangeInput}
         />
@@ -93,7 +95,7 @@ const Customer: FC = () => {
         <input
           className={customerStyles.customer__input}
           name="phoneNumber"
-          placeholder="Phone number"
+          placeholder={t("customer.phone")}
           type="tel"
           onChange={onChangeInput}
         />
@@ -107,7 +109,7 @@ const Customer: FC = () => {
             [styles.todoitem__done]: values.whereYouHeard,
           })}
         />
-        <label>Where did you hear about us?</label>
+        <label>{t("customer.whereDidYouHearAboutUs")}</label>
       </div>
       <div className={customerStyles.detail}>
         <Select
@@ -116,6 +118,7 @@ const Customer: FC = () => {
           name="whereYouHeard"
           onChange={setOption}
           value={values.whereYouHeard}
+          placeholder={t("customer.select")}
           instanceId="where-you-heard"
         />
       </div>
