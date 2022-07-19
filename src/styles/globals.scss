@@ -36,7 +36,7 @@ a {
   }
 
   &-button:focus {
-    border: none;
+    border: none !important;
   }
 
   &-day {
