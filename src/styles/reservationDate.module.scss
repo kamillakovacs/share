@@ -30,16 +30,15 @@
 
   &__date {
     width: 330px;
-    height: 354px;
     background-color: #343434;
     position: relative;
+    border-radius: 10px;
   }
 
   &__time {
     align-items: center;
     margin-left: 10px;
     width: 140px;
-    height: 354px;
     background-color: #343434;
     border: 1px solid #222222;
     border-radius: 10px;
@@ -47,20 +46,18 @@
     padding: 23px 1em;
 
     &Title {
-      height: 56px;
+      height: 50px;
       width: 90px;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      top: 5px;
-      position: relative;
     }
 
     &Options {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      height: 254px;
+      height: 290px;
 
       button {
         background-color: #343434;

@@ -1,6 +1,6 @@
 import "react-day-picker/dist/style.css";
 import { DayPicker } from "react-day-picker";
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect } from "react";
 import classnames from "classnames";
 import { useFormikContext } from "formik";
 import { useTranslation } from "next-i18next";
@@ -150,6 +150,8 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
             fromMonth={new Date()}
             weekStartsOn={1}
             disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
+            showOutsideDays
+            fixedWeeks
           />
         </div>
         {values.date && (

@@ -15,11 +15,15 @@ a {
 }
 
 .rdp {
-  height: 354px;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 
   &:focus {
     outline: none !important;
+  }
+
+  &-nav_button,
+  &-nav_button:hover {
+    background-color: transparent !important;
   }
 
   &-caption {
@@ -37,6 +41,10 @@ a {
 
   &-button:focus {
     border: none !important;
+  }
+
+  &-head_cell {
+    font-weight: 400 !important;
   }
 
   &-day {
