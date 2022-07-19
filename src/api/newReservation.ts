@@ -1,7 +1,11 @@
 import { ReservationData } from "../pages";
 import axios from "axios";
 
-export const makeNewReservation = (reservationData: ReservationData, paymentId: string, users: ReservationData[]) => {
+export const makeNewReservation = async (
+  reservationData: ReservationData,
+  paymentId: string,
+  users: ReservationData[]
+) => {
   const customerAlreadyInDatabase = !!Object.values(users).filter(
     (user) =>
       user.firstName.toLowerCase() === reservationData.firstName.toLowerCase() &&
@@ -21,5 +25,9 @@ export const makeNewReservation = (reservationData: ReservationData, paymentId: 
     "Content-Type": "application/json; charset=utf-8",
   };
 
-  axios.post("/api/reservation", { reservationData, newCustomer, paymentId, customerAlreadyInDatabase }, { headers });
+  await axios.post(
+    "/api/reservation",
+    { reservationData, newCustomer, paymentId, customerAlreadyInDatabase },
+    { headers }
+  );
 };
