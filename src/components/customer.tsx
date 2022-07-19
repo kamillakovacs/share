@@ -123,8 +123,6 @@ const Customer: FC = () => {
           isSearchable={false}
         />
       </div>
-
-      {/* <Payment /> */}
     </section>
   );
 };

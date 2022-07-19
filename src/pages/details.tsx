@@ -66,9 +66,7 @@ const Details: FC<Props> = ({ users }) => {
       paymentMethod: values.paymentMethod,
     };
 
-    if (values.paymentMethod === "card") {
-      return redirectToStartPayment(reservationData);
-    }
+    return redirectToStartPayment(reservationData);
   };
 
   return (

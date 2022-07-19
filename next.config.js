@@ -16,6 +16,7 @@ module.exports = {
       issuer: /\.[jt]sx?$/,
       use: ["@svgr/webpack"],
     });
+    config.plugins.push(new Dotenv({ silent: true }));
     return config;
   },
 };
