@@ -21,6 +21,7 @@
     "html-loader": "4.1.0",
     "next": "12.2.2",
     "next-i18next": "11.2.2",
+    "path": "0.12.7",
     "react": "17.0.2",
     "react-bootstrap": "2.4.0",
     "react-datepicker": "4.8.0",
