@@ -2,6 +2,7 @@ import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { ThankYouEmail } from "../components/thankYouEmail";
 
@@ -52,14 +53,14 @@ const Thanks: FC<Props> = ({ reservations }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }) {
   const res = firebase.database().ref("reservations");
 
   const reservations = await res.once("value").then(function (snapshot) {
     return snapshot.val() || "Anonymous";
   });
 
-  return { props: { reservations } };
+  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations } };
 }
 
 export default memo(Thanks);
