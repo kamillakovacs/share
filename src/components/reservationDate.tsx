@@ -32,12 +32,24 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
     setFieldValue("numberOfGuests", null);
     setFieldValue("numberOfTubs", null);
     handleIconColors(".calendarIcon");
+
+    // reset time icon if changing selected date
+    if (document.querySelector(".clockIcon")) {
+      resetIconColor(".clockIcon");
+    }
+    // remove selected highlight on time if changing selected date
+    if (document.querySelector(".reservationDate__timeOptions .button")) {
+      (document.querySelector(".reservationDate__timeOptions .button") as HTMLElement).classList.remove(
+        dateStyles.selected,
+        "button"
+      );
+    }
   };
 
   const selectTime = (e: React.MouseEvent<HTMLButtonElement>) => {
     const previousSelected = document.querySelector(`.${dateStyles.selected}`);
     if (previousSelected) {
-      previousSelected.classList.remove(dateStyles.selected);
+      previousSelected.classList.remove(dateStyles.selected, "button");
     }
     if (!allTubsAreReservedForGivenDayAndTime(e.currentTarget.innerText)) {
       e.currentTarget.className += `button ${dateStyles.selected}`;
@@ -146,10 +158,9 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
               <div className={styles.iconContainer}>
                 <ClockIcon className={classnames(`${dateStyles.reservationDate__clockIcon} clockIcon`)} />
               </div>
-              {/* <span className={dateStyles.reservationDate__clockIcon} /> */}
               <span>Time</span>
             </div>
-            <div className={dateStyles.reservationDate__timeOptions}>
+            <div className={classnames(`${dateStyles.reservationDate__timeOptions} reservationDate__timeOptions`)}>
               {timeOptions.map((t, index) => (
                 <button
                   key={index}

@@ -5,7 +5,7 @@
 
   &__calendarIcon {
     position: absolute;
-    top: 40px;
+    top: 36px;
     left: 27px;
     right: auto;
     width: 24px;
@@ -32,8 +32,6 @@
     width: 330px;
     height: 354px;
     background-color: #343434;
-    border: 1px solid #222222;
-    border-radius: 10px;
     position: relative;
   }
 
@@ -50,6 +48,7 @@
 
     &Title {
       height: 56px;
+      width: 90px;
       display: flex;
       justify-content: space-around;
       align-items: center;
