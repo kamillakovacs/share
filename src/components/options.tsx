@@ -44,7 +44,8 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   useEffect(() => {
     if (values.numberOfGuests) {
-      setFieldValue("numberOfTubs", getTubOptions());
+      setFieldValue("numberOfTubs", null);
+      resetIconColor(".numberOfTubs");
     }
   }, [values.numberOfGuests]);
 
@@ -149,6 +150,8 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const colorIconGreen = (selector: string) =>
     ((document.querySelector(`.${selector}`) as HTMLElement).style.fill = "#00d531");
+
+  const resetIconColor = (selector: string) => ((document.querySelector(selector) as HTMLElement).style.fill = "white");
 
   const numberOfTubsAvailableText =
     numberOfAvailableTubs() > 0
