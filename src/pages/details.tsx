@@ -128,6 +128,11 @@ const Details: FC<Props> = ({ users }) => {
                     <div>{values.price} HUF</div>
                   </div>
                 </div>
+                <img
+                  src="/assets/barion-card-strip-intl__small.png"
+                  alt="barion-logo"
+                  className={detailsStyles.barion}
+                ></img>
                 <div className={reservationStyles.reservation__info}>
                   <button
                     className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`}
