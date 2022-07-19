@@ -1,4 +1,3 @@
-import Header from "../components/header";
 import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
 import { useRouter } from "next/router";

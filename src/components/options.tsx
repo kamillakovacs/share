@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect } from "react";
-import Select, { ActionMeta, ValueType } from "react-select";
+import Select, { ActionMeta } from "react-select";
 import classNames from "classnames";
 import { useFormikContext } from "formik";
 import { useTranslation } from "next-i18next";
@@ -140,7 +140,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
   };
 
   const setOption = (
-    option: ValueType<{ value: string; label: string }>,
+    option: { value: string; label: string },
     select: ActionMeta<{ value: string; label: string }>
   ) => {
     setFieldValue(select.name, option);
