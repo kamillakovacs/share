@@ -181,6 +181,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
         <Select
           className={optionStyles.select}
+          classNamePrefix={optionStyles.select}
           options={availableNumberOfGuestsOptions}
           placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : t("options.selectGuests")}</>}
           name="numberOfGuests"

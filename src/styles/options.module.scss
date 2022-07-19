@@ -55,7 +55,6 @@
 .select {
   width: 300px;
   height: 64px;
-  font-weight: 200px;
 
   &:focus {
     outline: none;
@@ -65,7 +64,8 @@
     height: 100%;
     color: #ffffff;
     background-color: #343434;
-    border: 1px solid #707070;
+    border: 1px solid #707070 !important;
+    cursor: pointer !important;
 
     &:focus {
       outline: none;
@@ -93,8 +93,17 @@
       color: white;
       background-color: #343434 !important;
       position: relative;
-      cursor: pointer;
+
+      svg {
+        position: relative;
+        right: 50px;
+        color: white;
+      }
     }
+  }
+
+  > div:nth-child(4) > div > div {
+    left: 0;
   }
 
   span {
