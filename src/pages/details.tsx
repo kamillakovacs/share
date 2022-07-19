@@ -12,8 +12,10 @@ import { reservation } from "../lib/validation/validationSchemas";
 import { useAppContext } from "../../context/appContext";
 
 import Customer from "../components/customer";
+import customerStyles from "../styles/customer.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
 import styles from "../styles/main.module.scss";
+import detailsStyles from "../styles/details.module.scss";
 import { ReservationData } from ".";
 
 interface Props {
@@ -92,6 +94,40 @@ const Details: FC<Props> = ({ users }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <Customer />
+                <div className={detailsStyles.details__detailTitle}>
+                  <div className={`${styles.todoitem} ${styles.todoitem__four}`} />
+                  <label>Summary & Checkout</label>
+                </div>
+                <div className={detailsStyles.details}>
+                  <div className={detailsStyles.details__row}>
+                    <div>Location: </div>
+                    <div>Share Spa, Szarvaskő, Hungary</div>
+                  </div>
+                  <div className={detailsStyles.details__row}>
+                    <div>Tubs reserved:</div>
+                    <div>{values.numberOfTubs.label}</div>
+                  </div>
+                  <div className={detailsStyles.details__row}>
+                    <div>Date:</div>
+                    <div>
+                      {new Intl.DateTimeFormat("en-US", {
+                        month: "2-digit",
+                        day: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }).format(new Date(values.date))}
+                    </div>
+                  </div>
+                  <div className={detailsStyles.details__row}>
+                    <div>Length of stay:</div>
+                    <div>1 hour 15 minutes</div>
+                  </div>
+                  <div className={detailsStyles.details__row}>
+                    <div>Total price (incl. VAT):</div>
+                    <div>{values.price} HUF</div>
+                  </div>
+                </div>
                 <div className={reservationStyles.reservation__info}>
                   <button
                     className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`}

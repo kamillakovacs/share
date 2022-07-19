@@ -1,0 +1,29 @@
+.details {
+  border: 1px solid #707070;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 300;
+  padding: 20px;
+  color: white;
+  background-color: #343434;
+  margin: 10px 0 0 25px;
+  line-height: 25px;
+
+  &__title {
+    padding-bottom: 10px;
+  }
+
+  &__detailTitle {
+    display: flex;
+    align-items: center;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__total {
+    padding-top: 15px;
+  }
+}

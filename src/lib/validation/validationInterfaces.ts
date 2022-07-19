@@ -12,8 +12,8 @@ export interface Reservation {
 
 export interface ReservationWithDetails {
   date: Date;
-  numberOfGuests: string;
-  numberOfTubs: string;
+  numberOfGuests: { label: string; value: string };
+  numberOfTubs: { label: string; value: string };
   price: string;
   firstName: string;
   lastName: string;

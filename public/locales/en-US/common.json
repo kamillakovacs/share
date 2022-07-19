@@ -70,7 +70,7 @@
     "email": "Email address",
     "phone": "Phone number",
     "whereDidYouHearAboutUs": "Where did you hear about us?",
-    "select": "Select..."
+    "select": "Select response"
   },
   "price": {
     "paymentMethods": "Payment Methods",

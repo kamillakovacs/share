@@ -123,7 +123,7 @@ const Customer: FC = () => {
         />
       </div>
 
-      <Payment />
+      {/* <Payment /> */}
     </section>
   );
 };
