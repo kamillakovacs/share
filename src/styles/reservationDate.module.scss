@@ -69,10 +69,12 @@
         height: 43px;
         font-weight: 200;
         cursor: pointer;
+        font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 
         &.selected {
           color: #222222;
           background-color: #fcb923;
+          font-weight: 600;
         }
 
         &:focus {

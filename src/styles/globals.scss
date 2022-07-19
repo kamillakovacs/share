@@ -58,6 +58,10 @@ a {
       color: #222222 !important;
       background-color: #fcb923 !important;
 
+      span {
+        font-weight: 600;
+      }
+
       &:hover {
         background-color: #fcb923 !important;
       }
