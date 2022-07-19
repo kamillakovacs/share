@@ -120,6 +120,7 @@ const Customer: FC = () => {
           value={values.whereYouHeard}
           placeholder={t("customer.select")}
           instanceId="where-you-heard"
+          isSearchable={false}
         />
       </div>
 
