@@ -14,7 +14,7 @@ a {
   box-sizing: border-box;
 }
 
-.DayPicker {
+.rdp {
   height: 354px;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 
@@ -22,81 +22,36 @@ a {
     outline: none !important;
   }
 
-  &-wrapper {
-    padding: 20px !important;
-
-    &:focus {
-      outline: none !important;
-    }
-  }
-
-  &-Caption {
+  &-caption {
     padding-left: 40px !important;
     height: 64px;
     margin-bottom: 0 !important;
-    & > div {
+    &_label {
       display: flex;
       align-items: center;
       height: 100%;
       font-weight: 200 !important;
+      font-size: 20px !important;
     }
   }
 
-  &-NavBar {
-    left: 20px;
-    position: relative;
+  &-button:focus {
+    border: none;
   }
 
-  &-NavButton {
-    background-size: 75% !important;
-    top: 22px !important;
-    outline: none;
-
-    &--prev {
-      background-image: url("/assets/previous.svg") !important;
-    }
-    &--next {
-      background-image: url("/assets/next.svg") !important;
-    }
-  }
-
-  &-Weekday {
-    color: #ffffff !important;
-  }
-
-  &-Month {
-    height: 250px;
-    width: 290px;
-    margin: 0 !important;
-  }
-
-  &-Day {
+  &-day {
     outline: none;
 
     &:hover {
       background-color: inherit !important;
     }
-    &--today {
-      color: inherit !important;
-      font-weight: inherit !important;
-    }
-    &--selected {
+
+    &_selected {
       color: #222222 !important;
       background-color: #fcb923 !important;
 
       &:hover {
         background-color: #fcb923 !important;
-      }
-    }
-
-    &--disabled {
-      color: #707070 !important;
-      background-color: #343434 !important;
-
-      &:hover {
-        cursor: not-allowed;
-        color: #707070 !important;
-        background-color: inherit !important;
       }
     }
   }

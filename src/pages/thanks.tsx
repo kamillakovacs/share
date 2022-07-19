@@ -1,7 +1,6 @@
 import Header from "../components/header";
 import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
-import mailgun from "mailgun-js";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
@@ -21,10 +20,10 @@ const Thanks: FC<Props> = ({ reservations }) => {
     "<html><body><div>" + " " + t("thanks.thankYou") + t("thanks.lookForwardToSeeingYou") + "</div></body></html>";
 
   const sendThankYouEmail = () => {
-    const mg = mailgun({
-      apiKey: process.env.MAILGUN_API_KEY,
-      domain: process.env.MAILGUN_DOMAIN,
-    });
+    // const mg = mailgun({
+    //   apiKey: process.env.MAILGUN_API_KEY,
+    //   domain: process.env.MAILGUN_DOMAIN,
+    // });
     // const path = require('path');
     // var filepath = path.join(__dirname, 'sample.jpg');
     const data = {
@@ -35,10 +34,10 @@ const Thanks: FC<Props> = ({ reservations }) => {
       // attachment: filepath
     };
 
-    mg.messages().send(data, (_error, body) => {
-      console.log("body", body);
-      console.log("reservations", reservations);
-    });
+    // mg.messages().send(data, (_error, body) => {
+    //   console.log("body", body);
+    //   console.log("reservations", reservations);
+    // });
   };
 
   if (reservationPaymentId && reservation.paymentStatus === "Success") {

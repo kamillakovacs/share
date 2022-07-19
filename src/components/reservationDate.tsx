@@ -1,5 +1,5 @@
-import "react-day-picker/lib/style.css";
-import DayPicker from "react-day-picker";
+import "react-day-picker/dist/style.css";
+import { DayPicker } from "react-day-picker";
 import React, { FC, memo } from "react";
 import classnames from "classnames";
 import { useFormikContext } from "formik";
@@ -133,12 +133,11 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
             <CalendarIcon className={classnames(`${dateStyles.reservationDate__calendarIcon} calendarIcon`)} />
           </div>
           <DayPicker
-            selectedDays={values.date}
+            selected={values.date}
             onDayClick={selectDate}
             fromMonth={new Date()}
-            initialMonth={new Date()}
-            firstDayOfWeek={1}
-            disabledDays={(day) => day < new Date() || allTubsAreReservedForGivenEntireDay(day)}
+            weekStartsOn={1}
+            disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
           />
         </div>
         {values.date && (
