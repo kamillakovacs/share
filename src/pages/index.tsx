@@ -32,9 +32,14 @@ export interface ReservationData {
   paymentMethod: string;
 }
 
+export interface ReservationDataShort {
+  date: Date;
+  numberOfGuests: { label: string; value: string };
+  numberOfTubs: { label: string; value: string };
+}
+
 interface Props {
-  users: ReservationData[];
-  currentReservations: ReservationData;
+  currentReservations: ReservationDataShort;
 }
 
 const Main: FC<Props> = ({ currentReservations }) => {
@@ -124,21 +129,20 @@ const Main: FC<Props> = ({ currentReservations }) => {
 };
 
 export async function getServerSideProps({ locale }) {
-  const customers = firebase.database().ref("customers");
-  const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
-    return snapshot.val() || [];
-  });
-
   const reservations = firebase.database().ref("reservations");
-
-  const currentReservations: ReservationData[] = await reservations.once("value").then(function (snapshot) {
-    return snapshot.val() || [];
+  const currentReservations: ReservationDataShort[] = await reservations.once("value").then(function (snapshot) {
+    return (
+      Object.values(snapshot.val()).map((res: Reservation) => ({
+        date: res.date,
+        numberOfGuests: res.numberOfGuests,
+        numberOfTubs: res.numberOfTubs,
+      })) || []
+    );
   });
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"])),
-      users,
       currentReservations,
     },
   };

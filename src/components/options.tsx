@@ -12,10 +12,10 @@ import { Reservation } from "../lib/validation/validationInterfaces";
 
 import optionStyles from "../styles/options.module.scss";
 import styles from "../styles/main.module.scss";
-import { ReservationData } from "../pages";
+import { ReservationDataShort } from "../pages";
 
 interface Props {
-  currentReservations: ReservationData;
+  currentReservations: ReservationDataShort;
 }
 
 const Options: FC<Props> = ({ currentReservations }) => {

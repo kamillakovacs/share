@@ -13,10 +13,10 @@ import { Reservation } from "../lib/validation/validationInterfaces";
 
 import dateStyles from "../styles/reservationDate.module.scss";
 import styles from "../styles/main.module.scss";
-import { ReservationData } from "../pages";
+import { ReservationData, ReservationDataShort } from "../pages";
 
 interface Props {
-  currentReservations: ReservationData;
+  currentReservations: ReservationDataShort;
 }
 
 const timeOptions = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
@@ -74,7 +74,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
   const resetIconColor = (selector: string) => ((document.querySelector(selector) as HTMLElement).style.fill = "white");
 
   const allTubsAreReservedForGivenEntireDay = (day: Date) => {
-    const reservationsOnDate = Object.values(currentReservations).filter((res) => {
+    const reservationsOnDate = Object.values(currentReservations).filter((res: ReservationDataShort) => {
       // find if there are reservations on given day
       let givenDay = new Date(day.getFullYear(), day.getMonth(), day.getDate());
       let reservationDateAndTime = new Date(res.date);
@@ -85,7 +85,9 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       );
       return reservationDate.toISOString() === givenDay.toISOString();
     });
-    const hoursReservedOnGivenDay = reservationsOnDate.map((res) => new Date(res.date).getHours()).sort();
+    const hoursReservedOnGivenDay = reservationsOnDate
+      .map((res: ReservationDataShort) => new Date(res.date).getHours())
+      .sort();
     const allTimesAreReservedOnGivenDay =
       [10, 12, 14, 16, 18, 20].sort().toString() ===
       hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay.indexOf(hour) == -index).toString();
@@ -96,7 +98,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       }
 
       let tubsReserved = 0;
-      reservationsOnDate.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs.value)));
+      reservationsOnDate.forEach((res: ReservationDataShort) => (tubsReserved += parseInt(res.numberOfTubs.value)));
       return tubsReserved >= AVAILABLE_TUBS;
     };
 
