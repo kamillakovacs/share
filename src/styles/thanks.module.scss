@@ -1,15 +1,50 @@
+.container {
+  background-color: #222;
+  padding: 40px 0;
+}
+
 .label {
   display: flex;
   align-items: center;
   margin: 40px 0 10px 5px;
 }
 
-.container {
+.icon {
+  margin: 10px 23px 0 -27px;
+
+  svg {
+    fill: #fcb923;
+    width: 24px;
+  }
+}
+
+.summaryLabel {
+  display: flex;
+  align-items: center;
+  margin: 30px 0 10px 5px;
+}
+
+.reservation {
+  display: flex;
   width: 480px;
   color: #bcbcbc;
   font-weight: 300;
-  margin: 0 0 10px 32px;
+  margin: 0 0 10px 22px;
   line-height: 30px;
+
+  &__summary {
+    margin: 10px;
+  }
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 44px;
+
+    span {
+      margin-left: 30px !important;
+      color: #ffffff;
+    }
+  }
 }
 
 .bold {
@@ -26,4 +61,18 @@
   border-top: 1px solid;
   margin-top: 15px;
   font-weight: 400;
+}
+
+.navigators {
+  .verticalLine {
+    border-left: 1px solid #343434;
+    height: 235px;
+    margin: 75px 0 10px 12px;
+  }
+
+  .verticalLine2 {
+    border-left: 1px solid #343434;
+    height: 270px;
+    margin: 5px 0 10px 12px;
+  }
 }

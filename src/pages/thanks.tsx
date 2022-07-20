@@ -4,10 +4,15 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+
 import { ThankYouEmail } from "../components/thankYouEmail";
+import ReservationSummary from "../components/reservationSummary";
+import thanksStyles from "../styles/thanks.module.scss";
+import reservationStyles from "../styles/reservation.module.scss";
 
 interface Props {
-  reservations: { [key: string]: { paymentId: string; paymentStatus: string } };
+  reservations: ReservationWithDetails;
 }
 
 const Thanks: FC<Props> = ({ reservations }) => {
@@ -45,10 +50,11 @@ const Thanks: FC<Props> = ({ reservations }) => {
   }
 
   return (
-    <article className="Main">
-      <section className="Main__container">
-        <div className="Thanks">{t("thanks.thankYou")}</div>
-      </section>
+    <article className={thanksStyles.container}>
+      <label className={thanksStyles.reservation__title}>
+        <span>{t("thanks.thankYou")}</span>
+      </label>
+      <ReservationSummary reservation={reservation} />
     </article>
   );
 };
