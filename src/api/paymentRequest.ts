@@ -53,6 +53,7 @@ export const useSendPaymentRequest = async (
       headers,
     })
     .then(async (res: any) => {
+      console.log(reservationData);
       await newReservation.makeNewReservation(reservationData, res.data.PaymentId, users);
       router.replace(res.data.GatewayUrl);
     });

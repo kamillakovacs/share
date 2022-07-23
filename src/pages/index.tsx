@@ -19,6 +19,7 @@ import styles from "../styles/main.module.scss";
 
 export interface ReservationData {
   date: Date;
+  dateOfPurchase: Date;
   numberOfGuests: { label: string; value: string };
   numberOfTubs: { label: string; value: string };
   price: string;
@@ -67,6 +68,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
   const onSubmit = (values: Reservation) => {
     const reservationData: ReservationData = {
       date: values.date,
+      dateOfPurchase: new Date(),
       numberOfGuests: values.numberOfGuests,
       numberOfTubs: values.numberOfTubs,
       price: values.price,

@@ -27,6 +27,13 @@ const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
   const [data, setData] = useAppContext();
   const { t } = useTranslation("common");
+  const formattedDate = new Intl.DateTimeFormat("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(data.date));
 
   useEffect(() => {
     if (!data.numberOfGuests) {
@@ -52,8 +59,10 @@ const Details: FC<Props> = ({ users }) => {
     payment.useSendPaymentRequest(reservationData, users, router);
 
   const onSubmit = async (values: ReservationWithDetails) => {
+    console.log(data.date);
     const reservationData: ReservationData = {
       date: data.date,
+      dateOfPurchase: new Date(),
       numberOfGuests: data.numberOfGuests,
       numberOfTubs: data.numberOfTubs,
       price: data.price,
@@ -107,15 +116,7 @@ const Details: FC<Props> = ({ users }) => {
                   </div>
                   <div className={detailsStyles.details__row}>
                     <div>Date:</div>
-                    <div>
-                      {new Intl.DateTimeFormat("en-US", {
-                        month: "2-digit",
-                        day: "2-digit",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      }).format(new Date(values.date))}
-                    </div>
+                    <div>{formattedDate}</div>
                   </div>
                   <div className={detailsStyles.details__row}>
                     <div>Length of stay:</div>

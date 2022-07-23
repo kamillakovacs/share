@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 
 //@ts-ignore
@@ -18,6 +18,21 @@ interface Props {
 
 const ReservationSummary: FC<Props> = ({ reservation }) => {
   const { t } = useTranslation("common");
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    if (reservation?.date) {
+      setDate(
+        new Intl.DateTimeFormat("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(new Date(reservation?.date))
+      );
+    }
+  }, [reservation?.date]);
 
   return (
     <>
@@ -44,16 +59,7 @@ const ReservationSummary: FC<Props> = ({ reservation }) => {
             </div>
             <div className={detailsStyles.details__row}>
               <div>{t("reservationSummary.date")}</div>
-              <div>
-                {reservation?.date &&
-                  new Intl.DateTimeFormat("en-US", {
-                    month: "2-digit",
-                    day: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  }).format(new Date(reservation?.date))}
-              </div>
+              <div>{date}</div>
             </div>
             <div className={detailsStyles.details__row}>
               <div>{t("reservationSummary.lengthOfStay")}</div>
@@ -64,6 +70,45 @@ const ReservationSummary: FC<Props> = ({ reservation }) => {
               <div>
                 {reservation?.price} {t("summary.huf")}
               </div>
+            </div>
+          </div>
+
+          <div className={thanksStyles.summaryLabel}>
+            <div className={thanksStyles.icon}>
+              <CalendarCheckIcon />
+            </div>
+            <label>Billing Details</label>
+          </div>
+          <div className={detailsStyles.details}>
+            <div className={detailsStyles.details__row}>
+              <div>Name</div>
+              <div>
+                {reservation?.firstName} {reservation?.lastName}
+              </div>
+            </div>
+            <div className={detailsStyles.details__row}>
+              <div>Email</div>
+              <div>{reservation?.email}</div>
+            </div>
+            <div className={detailsStyles.details__row}>
+              <div>Phone</div>
+              <div>{reservation?.phoneNumber}</div>
+            </div>
+            <div className={detailsStyles.details__row}>
+              <div>Date of Purchase</div>
+              <div>{reservation?.dateOfPurchase}</div>
+            </div>
+            <div className={detailsStyles.details__row}>
+              <div>Total price</div>
+              <div>{reservation?.price} HUF</div>
+            </div>
+            <div className={detailsStyles.details__row}>
+              <div>Amount paid</div>
+              <div></div>
+            </div>
+            <div className={detailsStyles.details__row}>
+              <div>Remaining balance</div>
+              <div></div>
             </div>
           </div>
 
