@@ -31,6 +31,7 @@ export interface ReservationData {
   whereYouHeard?: { label: string; value: string };
   paymentStatus: string;
   paymentMethod: string;
+  transactionId: string;
 }
 
 export interface ReservationDataShort {

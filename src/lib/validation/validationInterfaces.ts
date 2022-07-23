@@ -1,5 +1,6 @@
 export enum PaymentStatus {
   Unpaid = "UNPAID",
+  Prepared = "Prepared",
   Success = "Success",
 }
 

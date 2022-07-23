@@ -8,12 +8,12 @@ export default function handler(req, res) {
   const newCustomerId = customers.child("customers").push().key;
 
   reservations.update({
-    [paymentId]: reservationData,
+    [paymentId]: reservationData
   });
 
   if (!customerAlreadyInDatabase) {
     customers.update({
-      [newCustomerId]: newCustomer,
+      [newCustomerId]: newCustomer
     });
   }
 

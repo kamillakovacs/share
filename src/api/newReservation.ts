@@ -1,10 +1,12 @@
 import { ReservationData } from "../pages";
 import axios from "axios";
+import { PaymentStatus } from "../lib/validation/validationInterfaces";
 
 export const makeNewReservation = async (
   reservationData: ReservationData,
+  users: ReservationData[],
   paymentId: string,
-  users: ReservationData[]
+  transactionId: string
 ) => {
   const customerAlreadyInDatabase = !!Object.values(users).filter(
     (user) =>
@@ -18,16 +20,18 @@ export const makeNewReservation = async (
     firstName: reservationData.firstName,
     lastName: reservationData.lastName,
     phoneNumber: reservationData.phoneNumber,
-    email: reservationData.email,
+    email: reservationData.email
   };
 
   const headers = {
-    "Content-Type": "application/json; charset=utf-8",
+    "Content-Type": "application/json; charset=utf-8"
   };
 
-  await axios.post(
-    "/api/reservation",
-    { reservationData, newCustomer, paymentId, customerAlreadyInDatabase },
-    { headers }
-  );
+  reservationData.paymentStatus = PaymentStatus.Prepared;
+  reservationData.transactionId = transactionId;
+
+  await axios
+    .post("/api/reservation", { reservationData, newCustomer, paymentId, customerAlreadyInDatabase }, { headers })
+    .then((res) => console.log(res))
+    .catch((e) => console.log(e));
 };

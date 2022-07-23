@@ -1,7 +1,8 @@
+import axios from "axios";
 import { NextRouter } from "next/router";
 
 import * as newReservation from "../api/newReservation";
-import axios from "axios";
+import { BarionPaymentResponseData } from "./interfaces";
 import { ReservationData } from "../pages";
 
 export const useSendPaymentRequest = async (
@@ -10,7 +11,7 @@ export const useSendPaymentRequest = async (
   router: NextRouter
 ) => {
   const headers = {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json"
   };
 
   const data = {
@@ -41,20 +42,22 @@ export const useSendPaymentRequest = async (
             Quantity: 1,
             Unit: "pcs",
             UnitPrice: parseInt(reservationData.price),
-            ItemTotal: parseInt(reservationData.price),
-          },
-        ],
-      },
-    ],
+            ItemTotal: parseInt(reservationData.price)
+          }
+        ]
+      }
+    ]
   };
 
   return axios
     .post(process.env.BARION_PAYMENT_REQUEST_URL, data, {
-      headers,
+      headers
     })
-    .then(async (res: any) => {
-      console.log(reservationData);
-      await newReservation.makeNewReservation(reservationData, res.data.PaymentId, users);
+    .then(async (res: BarionPaymentResponseData) => {
+      await res.data.Transactions.forEach(
+        async (transaction) =>
+          await newReservation.makeNewReservation(reservationData, users, res.data.PaymentId, transaction.TransactionId)
+      );
       router.replace(res.data.GatewayUrl);
     });
 };
