@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import firebase from "../lib/firebase";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
@@ -6,10 +6,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
-import { ThankYouEmail } from "../components/thankYouEmail";
 import ReservationSummary from "../components/reservationSummary";
 import thanksStyles from "../styles/thanks.module.scss";
-import reservationStyles from "../styles/reservation.module.scss";
+import { sendThankYouEmail } from "../api/thankYouEmail";
 
 interface Props {
   reservations: ReservationWithDetails;
@@ -18,35 +17,49 @@ interface Props {
 const Thanks: FC<Props> = ({ reservations }) => {
   const { query } = useRouter();
   const { t } = useTranslation("common");
+  const [date, setDate] = useState("");
+  const [dateOfPurchase, setDateOfPurchase] = useState("");
+
   const reservationPaymentId = Object.keys(reservations).find((key) => key === query.paymentId);
-  const reservation = Object.values(reservations).find(() => reservations[reservationPaymentId]);
+  const reservation: ReservationWithDetails = Object.values(reservations).find(
+    () => reservations[reservationPaymentId]
+  );
 
-  const messageContent =
-    "<html><body><div>" + " " + t("thanks.thankYou") + t("thanks.lookForwardToSeeingYou") + "</div></body></html>";
+  useEffect(() => {
+    if (reservation?.date) {
+      setDate(
+        new Intl.DateTimeFormat("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(new Date(reservation?.date))
+      );
+    }
 
-  const sendThankYouEmail = () => {
-    // const mg = mailgun({
-    //   apiKey: process.env.MAILGUN_API_KEY,
-    //   domain: process.env.MAILGUN_DOMAIN,
-    // });
-    // const path = require('path');
-    // var filepath = path.join(__dirname, 'sample.jpg');
-    const data = {
-      from: `Mailgun Sandbox <${process.env.MAILGUN_EMAIL_ADDRESS}>`,
-      to: "kamilla525@yahoo.com",
-      subject: t("thanks.yourReservation"),
-      html: ThankYouEmail,
-      // attachment: filepath
+    if (reservation?.dateOfPurchase) {
+      setDateOfPurchase(
+        new Intl.DateTimeFormat("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(new Date(reservation?.dateOfPurchase))
+      );
+    }
+  }, [reservation?.date]);
+
+  if (reservationPaymentId) {
+    const emailData = {
+      name: `${reservation?.firstName} ${reservation?.lastName}`,
+      date,
+      dateOfPurchase,
+      numberOfTubs: reservation?.numberOfTubs.label,
+      totalPrice: reservation?.price,
     };
-
-    // mg.messages().send(data, (_error, body) => {
-    //   console.log("body", body);
-    //   console.log("reservations", reservations);
-    // });
-  };
-
-  if (reservationPaymentId && reservation.paymentStatus === "Success") {
-    sendThankYouEmail();
+    // sendThankYouEmail(emailData);
   }
 
   return (
