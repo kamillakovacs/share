@@ -25,9 +25,8 @@ export default function handler(req, res) {
       params
     })
     .then(async (response) => {
-      console.log("saving payment status");
-      console.log(response);
-      savePaymentStatus(response.data.PaymentId, response.data.Status);
-      return res.status(200).json({ success: true });
-    });
+      await savePaymentStatus(response.data.PaymentId, response.data.Status);
+      return res.json({ success: true });
+    })
+    .catch((e) => res.error({ error: e }));
 }
