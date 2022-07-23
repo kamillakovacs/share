@@ -1,8 +1,8 @@
 export interface ReservationData {
   date: Date;
   dateOfPurchase?: Date;
-  numberOfGuests: { label: string; value: string };
-  numberOfTubs: { label: string; value: string };
+  numberOfGuests: { label: string; value: number };
+  numberOfTubs: { label: string; value: number };
   price: string;
   additionalTreatments?: string;
   firstName: string;
@@ -17,6 +17,6 @@ export interface ReservationData {
 
 export interface ReservationDataShort {
   date: Date;
-  numberOfGuests: { label: string; value: string };
-  numberOfTubs: { label: string; value: string };
+  numberOfGuests: { label: string; value: number };
+  numberOfTubs: { label: string; value: number };
 }

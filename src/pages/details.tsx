@@ -12,7 +12,6 @@ import { reservation } from "../lib/validation/validationSchemas";
 import { useAppContext } from "../../context/appContext";
 
 import Customer from "../components/customer";
-import customerStyles from "../styles/customer.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";

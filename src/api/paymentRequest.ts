@@ -34,15 +34,15 @@ export const useSendPaymentRequest = async (
       {
         POSTransactionId: `share-pos-transaction-${reservationData.date}-${Date.now()}`,
         Payee: "kamilla525@yahoo.com",
-        Total: parseInt(reservationData.price),
+        Total: reservationData.price,
         Items: [
           {
             Name: reservationData.lastName,
             Description: `Spa reservation for ${reservationData.numberOfGuests.label}`,
             Quantity: 1,
             Unit: "pcs",
-            UnitPrice: parseInt(reservationData.price),
-            ItemTotal: parseInt(reservationData.price)
+            UnitPrice: reservationData.price,
+            ItemTotal: reservationData.price
           }
         ]
       }

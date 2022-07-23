@@ -98,7 +98,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       }
 
       let tubsReserved = 0;
-      reservationsOnDate.forEach((res: ReservationDataShort) => (tubsReserved += parseInt(res.numberOfTubs.value)));
+      reservationsOnDate.forEach((res: ReservationDataShort) => (tubsReserved += res.numberOfTubs.value));
       return tubsReserved >= AVAILABLE_TUBS;
     };
 

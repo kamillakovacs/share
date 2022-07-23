@@ -28,7 +28,7 @@ const ReservationSummary: FC<Props> = ({ reservation }) => {
           day: "2-digit",
           year: "numeric",
           hour: "2-digit",
-          minute: "2-digit",
+          minute: "2-digit"
         }).format(new Date(reservation?.date))
       );
     }
@@ -122,14 +122,12 @@ const ReservationSummary: FC<Props> = ({ reservation }) => {
             <div>{t("summary.infraredSauna")}</div>
             <div>{`${t("summary.soakFor")} ${reservation?.numberOfGuests ? reservation?.numberOfGuests.value : 1} ${
               reservation?.numberOfGuests
-                ? parseInt(reservation.numberOfGuests.value) > 1
+                ? reservation.numberOfGuests.value > 1
                   ? t("summary.people")
                   : t("summary.person")
                 : t("summary.person")
-            } in ${reservation?.numberOfTubs ? reservation?.numberOfTubs.value : "1"} ${
-              parseInt(reservation?.numberOfTubs ? reservation?.numberOfTubs.value : "1") > 1
-                ? t("summary.tubs")
-                : t("summary.tub")
+            } in ${reservation?.numberOfTubs ? reservation?.numberOfTubs.value : 1} ${
+              reservation?.numberOfTubs ? reservation?.numberOfTubs.value : 1 > 1 ? t("summary.tubs") : t("summary.tub")
             } ${t("summary.ofBeerBath")} `}</div>
             <div>{t("summary.strawBed")} </div>
             <div>{t("summary.unlimitedBeer")} </div>

@@ -6,16 +6,16 @@ export enum PaymentStatus {
 
 export interface Reservation {
   date: Date;
-  numberOfGuests: { label: string; value: string };
-  numberOfTubs: { label: string; value: string };
+  numberOfGuests: { label: string; value: number };
+  numberOfTubs: { label: string; value: number };
   price: string;
 }
 
 export interface ReservationWithDetails {
   date: Date;
   dateOfPurchase?: Date;
-  numberOfGuests: { label: string; value: string };
-  numberOfTubs: { label: string; value: string };
+  numberOfGuests: { label: string; value: number };
+  numberOfTubs: { label: string; value: number };
   price: string;
   firstName: string;
   lastName: string;

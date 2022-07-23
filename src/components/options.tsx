@@ -62,57 +62,57 @@ const Options: FC<Props> = ({ currentReservations }) => {
   };
 
   const numberOfGuestsOptions = [
-    { value: "1", label: t("options.onePerson") },
-    { value: "2", label: t("options.twoPeople") },
-    { value: "3", label: t("options.threePeople") },
-    { value: "4", label: t("options.fourPeople") },
-    { value: "5", label: t("options.fivePeople") },
-    { value: "6", label: t("options.sixPeople") }
+    { value: 1, label: t("options.onePerson") },
+    { value: 2, label: t("options.twoPeople") },
+    { value: 3, label: t("options.threePeople") },
+    { value: 4, label: t("options.fourPeople") },
+    { value: 5, label: t("options.fivePeople") },
+    { value: 6, label: t("options.sixPeople") }
   ];
 
   const availableNumberOfGuestsOptions = numberOfGuestsOptions.filter(
-    (option) => numberOfAvailableTubs() * 2 >= parseInt(option.value)
+    (option) => numberOfAvailableTubs() * 2 >= option.value
   );
 
-  const onePersonTubOptions = [{ value: "1", label: t("options.oneTub") }];
+  const onePersonTubOptions = [{ value: 1, label: t("options.oneTub") }];
   const twoPeopleTubOptions = [
-    { value: "1", label: t("options.twoPeopleInOneTub") },
-    { value: "2", label: t("options.twoPeopleInTwoTubs") }
+    { value: 1, label: t("options.twoPeopleInOneTub") },
+    { value: 2, label: t("options.twoPeopleInTwoTubs") }
   ];
   const threePeopleTubOptions = [
-    { value: "2", label: t("options.threePeopleInTwoTubs") },
-    { value: "3", label: t("options.threePeopleInThreeTubs") }
+    { value: 2, label: t("options.threePeopleInTwoTubs") },
+    { value: 3, label: t("options.threePeopleInThreeTubs") }
   ];
   const fourPeopleTubOptions = [
-    { value: "2", label: t("options.fourPeopleInTwoTubs") },
-    { value: "3", label: t("options.fourPeopleInThreeTubs") }
+    { value: 2, label: t("options.fourPeopleInTwoTubs") },
+    { value: 3, label: t("options.fourPeopleInThreeTubs") }
   ];
-  const fivePeopleTubOptions = [{ value: "3", label: t("options.threeTubs") }];
-  const sixPeopleTubOptions = [{ value: "3", label: t("options.threeTubs") }];
+  const fivePeopleTubOptions = [{ value: 3, label: t("options.threeTubs") }];
+  const sixPeopleTubOptions = [{ value: 3, label: t("options.threeTubs") }];
 
   const availableTubOptions = (
     tubOptions: {
-      value: string;
+      value: number;
       label: string;
     }[]
-  ) => tubOptions.filter((option) => numberOfAvailableTubs() >= parseInt(option.value));
+  ) => tubOptions.filter((option) => numberOfAvailableTubs() >= option.value);
 
   const getTubOptions = () => {
     if (!values.numberOfGuests) {
       return [];
     } else {
       switch (values.numberOfGuests.value) {
-        case "1":
+        case 1:
           return availableTubOptions(onePersonTubOptions);
-        case "2":
+        case 2:
           return availableTubOptions(twoPeopleTubOptions);
-        case "3":
+        case 3:
           return availableTubOptions(threePeopleTubOptions);
-        case "4":
+        case 4:
           return availableTubOptions(fourPeopleTubOptions);
-        case "5":
+        case 5:
           return availableTubOptions(fivePeopleTubOptions);
-        case "6":
+        case 6:
           return availableTubOptions(sixPeopleTubOptions);
       }
     }
@@ -121,27 +121,27 @@ const Options: FC<Props> = ({ currentReservations }) => {
   const setPrice = () => {
     switch (values.numberOfTubs.label) {
       case t("options.oneTub"):
-        return "18 000";
+        return 18000;
       case t("options.twoPeopleInOneTub"):
-        return "22 000";
+        return 22000;
       case t("options.twoPeopleInTwoTubs"):
-        return "32 000";
+        return 32000;
       case t("options.threePeopleInTwoTubs"):
-        return "40 000";
+        return 40000;
       case t("options.threePeopleInThreeTubs"):
-        return "54 000";
+        return 54000;
       case t("options.fourPeopleInTwoTubs"):
-        return "44 000";
+        return 44000;
       case t("options.fourPeopleInThreeTubs"):
-        return "58 000";
+        return 58000;
       case t("options.threeTubs"):
-        return values.numberOfGuests.value === "5" ? "62 000" : "66 000";
+        return values.numberOfGuests.value === 5 ? 62000 : 66000;
     }
   };
 
   const setOption = (
-    option: { value: string; label: string },
-    select: ActionMeta<{ value: string; label: string }>
+    option: { value: number; label: string },
+    select: ActionMeta<{ value: number; label: string }>
   ) => {
     setFieldValue(select.name, option);
     setFieldTouched(select.name);

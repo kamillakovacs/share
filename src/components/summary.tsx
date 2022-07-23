@@ -22,12 +22,12 @@ const Summary: FC = () => {
         <div>{t("summary.infraredSauna")}</div>
         <div>{`${t("summary.soakFor")} ${values.numberOfGuests ? values.numberOfGuests.value : 1} ${
           values.numberOfGuests
-            ? parseInt(values.numberOfGuests.value) > 1
+            ? values.numberOfGuests.value > 1
               ? t("summary.people")
               : t("summary.person")
             : t("summary.person")
-        } in ${values.numberOfTubs ? values.numberOfTubs.value : "1"} ${
-          parseInt(values.numberOfTubs ? values.numberOfTubs.value : "1") > 1 ? t("summary.tubs") : t("summary.tub")
+        } in ${values.numberOfTubs ? values.numberOfTubs.value : 1} ${
+          values.numberOfTubs ? values.numberOfTubs.value : 1 > 1 ? t("summary.tubs") : t("summary.tub")
         } ${t("summary.ofBeerBath")} `}</div>
         <div>{t("summary.strawBed")} </div>
         <div>{t("summary.unlimitedBeer")} </div>
