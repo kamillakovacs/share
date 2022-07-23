@@ -57,7 +57,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const numberOfAvailableTubs = (): number => {
     let tubsReserved = 0;
-    reservationsSelectedOnDateAndTime.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs.value)));
+    reservationsSelectedOnDateAndTime.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs?.value)));
     return AVAILABLE_TUBS - tubsReserved;
   };
 

@@ -111,12 +111,12 @@ const Main: FC<Props> = ({ currentReservations }) => {
 
 export async function getServerSideProps({ locale }) {
   const reservations = firebase.database().ref("reservations");
-  const currentReservations: ReservationDataShort[] = await reservations.once("value").then(function (snapshot) {
+  const currentReservations: ReservationDataShort[] = await reservations?.once("value").then(function (snapshot) {
     return (
       Object.values(snapshot.val()).map((res: Reservation) => ({
-        date: res.date,
-        numberOfGuests: res.numberOfGuests,
-        numberOfTubs: res.numberOfTubs
+        date: res.date ?? null,
+        numberOfGuests: res.numberOfGuests ?? null,
+        numberOfTubs: res.numberOfTubs ?? null
       })) || []
     );
   });

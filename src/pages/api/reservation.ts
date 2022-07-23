@@ -1,4 +1,4 @@
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const firebase = require("../../lib/firebase").default;
   const { reservationData, newCustomer, paymentId, customerAlreadyInDatabase } = req.body;
 
@@ -7,12 +7,12 @@ export default function handler(req, res) {
   const reservations = database.ref("reservations");
   const newCustomerId = customers.child("customers").push().key;
 
-  reservations.update({
+  await reservations.update({
     [paymentId]: reservationData
   });
 
   if (!customerAlreadyInDatabase) {
-    customers.update({
+    await customers.update({
       [newCustomerId]: newCustomer
     });
   }

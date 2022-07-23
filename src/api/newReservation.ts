@@ -31,8 +31,10 @@ export const makeNewReservation = async (
   reservationData.paymentStatus = PaymentStatus.Prepared;
   reservationData.transactionId = transactionId;
 
-  await axios
+  const firebaseResponse = await axios
     .post("/api/reservation", { reservationData, newCustomer, paymentId, customerAlreadyInDatabase }, { headers })
-    .then((res) => console.log(res))
-    .catch((e) => console.log(e));
+    .then((res) => res.data)
+    .catch((e) => e);
+
+  return firebaseResponse;
 };

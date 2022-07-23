@@ -54,10 +54,9 @@ export const useSendPaymentRequest = async (
       headers
     })
     .then(async (res: BarionPaymentResponseData) => {
-      await res.data.Transactions.forEach(
-        async (transaction) =>
-          await newReservation.makeNewReservation(reservationData, users, res.data.PaymentId, transaction.TransactionId)
-      );
-      router.replace(res.data.GatewayUrl);
+      await newReservation
+        .makeNewReservation(reservationData, users, res.data.PaymentId, res.data.Transactions[0].TransactionId)
+        .then(() => router.replace(res.data.GatewayUrl))
+        .catch((e) => e);
     });
 };
