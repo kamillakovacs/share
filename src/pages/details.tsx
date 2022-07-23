@@ -111,7 +111,7 @@ const Details: FC<Props> = ({ users }) => {
                   </div>
                   <div className={detailsStyles.details__row}>
                     <div>Tubs reserved:</div>
-                    <div>{values.numberOfTubs.label}</div>
+                    <div>{values.numberOfTubs?.label}</div>
                   </div>
                   <div className={detailsStyles.details__row}>
                     <div>Date:</div>

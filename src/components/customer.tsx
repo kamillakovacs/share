@@ -3,24 +3,27 @@ import Select, { ActionMeta } from "react-select";
 import classNames from "classnames";
 import { useFormikContext, ErrorMessage } from "formik";
 import { useTranslation } from "next-i18next";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
-import Payment from "./payment";
 import customerStyles from "../styles/customer.module.scss";
 import styles from "../styles/main.module.scss";
 
 const Customer: FC = () => {
   const { t } = useTranslation("common");
+
   const { values, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "phoneNumber") {
-      e.target.value.replace(/\+|-/gi, "");
-    }
-
     setFieldTouched(e.target.name);
     setFieldValue(e.target.name, e.target.value);
+  };
+
+  const onPhoneNumberInput = (value: any) => {
+    setFieldTouched("phoneNumber");
+    setFieldValue("phoneNumber", value);
   };
 
   const setOption = (
@@ -38,7 +41,7 @@ const Customer: FC = () => {
     { value: "tripAdvisor", label: t("customer.tripAdvisor") },
     { value: "facebook", label: t("customer.facebook") },
     { value: "instagram", label: t("customer.instagram") },
-    { value: "hotel", label: t("customer.hotel") },
+    { value: "hotel", label: t("customer.hotel") }
   ];
 
   return (
@@ -46,7 +49,7 @@ const Customer: FC = () => {
       <div className={customerStyles.detailTitle}>
         <div
           className={classNames(`${styles.todoitem} ${styles.todoitem__one}`, {
-            [styles.todoitem__done]: values.firstName && values.lastName,
+            [styles.todoitem__done]: values.firstName && values.lastName
           })}
         />
         <label>{t("customer.personalInformation")}</label>
@@ -76,7 +79,7 @@ const Customer: FC = () => {
       <div className={customerStyles.detailTitle}>
         <div
           className={classNames(`${styles.todoitem} ${styles.todoitem__two}`, {
-            [styles.todoitem__done]: values.email && values.phoneNumber,
+            [styles.todoitem__done]: values.email && values.phoneNumber
           })}
         />
         <label>{t("customer.contactInformation")}</label>
@@ -92,12 +95,12 @@ const Customer: FC = () => {
         <div className={customerStyles.ErrorMessage}>
           <ErrorMessage name="email" />
         </div>
-        <input
+        <PhoneInput
           className={customerStyles.customer__input}
           name="phoneNumber"
-          placeholder={t("customer.phone")}
-          type="tel"
-          onChange={onChangeInput}
+          placeholder="Enter phone number"
+          defaultCountry="HU"
+          onChange={onPhoneNumberInput}
         />
       </div>
       <div className={customerStyles.ErrorMessage}>
@@ -106,7 +109,7 @@ const Customer: FC = () => {
       <div className={customerStyles.detailTitle}>
         <div
           className={classNames(`${styles.todoitem} ${styles.todoitem__three}`, {
-            [styles.todoitem__done]: values.whereYouHeard,
+            [styles.todoitem__done]: values.whereYouHeard
           })}
         />
         <label>{t("customer.whereDidYouHearAboutUs")}</label>
