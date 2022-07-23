@@ -16,29 +16,7 @@ import ReservationDate from "../components/reservationDate";
 import Summary from "../components/summary";
 import reservationStyles from "../styles/reservation.module.scss";
 import styles from "../styles/main.module.scss";
-
-export interface ReservationData {
-  date: Date;
-  dateOfPurchase: Date;
-  numberOfGuests: { label: string; value: string };
-  numberOfTubs: { label: string; value: string };
-  price: string;
-  additionalTreatments?: string;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  whereYouHeard?: { label: string; value: string };
-  paymentStatus: string;
-  paymentMethod: string;
-  transactionId: string;
-}
-
-export interface ReservationDataShort {
-  date: Date;
-  numberOfGuests: { label: string; value: string };
-  numberOfTubs: { label: string; value: string };
-}
+import { ReservationData, ReservationDataShort } from "../lib/interfaces";
 
 interface Props {
   currentReservations: ReservationDataShort;
@@ -58,7 +36,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
     lastName: "",
     phoneNumber: "",
     email: "",
-    paymentMethod: "",
+    paymentMethod: ""
   };
 
   const redirectToDetailsPage = (reservationData: ReservationData) => {
@@ -79,7 +57,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
       email: "email@email.com",
       whereYouHeard: { value: "none", label: "None" },
       paymentStatus: "",
-      paymentMethod: "",
+      paymentMethod: ""
     };
 
     return redirectToDetailsPage(reservationData);
@@ -114,7 +92,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
                     className={classnames(
                       `${reservationStyles.reservation__button} ${reservationStyles.reservation__continue}`,
                       {
-                        [reservationStyles.reservation__continue__enabled]: !!dirty && !Object.keys(errors).length,
+                        [reservationStyles.reservation__continue__enabled]: !!dirty && !Object.keys(errors).length
                       }
                     )}
                     type="submit"
@@ -138,7 +116,7 @@ export async function getServerSideProps({ locale }) {
       Object.values(snapshot.val()).map((res: Reservation) => ({
         date: res.date,
         numberOfGuests: res.numberOfGuests,
-        numberOfTubs: res.numberOfTubs,
+        numberOfTubs: res.numberOfTubs
       })) || []
     );
   });
@@ -146,8 +124,8 @@ export async function getServerSideProps({ locale }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"])),
-      currentReservations,
-    },
+      currentReservations
+    }
   };
 }
 

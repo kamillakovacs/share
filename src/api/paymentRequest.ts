@@ -2,8 +2,8 @@ import axios from "axios";
 import { NextRouter } from "next/router";
 
 import * as newReservation from "../api/newReservation";
+import { ReservationData } from "../lib/interfaces";
 import { BarionPaymentResponseData } from "./interfaces";
-import { ReservationData } from "../pages";
 
 export const useSendPaymentRequest = async (
   reservationData: ReservationData,

@@ -16,7 +16,7 @@ import customerStyles from "../styles/customer.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
-import { ReservationData } from ".";
+import { ReservationData } from "../lib/interfaces";
 
 interface Props {
   users: ReservationData[];
@@ -32,7 +32,7 @@ const Details: FC<Props> = ({ users }) => {
     day: "2-digit",
     year: "numeric",
     hour: "2-digit",
-    minute: "2-digit",
+    minute: "2-digit"
   }).format(new Date(data.date));
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Details: FC<Props> = ({ users }) => {
     lastName: "",
     phoneNumber: "",
     email: "",
-    paymentMethod: "",
+    paymentMethod: ""
   };
 
   const goBack = () => router.replace("/");
@@ -72,7 +72,7 @@ const Details: FC<Props> = ({ users }) => {
       email: values.email,
       whereYouHeard: values.whereYouHeard ? values.whereYouHeard : null,
       paymentStatus: "UNPAID",
-      paymentMethod: values.paymentMethod,
+      paymentMethod: values.paymentMethod
     };
 
     return redirectToStartPayment(reservationData);
@@ -165,8 +165,8 @@ export async function getServerSideProps({ locale }) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"])),
-      users,
-    },
+      users
+    }
   };
 }
 

@@ -12,7 +12,7 @@ import { Reservation } from "../lib/validation/validationInterfaces";
 
 import optionStyles from "../styles/options.module.scss";
 import styles from "../styles/main.module.scss";
-import { ReservationDataShort } from "../pages";
+import { ReservationDataShort } from "../lib/interfaces";
 
 interface Props {
   currentReservations: ReservationDataShort;
@@ -67,7 +67,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
     { value: "3", label: t("options.threePeople") },
     { value: "4", label: t("options.fourPeople") },
     { value: "5", label: t("options.fivePeople") },
-    { value: "6", label: t("options.sixPeople") },
+    { value: "6", label: t("options.sixPeople") }
   ];
 
   const availableNumberOfGuestsOptions = numberOfGuestsOptions.filter(
@@ -77,15 +77,15 @@ const Options: FC<Props> = ({ currentReservations }) => {
   const onePersonTubOptions = [{ value: "1", label: t("options.oneTub") }];
   const twoPeopleTubOptions = [
     { value: "1", label: t("options.twoPeopleInOneTub") },
-    { value: "2", label: t("options.twoPeopleInTwoTubs") },
+    { value: "2", label: t("options.twoPeopleInTwoTubs") }
   ];
   const threePeopleTubOptions = [
     { value: "2", label: t("options.threePeopleInTwoTubs") },
-    { value: "3", label: t("options.threePeopleInThreeTubs") },
+    { value: "3", label: t("options.threePeopleInThreeTubs") }
   ];
   const fourPeopleTubOptions = [
     { value: "2", label: t("options.fourPeopleInTwoTubs") },
-    { value: "3", label: t("options.fourPeopleInThreeTubs") },
+    { value: "3", label: t("options.fourPeopleInThreeTubs") }
   ];
   const fivePeopleTubOptions = [{ value: "3", label: t("options.threeTubs") }];
   const sixPeopleTubOptions = [{ value: "3", label: t("options.threeTubs") }];
@@ -166,7 +166,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
         <div
           className={classNames(`${styles.todoitem} ${styles.todoitem__two}`, {
             [styles.todoitem__done]:
-              values.numberOfGuests && values.numberOfTubs && touched.numberOfGuests && touched.numberOfTubs,
+              values.numberOfGuests && values.numberOfTubs && touched.numberOfGuests && touched.numberOfTubs
           })}
         />
         <div className={optionStyles.options__tubsLabel}>

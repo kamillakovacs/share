@@ -1,17 +1,19 @@
+import { PaymentStatus } from "../../lib/validation/validationInterfaces";
+
 export default function handler(req, res) {
   const axios = require("axios");
   const firebase = require("../../lib/firebase").default;
 
   const headers = {
-    "Content-Type": "application/json; charset=utf-8",
+    "Content-Type": "application/json; charset=utf-8"
   };
 
   const params = {
     POSKey: process.env.BARION_POS_KEY,
-    PaymentId: req.query.paymentId,
+    PaymentId: req.query.paymentId
   };
 
-  const savePaymentStatus = (id, status) =>
+  const savePaymentStatus = (id: string, status: PaymentStatus) =>
     firebase
       .database()
       .ref("/reservations/" + id)
@@ -20,10 +22,11 @@ export default function handler(req, res) {
   return axios
     .get(process.env.BARION_GET_PAYMENT_STATE_URL, {
       headers,
-      params,
+      params
     })
     .then(async (response) => {
       console.log("saving payment status");
+      console.log(response);
       savePaymentStatus(response.data.PaymentId, response.data.Status);
       return res.status(200).json({ success: true });
     });

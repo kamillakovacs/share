@@ -13,7 +13,7 @@ import { Reservation } from "../lib/validation/validationInterfaces";
 
 import dateStyles from "../styles/reservationDate.module.scss";
 import styles from "../styles/main.module.scss";
-import { ReservationData, ReservationDataShort } from "../pages";
+import { ReservationDataShort } from "../lib/interfaces";
 
 interface Props {
   currentReservations: ReservationDataShort;
@@ -135,7 +135,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
       <div className={dateStyles.reservationDate__label}>
         <div
           className={classnames(`${styles.todoitem} ${styles.todoitem__one}`, {
-            [styles.todoitem__done]: values.date && values.date.getHours() !== 0,
+            [styles.todoitem__done]: values.date && values.date.getHours() !== 0
           })}
         />
 
@@ -170,7 +170,7 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
                   key={index}
                   type="button"
                   className={classnames({
-                    [dateStyles.reservationDate__timeOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(t),
+                    [dateStyles.reservationDate__timeOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(t)
                   })}
                   onClick={selectTime}
                 >

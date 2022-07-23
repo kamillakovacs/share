@@ -1,5 +1,6 @@
-import { ReservationData } from "../pages";
 import axios from "axios";
+import { ReservationData } from "../lib/interfaces";
+
 import { PaymentStatus } from "../lib/validation/validationInterfaces";
 
 export const makeNewReservation = async (
