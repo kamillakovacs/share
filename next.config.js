@@ -9,12 +9,12 @@ module.exports = {
   webpack: (config) => {
     config.module.rules.push({
       test: /\.html$/i,
-      loader: "html-loader",
+      loader: "html-loader"
     });
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
-      use: ["@svgr/webpack"],
+      use: ["@svgr/webpack"]
     });
     config.plugins.push(new Dotenv({ silent: true }));
     return config;
@@ -39,6 +39,6 @@ module.exports = {
     FIREBASE_CLIENT_EMAIL: process.env.FIREBASE_CLIENT_EMAIL,
     FIREBASE_PRIVATE_KEY: process.env.FIREBASE_PRIVATE_KEY,
     BARION_PAYMENT_REDIRECT_URL: process.env.BARION_PAYMENT_REDIRECT_URL,
-    BARION_PAYMENT_CALLBACK_URL: process.env.BARION_PAYMENT_CALLBACK_URL,
-  },
+    BARION_PAYMENT_CALLBACK_URL: process.env.BARION_PAYMENT_CALLBACK_URL
+  }
 };

@@ -1,8 +1,4 @@
-export enum PaymentStatus {
-  Unpaid = "UNPAID",
-  Prepared = "Prepared",
-  Success = "Success"
-}
+import { PaymentStatus } from "../../api/interfaces";
 
 export interface Reservation {
   date: Date;
@@ -25,4 +21,8 @@ export interface ReservationWithDetails {
   paymentMethod: string;
   paymentStatus?: PaymentStatus;
   transactionId?: string;
+}
+
+export interface Reservations {
+  [key: string]: ReservationWithDetails;
 }

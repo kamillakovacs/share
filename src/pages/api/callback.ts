@@ -1,4 +1,4 @@
-import { PaymentStatus } from "../../lib/validation/validationInterfaces";
+import { PaymentStatus } from "../../api/interfaces";
 
 export default function handler(req, res) {
   const axios = require("axios");

@@ -27,7 +27,11 @@ const Summary: FC = () => {
               : t("summary.person")
             : t("summary.person")
         } in ${values.numberOfTubs ? values.numberOfTubs.value : 1} ${
-          values.numberOfTubs ? values.numberOfTubs.value : 1 > 1 ? t("summary.tubs") : t("summary.tub")
+          values.numberOfTubs
+            ? values.numberOfTubs.value > 1
+              ? t("summary.tubs")
+              : t("summary.tub")
+            : t("summary.tub")
         } ${t("summary.ofBeerBath")} `}</div>
         <div>{t("summary.strawBed")} </div>
         <div>{t("summary.unlimitedBeer")} </div>

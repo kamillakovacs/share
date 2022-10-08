@@ -1,4 +1,11 @@
-import { PaymentStatus } from "../lib/validation/validationInterfaces";
+export enum PaymentStatus {
+  Prepared = "Prepared",
+  Succeeded = "Succeeded",
+  Reserved = "Reserved",
+  Authorized = "Authorized",
+  Canceled = "Canceled",
+  Expired = "Expired"
+}
 
 export interface BarionTransactions {
   Currency: string;

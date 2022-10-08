@@ -20,8 +20,7 @@ export const useSendPaymentRequest = async (
     FundingSources: ["All"],
     TraceId: "",
 
-    PaymentRequestId: `share-payment-request-${reservationData.date}-${Date.now()}`,
-    OrderNumber: "order-25",
+    PaymentRequestId: `share-spa-${new Date(reservationData.date).getTime()}-${Date.now()}`,
     PayerHint: reservationData.email,
 
     RedirectUrl: process.env.BARION_PAYMENT_REDIRECT_URL,
@@ -32,8 +31,8 @@ export const useSendPaymentRequest = async (
 
     Transactions: [
       {
-        POSTransactionId: `share-pos-transaction-${reservationData.date}-${Date.now()}`,
-        Payee: "kamilla525@yahoo.com",
+        POSTransactionId: `share-pos-transaction-${new Date(reservationData.date).getTime()}-${Date.now()}`,
+        Payee: process.env.BARION_PAYEE,
         Total: reservationData.price,
         Items: [
           {

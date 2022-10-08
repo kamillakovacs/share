@@ -1,5 +1,12 @@
 import React, { FC, memo, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+
+import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+
+import thanksStyles from "../styles/thanks.module.scss";
+import { sendThankYouEmail } from "../api/thankYouEmail";
+import detailsStyles from "../styles/details.module.scss";
 
 //@ts-ignore
 import CalendarCheckIcon from "../../public/assets/calendar-check.svg";
@@ -7,18 +14,16 @@ import CalendarCheckIcon from "../../public/assets/calendar-check.svg";
 import HeartIcon from "../../public/assets/heart.svg";
 //@ts-ignore
 import HottubIcon from "../../public/assets/hottub.svg";
-import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
-
-import detailsStyles from "../styles/details.module.scss";
-import thanksStyles from "../styles/thanks.module.scss";
 
 interface Props {
   reservation: ReservationWithDetails;
 }
 
 const ReservationSummary: FC<Props> = ({ reservation }) => {
+  const { query } = useRouter();
   const { t } = useTranslation("common");
   const [date, setDate] = useState("");
+  const [dateOfPurchase, setDateOfPurchase] = useState("");
 
   useEffect(() => {
     if (reservation?.date) {
@@ -32,10 +37,36 @@ const ReservationSummary: FC<Props> = ({ reservation }) => {
         }).format(new Date(reservation?.date))
       );
     }
+
+    if (reservation?.dateOfPurchase) {
+      setDateOfPurchase(
+        new Intl.DateTimeFormat("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(new Date(reservation?.dateOfPurchase))
+      );
+    }
   }, [reservation?.date]);
 
+  if (reservation) {
+    const emailData = {
+      name: `${reservation?.firstName} ${reservation?.lastName}`,
+      date,
+      dateOfPurchase,
+      numberOfTubs: reservation?.numberOfTubs.label,
+      totalPrice: reservation?.price
+    };
+    // sendThankYouEmail(emailData);
+  }
+
   return (
-    <>
+    <article className={thanksStyles.container}>
+      <label className={thanksStyles.reservation__title}>
+        <span>{t("thanks.thankYou")}</span>
+      </label>
       <div className={thanksStyles.reservation}>
         <div className={thanksStyles.navigators}>
           <div className={thanksStyles.verticalLine} />
@@ -143,7 +174,7 @@ const ReservationSummary: FC<Props> = ({ reservation }) => {
           </div>
         </div>
       </div>
-    </>
+    </article>
   );
 };
 

@@ -45,11 +45,11 @@ const Details: FC<Props> = ({ users }) => {
     numberOfGuests: data.numberOfGuests,
     numberOfTubs: data.numberOfTubs,
     price: data.price,
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    email: "",
-    paymentMethod: ""
+    firstName: null,
+    lastName: null,
+    phoneNumber: null,
+    email: null,
+    paymentMethod: null
   };
 
   const goBack = () => router.replace("/");
@@ -70,7 +70,7 @@ const Details: FC<Props> = ({ users }) => {
       phoneNumber: values.phoneNumber,
       email: values.email,
       whereYouHeard: values.whereYouHeard ? values.whereYouHeard : null,
-      paymentStatus: "UNPAID",
+      paymentStatus: null,
       paymentMethod: values.paymentMethod
     };
 

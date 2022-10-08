@@ -56,8 +56,8 @@ const Main: FC<Props> = ({ currentReservations }) => {
       phoneNumber: "222222222222",
       email: "email@email.com",
       whereYouHeard: { value: "none", label: "None" },
-      paymentStatus: "",
-      paymentMethod: ""
+      paymentStatus: null,
+      paymentMethod: null
     };
 
     return redirectToDetailsPage(reservationData);
