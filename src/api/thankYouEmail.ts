@@ -19,7 +19,7 @@ const mg = mailgun.client({ username: "api", key: process.env.MAILGUN_API_KEY })
 //   callPing();
 // };
 
-export const sendThankYouEmail = ({ name, date, dateOfPurchase, numberOfTubs, totalPrice }) =>
+export const sendThankYouEmail = ({ name, date, dateOfPurchase, numberOfTubs, totalPrice, paymentId }) =>
   mg.messages
     .create(process.env.MAILGUN_DOMAIN, {
       from: `Mailgun Sandbox <${process.env.MAILGUN_EMAIL_ADDRESS}>`,
@@ -31,7 +31,8 @@ export const sendThankYouEmail = ({ name, date, dateOfPurchase, numberOfTubs, to
         date,
         dateOfPurchase,
         numberOfTubs,
-        totalPrice
+        totalPrice,
+        paymentId
       })
     })
     .then((msg) => console.log(msg)) // logs response data
