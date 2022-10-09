@@ -20,10 +20,8 @@ const Reservation: FC<Props> = ({ reservations }) => {
   const { t } = useTranslation("common");
 
   const reservationPaymentId = Object.keys(reservations).find((key) => key === query.paymentId);
-  const reservation: ReservationWithDetails = Object.values(reservations).find(
-    () => reservations[reservationPaymentId]
-  );
-  console.log(reservation);
+  const reservation: ReservationWithDetails = reservations[reservationPaymentId];
+
   return (
     <article className={thanksStyles.container}>
       {reservation?.paymentStatus === PaymentStatus.Succeeded && <ReservationSummary reservation={reservation} />}
