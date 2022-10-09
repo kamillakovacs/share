@@ -8,11 +8,8 @@ import thanksStyles from "../styles/thanks.module.scss";
 import { sendThankYouEmail } from "../api/thankYouEmail";
 import detailsStyles from "../styles/details.module.scss";
 
-//@ts-ignore
 import CalendarCheckIcon from "../../public/assets/calendar-check.svg";
-//@ts-ignore
 import HeartIcon from "../../public/assets/heart.svg";
-//@ts-ignore
 import HottubIcon from "../../public/assets/hottub.svg";
 
 interface Props {
