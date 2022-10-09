@@ -31,7 +31,7 @@ const Reservation: FC<Props> = ({ reservations }) => {
   );
 };
 
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps({ locale }) {
   const res = firebase.database().ref("reservations");
 
   const reservations = await res.once("value").then(function (snapshot) {
