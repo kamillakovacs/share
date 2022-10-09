@@ -10,35 +10,42 @@ import Unsuccessful from "../components/unsuccessful";
 
 import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
+import { ReservationData } from "../lib/interfaces";
 
 interface Props {
   reservations: Reservations;
+  users: ReservationData[];
 }
 
-const Reservation: FC<Props> = ({ reservations }) => {
+const Reservation: FC<Props> = ({ reservations, users }) => {
   const { query } = useRouter();
   const { t } = useTranslation("common");
   const reservation: ReservationWithDetails = reservations[query.paymentId as string];
 
-  console.log(reservations);
-  console.log(reservation);
   return (
     <article className={thanksStyles.container}>
       {reservation?.paymentStatus === PaymentStatus.Succeeded && <ReservationSummary reservation={reservation} />}
       {(reservation?.paymentStatus === PaymentStatus.Canceled ||
-        reservation?.paymentStatus === PaymentStatus.Expired) && <Unsuccessful reservation={reservation} />}
+        reservation?.paymentStatus === PaymentStatus.Expired) && (
+        <Unsuccessful reservation={reservation} users={users} />
+      )}
     </article>
   );
 };
 
 export async function getServerSideProps({ locale }) {
   const res = firebase.database().ref("reservations");
+  const customers = firebase.database().ref("customers");
 
   const reservations = await res.once("value").then(function (snapshot) {
     return snapshot.val() || "Anonymous";
   });
 
-  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations } };
+  const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
+    return snapshot.val() || "Anonymous";
+  });
+
+  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations, users } };
 }
 
 export default memo(Reservation);

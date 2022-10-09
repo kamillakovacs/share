@@ -19,7 +19,6 @@ import { ReservationData } from "../lib/interfaces";
 
 interface Props {
   users: ReservationData[];
-  currentReservations: ReservationData;
 }
 
 const Details: FC<Props> = ({ users }) => {
@@ -58,7 +57,6 @@ const Details: FC<Props> = ({ users }) => {
     payment.useSendPaymentRequest(reservationData, users, router);
 
   const onSubmit = async (values: ReservationWithDetails) => {
-    console.log(data.date);
     const reservationData: ReservationData = {
       date: data.date,
       dateOfPurchase: new Date(),
@@ -143,7 +141,7 @@ const Details: FC<Props> = ({ users }) => {
                     type="submit"
                     className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}
                   >
-                    {values.paymentMethod === "bankTransfer" ? t("details.complete") : t("details.finishAndPay")}
+                    {t("details.finishAndPay")}
                   </button>
                 </div>
               </form>

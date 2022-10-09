@@ -17,7 +17,6 @@ interface Props {
 }
 
 const ReservationSummary: FC<Props> = ({ reservation }) => {
-  const { query } = useRouter();
   const { t } = useTranslation("common");
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
@@ -56,7 +55,7 @@ const ReservationSummary: FC<Props> = ({ reservation }) => {
       numberOfTubs: reservation?.numberOfTubs.label,
       totalPrice: reservation?.price
     };
-    // sendThankYouEmail(emailData);
+    sendThankYouEmail(emailData);
   }
 
   return (
