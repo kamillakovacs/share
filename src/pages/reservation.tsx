@@ -19,12 +19,14 @@ interface Props {
 
 const Reservation: FC<Props> = ({ reservations, users }) => {
   const { query } = useRouter();
-  const { t } = useTranslation("common");
-  const reservation: ReservationWithDetails = reservations[query.paymentId as string];
+  const paymentId = query.paymentId as string
+  const reservation: ReservationWithDetails = reservations[paymentId];
 
   return (
     <article className={thanksStyles.container}>
-      {reservation?.paymentStatus === PaymentStatus.Succeeded && <ReservationSummary reservation={reservation} />}
+      {reservation?.paymentStatus === PaymentStatus.Succeeded && (
+        <ReservationSummary reservation={reservation} paymentId={paymentId} />
+      )}
       {(reservation?.paymentStatus === PaymentStatus.Canceled ||
         reservation?.paymentStatus === PaymentStatus.Expired) && (
         <Unsuccessful reservation={reservation} users={users} />

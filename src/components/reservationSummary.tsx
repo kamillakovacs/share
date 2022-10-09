@@ -14,9 +14,10 @@ import HottubIcon from "../../public/assets/hottub.svg";
 
 interface Props {
   reservation: ReservationWithDetails;
+  paymentId: string;
 }
 
-const ReservationSummary: FC<Props> = ({ reservation }) => {
+const ReservationSummary: FC<Props> = ({ reservation, paymentId }) => {
   const { t } = useTranslation("common");
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
@@ -53,7 +54,8 @@ const ReservationSummary: FC<Props> = ({ reservation }) => {
       date,
       dateOfPurchase,
       numberOfTubs: reservation?.numberOfTubs.label,
-      totalPrice: reservation?.price
+      totalPrice: reservation?.price,
+      paymentId
     };
     sendThankYouEmail(emailData);
   }
