@@ -3,7 +3,7 @@ import { NextRouter } from "next/router";
 
 import * as newReservation from "../api/newReservation";
 import { ReservationData } from "../lib/interfaces";
-import { BarionPaymentResponseData } from "./interfaces";
+import { BarionPaymentConfirmationResponseData } from "./interfaces";
 
 export const useSendPaymentRequest = async (
   reservationData: ReservationData,
@@ -52,7 +52,7 @@ export const useSendPaymentRequest = async (
     .post(process.env.BARION_PAYMENT_REQUEST_URL, data, {
       headers
     })
-    .then(async (res: BarionPaymentResponseData) => {
+    .then(async (res: BarionPaymentConfirmationResponseData) => {
       await newReservation
         .makeNewReservation(reservationData, users, res.data.PaymentId, res.data.Transactions[0].TransactionId)
         .then(() => router.replace(res.data.GatewayUrl))

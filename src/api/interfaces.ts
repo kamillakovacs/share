@@ -7,7 +7,7 @@ export enum PaymentStatus {
   Expired = "Expired"
 }
 
-export interface BarionTransactions {
+export interface BarionTransaction {
   Currency: string;
   POSTransactionId: string;
   RelatedId: string;
@@ -37,9 +37,21 @@ export interface BarionPaymentResponse {
   Status: PaymentStatus;
   ThreeDSAuthClientData: string;
   TraceId: string;
-  Transactions: BarionTransactions[];
+  Transactions: BarionTransaction[];
 }
 
-export interface BarionPaymentResponseData {
+export interface BarionPaymentConfirmationResponseData {
   data: BarionPaymentResponse;
+}
+
+export interface BarionPaymentCancelation {
+  IsSuccessful: boolean;
+  PaymentId: string;
+  PaymentRequestId: string;
+  Status: PaymentStatus;
+  Transactions: BarionTransaction[];
+}
+
+export interface BarionPaymentCancelationResponseData {
+  data: BarionPaymentCancelation;
 }
