@@ -22,6 +22,8 @@ const Reservation: FC<Props> = ({ reservations }) => {
   const reservationPaymentId = Object.keys(reservations).find((key) => key === query.paymentId);
   const reservation: ReservationWithDetails = reservations[reservationPaymentId];
 
+  console.log(reservations);
+  console.log(reservation);
   return (
     <article className={thanksStyles.container}>
       {reservation?.paymentStatus === PaymentStatus.Succeeded && <ReservationSummary reservation={reservation} />}
