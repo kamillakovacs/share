@@ -18,9 +18,7 @@ interface Props {
 const Reservation: FC<Props> = ({ reservations }) => {
   const { query } = useRouter();
   const { t } = useTranslation("common");
-
-  const reservationPaymentId = Object.keys(reservations).find((key) => key === query.paymentId);
-  const reservation: ReservationWithDetails = reservations[reservationPaymentId];
+  const reservation: ReservationWithDetails = reservations[query.paymentId as string];
 
   console.log(reservations);
   console.log(reservation);
