@@ -139,7 +139,7 @@ const Details: FC<Props> = ({ users }) => {
                   </button>
                   <button
                     type="submit"
-                    className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}
+                    className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__orange}`}
                   >
                     {t("details.finishAndPay")}
                   </button>

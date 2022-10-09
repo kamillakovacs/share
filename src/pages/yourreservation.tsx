@@ -1,24 +1,31 @@
 import React, { FC, memo, useEffect, useState } from "react";
+import firebase from "../lib/firebase";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { ReservationData } from "../lib/interfaces";
 
 import thanksStyles from "../styles/thanks.module.scss";
-import { sendThankYouEmail } from "../api/thankYouEmail";
 import detailsStyles from "../styles/details.module.scss";
+import reservationStyles from "../styles/reservation.module.scss";
 
 import CalendarCheckIcon from "../../public/assets/calendar-check.svg";
 import HeartIcon from "../../public/assets/heart.svg";
 import HottubIcon from "../../public/assets/hottub.svg";
 
 interface Props {
-  reservation: ReservationWithDetails;
-  paymentId: string;
+  reservations: Reservations;
+  users: ReservationData[];
 }
 
-const ReservationSummary: FC<Props> = ({ reservation, paymentId }) => {
+const Reservation: FC<Props> = ({ reservations, users }) => {
+  const { query } = useRouter();
   const { t } = useTranslation("common");
+  const paymentId = query.paymentId as string;
+  const reservation: ReservationWithDetails = reservations[paymentId];
+
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
 
@@ -48,22 +55,10 @@ const ReservationSummary: FC<Props> = ({ reservation, paymentId }) => {
     }
   }, [reservation?.date]);
 
-  if (reservation) {
-    const emailData = {
-      name: `${reservation?.firstName} ${reservation?.lastName}`,
-      date,
-      dateOfPurchase,
-      numberOfTubs: reservation?.numberOfTubs.label,
-      totalPrice: reservation?.price,
-      paymentId
-    };
-    sendThankYouEmail(emailData);
-  }
-
   return (
     <article className={thanksStyles.container}>
       <label className={thanksStyles.reservation__title}>
-        <span>{t("thanks.thankYou")}</span>
+        <span>Your reservation at Share Spa</span>
       </label>
       <div className={thanksStyles.reservation}>
         <div className={thanksStyles.navigators}>
@@ -104,45 +99,6 @@ const ReservationSummary: FC<Props> = ({ reservation, paymentId }) => {
 
           <div className={thanksStyles.summaryLabel}>
             <div className={thanksStyles.icon}>
-              <CalendarCheckIcon />
-            </div>
-            <label>Billing Details</label>
-          </div>
-          <div className={detailsStyles.details}>
-            <div className={detailsStyles.details__row}>
-              <div>Name</div>
-              <div>
-                {reservation?.firstName} {reservation?.lastName}
-              </div>
-            </div>
-            <div className={detailsStyles.details__row}>
-              <div>Email</div>
-              <div>{reservation?.email}</div>
-            </div>
-            <div className={detailsStyles.details__row}>
-              <div>Phone</div>
-              <div>{reservation?.phoneNumber}</div>
-            </div>
-            <div className={detailsStyles.details__row}>
-              <div>Date of Purchase</div>
-              <div>{reservation?.dateOfPurchase}</div>
-            </div>
-            <div className={detailsStyles.details__row}>
-              <div>Total price</div>
-              <div>{reservation?.price} HUF</div>
-            </div>
-            <div className={detailsStyles.details__row}>
-              <div>Amount paid</div>
-              <div></div>
-            </div>
-            <div className={detailsStyles.details__row}>
-              <div>Remaining balance</div>
-              <div></div>
-            </div>
-          </div>
-
-          <div className={thanksStyles.summaryLabel}>
-            <div className={thanksStyles.icon}>
               <HottubIcon />
             </div>
             <label>{t("summary.yourExperience")}</label>
@@ -176,8 +132,39 @@ const ReservationSummary: FC<Props> = ({ reservation, paymentId }) => {
           </div>
         </div>
       </div>
+
+      <div className={reservationStyles.reservation__info}>
+        <button
+          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__orange}`}
+          type="button"
+          onClick={() => {}}
+        >
+          Change your reservation date
+        </button>
+        <button
+          type="submit"
+          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__orange}`}
+        >
+          Cancel your reservation
+        </button>
+      </div>
     </article>
   );
 };
 
-export default memo(ReservationSummary);
+export async function getServerSideProps({ locale }) {
+  const res = firebase.database().ref("reservations");
+  const customers = firebase.database().ref("customers");
+
+  const reservations = await res.once("value").then(function (snapshot) {
+    return snapshot.val() || "Anonymous";
+  });
+
+  const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
+    return snapshot.val() || "Anonymous";
+  });
+
+  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations, users } };
+}
+
+export default memo(Reservation);

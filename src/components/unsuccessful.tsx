@@ -82,7 +82,7 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
       <div className={reservationStyles.reservation__info}>
         <button
           type="submit"
-          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}
+          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__orange}`}
           onClick={onSubmit}
         >
           {t("details.finishAndPay")}
