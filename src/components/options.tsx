@@ -15,7 +15,7 @@ import styles from "../styles/main.module.scss";
 import { ReservationDataShort } from "../lib/interfaces";
 
 interface Props {
-  currentReservations: ReservationDataShort;
+  currentReservations: ReservationDataShort[];
 }
 
 const Options: FC<Props> = ({ currentReservations }) => {
@@ -26,6 +26,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
     if (!values.date) {
       return [];
     }
+
     let selectedDateAndTime = new Date(
       values.date.getFullYear(),
       values.date.getMonth(),
@@ -57,7 +58,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const numberOfAvailableTubs = (): number => {
     let tubsReserved = 0;
-    reservationsSelectedOnDateAndTime.forEach((res) => (tubsReserved += parseInt(res.numberOfTubs?.value)));
+    reservationsSelectedOnDateAndTime.forEach((res) => (tubsReserved += res.numberOfTubs?.value));
     return AVAILABLE_TUBS - tubsReserved;
   };
 

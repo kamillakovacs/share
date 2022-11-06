@@ -19,13 +19,14 @@ import styles from "../styles/main.module.scss";
 import { ReservationData, ReservationDataShort } from "../lib/interfaces";
 
 interface Props {
-  currentReservations: ReservationDataShort;
+  currentReservations: ReservationDataShort[];
 }
 
 const Main: FC<Props> = ({ currentReservations }) => {
   const router = useRouter();
   const [data, setData] = useAppContext();
   const { t } = useTranslation("common");
+  console.log(currentReservations);
 
   const initialValues = {
     date: null,
