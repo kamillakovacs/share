@@ -1,5 +1,6 @@
 import "firebase/database";
 import React, { FC, memo, useEffect } from "react";
+import classnames from "classnames";
 import { Formik } from "formik";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
@@ -94,7 +95,7 @@ const Details: FC<Props> = ({ users }) => {
           validationSchema={reservation}
           validateOnChange
         >
-          {({ values, handleSubmit }) => {
+          {({ dirty, errors, values, handleSubmit }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <Customer />
@@ -140,7 +141,12 @@ const Details: FC<Props> = ({ users }) => {
                     </button>
                     <button
                       type="submit"
-                      className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__finish}`}
+                      className={classnames(
+                        `${reservationStyles.reservation__button} ${reservationStyles.reservation__finish} ${reservationStyles.reservation__margin}`,
+                        {
+                          [reservationStyles.reservation__finish__enabled]: !!dirty && !Object.keys(errors).length
+                        }
+                      )}
                     >
                       {t("details.finishAndPay")}
                     </button>

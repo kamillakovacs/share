@@ -122,19 +122,19 @@ const Options: FC<Props> = ({ currentReservations }) => {
   const setPrice = () => {
     switch (values.numberOfTubs.label) {
       case t("options.oneTub"):
-        return 18000;
+        return 1;
       case t("options.twoPeopleInOneTub"):
-        return 22000;
+        return 1;
       case t("options.twoPeopleInTwoTubs"):
-        return 32000;
+        return 1;
       case t("options.threePeopleInTwoTubs"):
-        return 40000;
+        return 1;
       case t("options.threePeopleInThreeTubs"):
-        return 54000;
+        return 1;
       case t("options.fourPeopleInTwoTubs"):
-        return 44000;
+        return 1;
       case t("options.fourPeopleInThreeTubs"):
-        return 58000;
+        return 1;
       case t("options.threeTubs"):
         return values.numberOfGuests.value === 5 ? 62000 : 66000;
     }

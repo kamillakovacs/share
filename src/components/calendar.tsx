@@ -23,7 +23,6 @@ const AVAILABLE_TUBS = 3;
 
 const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
-  console.log(values);
   const { t } = useTranslation("common");
 
   const selectDate = (date: Date) => {

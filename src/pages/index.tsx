@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
 import firebase from "../lib/firebase";
-import { Reservation } from "../lib/validation/validationInterfaces";
+import { PaymentStatus } from "../api/interfaces";
+import { Reservation, ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { reservation } from "../lib/validation/validationSchemas";
 import { useAppContext } from "../../context/appContext";
 
@@ -26,7 +27,6 @@ const Main: FC<Props> = ({ currentReservations }) => {
   const router = useRouter();
   const [data, setData] = useAppContext();
   const { t } = useTranslation("common");
-  console.log(currentReservations);
 
   const initialValues = {
     date: null,
@@ -52,11 +52,11 @@ const Main: FC<Props> = ({ currentReservations }) => {
       numberOfGuests: values.numberOfGuests,
       numberOfTubs: values.numberOfTubs,
       price: values.price,
-      firstName: "firstName",
-      lastName: "lastName",
-      phoneNumber: "222222222222",
-      email: "email@email.com",
-      whereYouHeard: { value: "none", label: "None" },
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      email: "",
+      whereYouHeard: { value: "", label: "" },
       paymentStatus: null,
       paymentMethod: null
     };
@@ -114,11 +114,13 @@ export async function getServerSideProps({ locale }) {
   const reservations = firebase.database().ref("reservations");
   const currentReservations: ReservationDataShort[] = await reservations?.once("value").then(function (snapshot) {
     return (
-      Object.values(snapshot.val()).map((res: Reservation) => ({
-        date: res.date ?? null,
-        numberOfGuests: res.numberOfGuests ?? null,
-        numberOfTubs: res.numberOfTubs ?? null
-      })) || []
+      Object.values(snapshot.val())
+        .filter((res: ReservationWithDetails) => res.paymentStatus === PaymentStatus.Succeeded)
+        .map((res: ReservationWithDetails) => ({
+          date: res.date ?? null,
+          numberOfGuests: res.numberOfGuests ?? null,
+          numberOfTubs: res.numberOfTubs ?? null
+        })) || []
     );
   });
 

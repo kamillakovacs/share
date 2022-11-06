@@ -38,6 +38,19 @@ export const makeReservation = async (
   return firebaseResponse;
 };
 
+export const updateReservationDate = async (date: Date, paymentId: string) => {
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8"
+  };
+
+  const firebaseResponse = await axios
+    .post("/api/updateReservationDate", { date, paymentId }, { headers })
+    .then((res) => res.data)
+    .catch((e) => e);
+
+  return firebaseResponse;
+};
+
 export const markReservationCanceled = async (paymentId: string) => {
   const headers = {
     "Content-Type": "application/json; charset=utf-8"

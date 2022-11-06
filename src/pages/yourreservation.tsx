@@ -62,10 +62,8 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
     await cancelPayment.useCancelPaymentRequest(paymentId, reservation.transactionId, reservation.price, router);
   };
 
-  const redirectToChangeReservation = async (reservationData: ReservationData) =>
-    await changeReservation
-      .makeReservation(reservationData, users, paymentId, reservation.transactionId)
-      .catch((e) => e);
+  const redirectToChangeReservation = async (date: Date) =>
+    await changeReservation.updateReservationDate(date, paymentId).catch((e) => e);
 
   const initialValues = {
     date: null,
@@ -80,22 +78,7 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
   };
 
   const onSubmit = (values: Reservation) => {
-    const reservationData: ReservationData = {
-      date: values.date,
-      dateOfPurchase: reservation.dateOfPurchase,
-      numberOfGuests: reservation.numberOfGuests,
-      numberOfTubs: reservation.numberOfTubs,
-      price: reservation.price,
-      firstName: reservation.firstName,
-      lastName: reservation.lastName,
-      phoneNumber: reservation.phoneNumber,
-      email: reservation.email,
-      whereYouHeard: reservation.whereYouHeard,
-      paymentStatus: reservation.paymentStatus,
-      paymentMethod: reservation.paymentMethod
-    };
-
-    return redirectToChangeReservation(reservationData);
+    return redirectToChangeReservation(values.date);
   };
 
   return (
@@ -210,11 +193,6 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
                 <section className={reservationStyles.reservation__section}>
                   <Calendar currentReservations={currentReservations} isExistingReservation={true} />
                   <div className={reservationStyles.reservation__barion__container}>
-                    <img
-                      src="/assets/barion-card-strip-intl__small.png"
-                      alt="barion-logo"
-                      className={detailsStyles.barion}
-                    ></img>
                     <button
                       type="submit"
                       className={classnames(
@@ -224,7 +202,7 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
                         }
                       )}
                     >
-                      {t("details.finishAndPay")}
+                      Finalize date change
                     </button>
                   </div>
                 </section>

@@ -2,7 +2,6 @@ import axios from "axios";
 import { NextRouter } from "next/router";
 
 import * as cancelReservation from "../api/makeReservation";
-import { BarionPaymentCancelationResponseData, BarionPaymentConfirmationResponseData } from "./interfaces";
 
 export const useCancelPaymentRequest = async (
   paymentId: string,
