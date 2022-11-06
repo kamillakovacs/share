@@ -2,7 +2,7 @@ import axios from "axios";
 import { ReservationData } from "../lib/interfaces";
 import { PaymentStatus } from "./interfaces";
 
-export const makeNewReservation = async (
+export const makeReservation = async (
   reservationData: ReservationData,
   users: ReservationData[],
   paymentId: string,
@@ -32,6 +32,19 @@ export const makeNewReservation = async (
 
   const firebaseResponse = await axios
     .post("/api/reservation", { reservationData, newCustomer, paymentId, customerAlreadyInDatabase }, { headers })
+    .then((res) => res.data)
+    .catch((e) => e);
+
+  return firebaseResponse;
+};
+
+export const markReservationCanceled = async (paymentId: string) => {
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8"
+  };
+
+  const firebaseResponse = await axios
+    .post("/api/cancelReservation", { paymentId }, { headers })
     .then((res) => res.data)
     .catch((e) => e);
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextRouter } from "next/router";
 
-import * as newReservation from "../api/newReservation";
+import * as newReservation from "../api/makeReservation";
 import { ReservationData } from "../lib/interfaces";
 import { BarionPaymentConfirmationResponseData } from "./interfaces";
 
@@ -54,7 +54,7 @@ export const useSendPaymentRequest = async (
     })
     .then(async (res: BarionPaymentConfirmationResponseData) => {
       await newReservation
-        .makeNewReservation(reservationData, users, res.data.PaymentId, res.data.Transactions[0].TransactionId)
+        .makeReservation(reservationData, users, res.data.PaymentId, res.data.Transactions[0].TransactionId)
         .then(() => router.replace(res.data.GatewayUrl))
         .catch((e) => e);
     });

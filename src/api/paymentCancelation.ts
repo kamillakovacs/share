@@ -1,28 +1,39 @@
 import axios from "axios";
 import { NextRouter } from "next/router";
 
-import * as newReservation from "../api/newReservation";
-import { ReservationData } from "../lib/interfaces";
+import * as cancelReservation from "../api/makeReservation";
 import { BarionPaymentCancelationResponseData, BarionPaymentConfirmationResponseData } from "./interfaces";
 
-export const useCancelPaymentRequest = async (paymentId: string) => {
+export const useCancelPaymentRequest = async (
+  paymentId: string,
+  transactionId: string,
+  price: string,
+  router: NextRouter
+) => {
   const headers = {
     "Content-Type": "application/json"
   };
 
+  const transactionToRefund = {
+    TransactionId: transactionId,
+    POSTransactionId: "",
+    AmountToRefund: parseFloat(price)
+  };
+
   const data = {
     POSKey: process.env.BARION_POS_KEY,
-    PaymentId: "Immediate"
+    PaymentId: paymentId,
+    TransactionsToRefund: [transactionToRefund]
   };
 
   return axios
-    .post(process.env.BARION_PAYMENT_CANCELATION_URL, data, {
+    .post(process.env.BARION_PAYMENT_REFUND_URL, data, {
       headers
     })
-    .then(async (res: BarionPaymentCancelationResponseData) => {
-      // await newReservation
-      //   .makeNewReservation(reservationData, users, res.data.PaymentId, res.data.Transactions[0].TransactionId)
-      //   .then(() => router.replace(res.data.GatewayUrl))
-      //   .catch((e) => e);
+    .then(async () => {
+      await cancelReservation
+        .markReservationCanceled(paymentId)
+        .then(() => router.replace(""))
+        .catch((e) => e);
     });
 };

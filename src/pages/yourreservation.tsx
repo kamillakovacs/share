@@ -6,6 +6,9 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import * as cancelPayment from "../api/paymentCancelation";
+import * as changeReservation from "../api/makeReservation";
+
 import { Reservation, Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { ReservationData, ReservationDataShort } from "../lib/interfaces";
 import Calendar from "../components/calendar";
@@ -30,9 +33,9 @@ enum Action {
 }
 
 const Reservation: FC<Props> = ({ reservations, users, currentReservations }) => {
-  const { query } = useRouter();
+  const router = useRouter();
   const { t } = useTranslation("common");
-  const paymentId = query.paymentId as string;
+  const paymentId = router.query.paymentId as string;
   const reservation: ReservationWithDetails = reservations[paymentId];
 
   const [date, setDate] = useState("");
@@ -53,7 +56,16 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
   }, [reservation?.date]);
 
   const change = () => setAction(Action.Change);
-  const cancel = () => setAction(Action.Cancel);
+
+  const cancel = async () => {
+    setAction(Action.Cancel);
+    await cancelPayment.useCancelPaymentRequest(paymentId, reservation.transactionId, reservation.price, router);
+  };
+
+  const redirectToChangeReservation = async (reservationData: ReservationData) =>
+    await changeReservation
+      .makeReservation(reservationData, users, paymentId, reservation.transactionId)
+      .catch((e) => e);
 
   const initialValues = {
     date: null,
@@ -66,24 +78,24 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
     email: reservation.email,
     paymentMethod: reservation.paymentMethod
   };
-  console.log(reservation);
+
   const onSubmit = (values: Reservation) => {
     const reservationData: ReservationData = {
       date: values.date,
-      dateOfPurchase: new Date(),
-      numberOfGuests: values.numberOfGuests,
-      numberOfTubs: values.numberOfTubs,
-      price: values.price,
-      firstName: "firstName",
-      lastName: "lastName",
-      phoneNumber: "222222222222",
-      email: "email@email.com",
-      whereYouHeard: { value: "none", label: "None" },
-      paymentStatus: null,
-      paymentMethod: null
+      dateOfPurchase: reservation.dateOfPurchase,
+      numberOfGuests: reservation.numberOfGuests,
+      numberOfTubs: reservation.numberOfTubs,
+      price: reservation.price,
+      firstName: reservation.firstName,
+      lastName: reservation.lastName,
+      phoneNumber: reservation.phoneNumber,
+      email: reservation.email,
+      whereYouHeard: reservation.whereYouHeard,
+      paymentStatus: reservation.paymentStatus,
+      paymentMethod: reservation.paymentMethod
     };
 
-    // return redirectToDetailsPage(reservationData);
+    return redirectToChangeReservation(reservationData);
   };
 
   return (

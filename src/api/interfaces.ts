@@ -43,15 +43,3 @@ export interface BarionPaymentResponse {
 export interface BarionPaymentConfirmationResponseData {
   data: BarionPaymentResponse;
 }
-
-export interface BarionPaymentCancelation {
-  IsSuccessful: boolean;
-  PaymentId: string;
-  PaymentRequestId: string;
-  Status: PaymentStatus;
-  Transactions: BarionTransaction[];
-}
-
-export interface BarionPaymentCancelationResponseData {
-  data: BarionPaymentCancelation;
-}
