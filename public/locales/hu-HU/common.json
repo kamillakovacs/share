@@ -1,0 +1,97 @@
+{
+    "index": {
+      "reserveYourExperience": "Foglald le a Share Spa élményt",
+      "continue": "Következő"
+    },
+    "reservationDate": {
+      "dateAndTime": "Időpont"
+    },
+    "options": {
+      "noOptions": "Nincs szabad hely",
+      "numberOfPeopleAndTubs": "Vendégek és kádak",
+      "selectGuests": "Vendégek",
+      "selectTubs": "Kádak",
+      "openParentheses": "(",
+      "tubs": "kád",
+      "tub": "kád",
+      "forMax": "max",
+      "peopleAtSelectedTime": "fő részére ebben az időpontban még elérhető.)",
+      "noTubsAtSelectedTime": "Nincs szabad kád erre az időpontra",
+      "oneTub": "1 kád",
+      "twoPeopleInOneTub": "2 fő 1 kádban",
+      "twoPeopleInTwoTubs": "2 fő 2 kádban",
+      "threePeopleInTwoTubs": "3 fő 2 kádban",
+      "threePeopleInThreeTubs": "3 fő 3 kádban",
+      "fourPeopleInTwoTubs": "4 fő 2 kádban",
+      "fourPeopleInThreeTubs": "4 fő 3 kádban",
+      "threeTubs": "3 kád",
+      "onePerson": "1 fő",
+      "twoPeople": "2 fő",
+      "threePeople": "3 fő",
+      "fourPeople": "4 fő",
+      "fivePeople": "5 fő",
+      "sixPeople": "6 fő"
+    },
+    "summary": {
+      "yourExperience": "Share Spa Foglalásod Részletei",
+      "infraredSauna": "- 15 perces infraszauna",
+      "soakFor": "- 40 perces fürdőzés",
+      "people": "fő részére",
+      "person": "fő részére",
+      "in": "",
+      "tubs": "kád",
+      "tub": "kád",
+      "ofBeerBath": " sörfürdőben",
+      "strawBed": "- 15 perces relaxáció szalma ágyunkon",
+      "unlimitedBeer": "- Korlátlan sörfogyasztás a foglalásod időtartama alatt",
+      "towelsAndRobes": "- Fürdőköpenyek és fürdőlepedők",
+      "exclusiveUse": "- Exkluzív Share Spa használat a foglalás időtartama alatt",
+      "total": "Összesen: ",
+      "vat": "(ÁFA-val)",
+      "huf": "Ft."
+    },
+    "details": {
+      "yourDetails": "Adataid",
+      "complete": "Beküldés",
+      "finishAndPay": "Bankkártyás fizetés Barionnal"
+    },
+    "customer": {
+      "personalInformation": "Személyes adatok",
+      "contactInformation": "Elérhetőség",
+      "webSearch": "Netes kereső",
+      "friendOrFamily": "Ismerős vagy családtag",
+      "advertisement": "Reklám",
+      "tripAdvisor": "Trip Advisor",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "hotel": "Szállás",
+      "firstName": "Keresztnév",
+      "lastName": "Vezetéknév",
+      "email": "Email cím",
+      "phone": "Telefon",
+      "whereDidYouHearAboutUs": "Hol hallottál rólunk?",
+      "select": "Válassz"
+    },
+    "price": {
+      "paymentMethods": "Fizetési lehetőségek",
+      "bankTransfer": "Utalás",
+      "creditCard": "Bankkártya"
+    },
+    "thanks": {
+      "thankYou": "Köszönjük a foglalást",
+      "yourReservation": "Share Spa Foglalásod Részletei",
+      "lookForwardToSeeingYou": "Várunk szeretettel a Share Spa-ban"
+    },
+    "reservationSummary": {
+      "reservationDetails": "Share Spa Foglalásod Részletei",
+      "location": "Helyszín:",
+      "shareSpa": "Share Spa, Szarvaskő",
+      "tubsReserved": "Lefoglalt kádak száma:",
+      "date": "Időpont:",
+      "lengthOfStay": "Foglalás időtartama:",
+      "hourAndFifteenMins": "1 óra 15 perc",
+      "totalPrice": "Összesen:",
+      "lookForwardToSeeingYou": "Várunk szeretettel!"
+    }
+  }
+  
