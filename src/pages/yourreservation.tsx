@@ -32,7 +32,7 @@ enum Action {
   Cancel = "cancel"
 }
 
-const Reservation: FC<Props> = ({ reservations, users, currentReservations }) => {
+const Reservation: FC<Props> = ({ reservations, currentReservations }) => {
   const router = useRouter();
   const { t } = useTranslation("common");
   const paymentId = router.query.paymentId as string;

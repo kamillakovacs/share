@@ -43,18 +43,39 @@ const Options: FC<Props> = ({ currentReservations }) => {
     return reservationDate.toISOString() === selectedDateAndTime.toISOString();
   });
 
+  const setPrice = () => {
+    switch (values.numberOfTubs.label) {
+      case t("options.oneTub"):
+        return 18000;
+      case t("options.twoPeopleInOneTub"):
+        return 22000;
+      case t("options.twoPeopleInTwoTubs"):
+        return 32000;
+      case t("options.threePeopleInTwoTubs"):
+        return 40000;
+      case t("options.threePeopleInThreeTubs"):
+        return 54000;
+      case t("options.fourPeopleInTwoTubs"):
+        return 44000;
+      case t("options.fourPeopleInThreeTubs"):
+        return 58000;
+      case t("options.threeTubs"):
+        return values.numberOfGuests.value === 5 ? 62000 : 66000;
+    }
+  };
+
   useEffect(() => {
     if (values.numberOfGuests) {
       setFieldValue("numberOfTubs", null);
       resetIconColor(".numberOfTubs");
     }
-  }, [values.numberOfGuests]);
+  }, [values.numberOfGuests, setFieldValue]);
 
   useEffect(() => {
     if (values.numberOfTubs) {
       setFieldValue("price", setPrice());
     }
-  }, [values.numberOfTubs, values.numberOfGuests]);
+  }, [values.numberOfTubs, values.numberOfGuests, setFieldValue, setPrice]);
 
   const numberOfAvailableTubs = (): number => {
     let tubsReserved = 0;
@@ -116,27 +137,6 @@ const Options: FC<Props> = ({ currentReservations }) => {
         case 6:
           return availableTubOptions(sixPeopleTubOptions);
       }
-    }
-  };
-
-  const setPrice = () => {
-    switch (values.numberOfTubs.label) {
-      case t("options.oneTub"):
-        return 18000;
-      case t("options.twoPeopleInOneTub"):
-        return 22000;
-      case t("options.twoPeopleInTwoTubs"):
-        return 32000;
-      case t("options.threePeopleInTwoTubs"):
-        return 40000;
-      case t("options.threePeopleInThreeTubs"):
-        return 54000;
-      case t("options.fourPeopleInTwoTubs"):
-        return 44000;
-      case t("options.fourPeopleInThreeTubs"):
-        return 58000;
-      case t("options.threeTubs"):
-        return values.numberOfGuests.value === 5 ? 62000 : 66000;
     }
   };
 

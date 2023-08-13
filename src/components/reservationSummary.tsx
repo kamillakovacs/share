@@ -45,7 +45,7 @@ const ReservationSummary: FC<Props> = ({ reservation, paymentId }) => {
         }).format(new Date(reservation?.dateOfPurchase))
       );
     }
-  }, [reservation?.date]);
+  }, [reservation?.date, reservation?.dateOfPurchase]);
 
   if (reservation) {
     const emailData = {
