@@ -25,7 +25,7 @@ interface Props {
 
 const Main: FC<Props> = ({ currentReservations }) => {
   const router = useRouter();
-  const [setData] = useAppContext();
+  const [data, setData] = useAppContext();
   const { t } = useTranslation("common");
 
   const initialValues = {

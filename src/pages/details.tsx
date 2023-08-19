@@ -14,6 +14,7 @@ import { useAppContext } from "../../context/appContext";
 
 import Customer from "../components/customer";
 import reservationStyles from "../styles/reservation.module.scss";
+import barion from "../../public/assets/barion-card-strip-intl__small.png";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
 import { ReservationData } from "../lib/interfaces";
@@ -25,7 +26,7 @@ interface Props {
 
 const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
-  const [data] = useAppContext();
+  const [data, setData] = useAppContext();
   const { t } = useTranslation("common");
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     month: "2-digit",
@@ -128,7 +129,7 @@ const Details: FC<Props> = ({ users }) => {
                 </div>
                 <div className={reservationStyles.reservation__barion__container}>
                   <Image
-                    src="/assets/barion-card-strip-intl__small.png"
+                    src={barion}
                     alt="barion-logo"
                     className={detailsStyles.barion}
                   />

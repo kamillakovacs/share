@@ -1,11 +1,12 @@
 import React, { memo } from "react";
+import Image from "next/image";
 
 import headerStyles from "../styles/header.module.scss";
-import Image from "next/image";
+import share from "../../public/assets/sharespatransparent.png";
 
 const Header = () => (
   <section className={headerStyles.Header}>
-    <Image src="/assets/sharespatransparent.png" alt="shareLogo" className={headerStyles.Header__shareLogo} />
+    <Image src={share} alt="shareLogo" className={headerStyles.Header__shareLogo} />
   </section>
 );
 

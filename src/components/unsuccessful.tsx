@@ -1,6 +1,7 @@
 import React, { FC, memo } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import Image from "next/image";
 
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { ReservationData } from "../lib/interfaces";
@@ -9,7 +10,7 @@ import * as payment from "../api/paymentRequest";
 import thanksStyles from "../styles/thanks.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
 import detailsStyles from "../styles/details.module.scss";
-import Image from "next/image";
+import barion from "../../public/assets/barion-card-strip-intl__small.png";
 
 interface Props {
   reservation: ReservationWithDetails;
@@ -79,7 +80,7 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
           <div>{reservation.price} HUF</div>
         </div>
       </div>
-      <Image src="/assets/barion-card-strip-intl__small.png" alt="barion-logo" className={detailsStyles.barion} />
+      <Image src={barion} alt="barion-logo" className={detailsStyles.barion} />
       <div className={reservationStyles.reservation__info}>
         <button
           type="submit"
