@@ -1,5 +1,6 @@
 import React, { FC, memo, useState } from "react";
 import classnames from "classnames";
+import Image from "next/image";
 
 interface Props {
   title: string;
@@ -30,7 +31,7 @@ const Accordion: FC<Props> = ({ title, subTitle, description }) => {
             <span className="Accordion__panel--subTitle">{subTitle}</span>
           </section>
           <section className="Accordion__indicator--contentItem Accordion__indicator--contentItem--center Accordion__indicator--contentItem--rotate">
-            <img src="/assets/downarrow.png" alt="downarrow" className="Accordion__indicator--icon" />
+            <Image src="/assets/downarrow.png" alt="downarrow" className="Accordion__indicator--icon" />
           </section>
         </section>
       </section>

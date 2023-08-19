@@ -9,6 +9,7 @@ import * as payment from "../api/paymentRequest";
 import thanksStyles from "../styles/thanks.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
 import detailsStyles from "../styles/details.module.scss";
+import Image from "next/image";
 
 interface Props {
   reservation: ReservationWithDetails;
@@ -78,7 +79,7 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
           <div>{reservation.price} HUF</div>
         </div>
       </div>
-      <img src="/assets/barion-card-strip-intl__small.png" alt="barion-logo" className={detailsStyles.barion}></img>
+      <Image src="/assets/barion-card-strip-intl__small.png" alt="barion-logo" className={detailsStyles.barion} />
       <div className={reservationStyles.reservation__info}>
         <button
           type="submit"

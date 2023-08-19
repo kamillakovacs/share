@@ -32,7 +32,7 @@ enum Action {
   Cancel = "cancel"
 }
 
-const Reservation: FC<Props> = ({ reservations, currentReservations }) => {
+const YourReservation: FC<Props> = ({ reservations, currentReservations }) => {
   const router = useRouter();
   const { t } = useTranslation("common");
   const paymentId = router.query.paymentId as string;
@@ -240,4 +240,4 @@ export async function getServerSideProps({ locale }) {
   return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations, users, currentReservations } };
 }
 
-export default memo(Reservation);
+export default memo(YourReservation);

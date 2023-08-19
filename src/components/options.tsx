@@ -43,27 +43,6 @@ const Options: FC<Props> = ({ currentReservations }) => {
     return reservationDate.toISOString() === selectedDateAndTime.toISOString();
   });
 
-  const setPrice = () => {
-    switch (values.numberOfTubs.label) {
-      case t("options.oneTub"):
-        return 18000;
-      case t("options.twoPeopleInOneTub"):
-        return 22000;
-      case t("options.twoPeopleInTwoTubs"):
-        return 32000;
-      case t("options.threePeopleInTwoTubs"):
-        return 40000;
-      case t("options.threePeopleInThreeTubs"):
-        return 54000;
-      case t("options.fourPeopleInTwoTubs"):
-        return 44000;
-      case t("options.fourPeopleInThreeTubs"):
-        return 58000;
-      case t("options.threeTubs"):
-        return values.numberOfGuests.value === 5 ? 62000 : 66000;
-    }
-  };
-
   useEffect(() => {
     if (values.numberOfGuests) {
       setFieldValue("numberOfTubs", null);
@@ -72,10 +51,31 @@ const Options: FC<Props> = ({ currentReservations }) => {
   }, [values.numberOfGuests, setFieldValue]);
 
   useEffect(() => {
+    const setPrice = () => {
+      switch (values.numberOfTubs.label) {
+        case t("options.oneTub"):
+          return 18000;
+        case t("options.twoPeopleInOneTub"):
+          return 22000;
+        case t("options.twoPeopleInTwoTubs"):
+          return 32000;
+        case t("options.threePeopleInTwoTubs"):
+          return 40000;
+        case t("options.threePeopleInThreeTubs"):
+          return 54000;
+        case t("options.fourPeopleInTwoTubs"):
+          return 44000;
+        case t("options.fourPeopleInThreeTubs"):
+          return 58000;
+        case t("options.threeTubs"):
+          return values.numberOfGuests.value === 5 ? 62000 : 66000;
+      }
+    };
+
     if (values.numberOfTubs) {
       setFieldValue("price", setPrice());
     }
-  }, [values.numberOfTubs, values.numberOfGuests, setFieldValue, setPrice]);
+  }, [values.numberOfTubs, values.numberOfGuests, setFieldValue, t]);
 
   const numberOfAvailableTubs = (): number => {
     let tubsReserved = 0;

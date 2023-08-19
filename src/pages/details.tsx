@@ -17,6 +17,7 @@ import reservationStyles from "../styles/reservation.module.scss";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
 import { ReservationData } from "../lib/interfaces";
+import Image from "next/image";
 
 interface Props {
   users: ReservationData[];
@@ -24,7 +25,7 @@ interface Props {
 
 const Details: FC<Props> = ({ users }) => {
   const router = useRouter();
-  const [data, setData] = useAppContext();
+  const [data] = useAppContext();
   const { t } = useTranslation("common");
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     month: "2-digit",
@@ -126,11 +127,11 @@ const Details: FC<Props> = ({ users }) => {
                   </div>
                 </div>
                 <div className={reservationStyles.reservation__barion__container}>
-                  <img
+                  <Image
                     src="/assets/barion-card-strip-intl__small.png"
                     alt="barion-logo"
                     className={detailsStyles.barion}
-                  ></img>
+                  />
                   <div className={reservationStyles.reservation__info}>
                     <button
                       className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`}
