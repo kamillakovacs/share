@@ -10,7 +10,7 @@ import * as payment from "../api/paymentRequest";
 import thanksStyles from "../styles/thanks.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
 import detailsStyles from "../styles/details.module.scss";
-import barion from "../../public/assets/barion-card-strip-intl__small.png";
+import barion from "../../public/assets/barion.png";
 import ReservationSummary from "./reservationSummary";
 
 interface Props {

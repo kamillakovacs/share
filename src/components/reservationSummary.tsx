@@ -15,26 +15,20 @@ const ReservationSummary: FC<Props> = ({ reservation, date }) => {
     return (
         <div className={detailsStyles.details}>
             <div className={detailsStyles.details__row}>
-              <div>{t("reservationDetails.location")}</div>
+              <div>{t("reservationDetails.location")}:</div>
               <div>{t("reservationDetails.shareSpa")}</div>
             </div>
             <div className={detailsStyles.details__row}>
-              <div>{t("reservationDetails.tubsReserved")}</div>
+              <div>{t("reservationDetails.tubsReserved")}:</div>
               <div>{reservation?.numberOfTubs.label}</div>
             </div>
             <div className={detailsStyles.details__row}>
-              <div>{t("reservationDetails.date")}</div>
+              <div>{t("reservationDetails.date")}:</div>
               <div>{date}</div>
             </div>
             <div className={detailsStyles.details__row}>
-              <div>{t("reservationDetails.lengthOfStay")}</div>
+              <div>{t("reservationDetails.lengthOfStay")}:</div>
               <div>{t("reservationDetails.hourAndFifteenMins")}</div>
-            </div>
-            <div className={detailsStyles.details__row}>
-              <div>{t("reservationDetails.totalPrice")}</div>
-              <div>
-                {reservation?.price} {t("summary.huf")}
-              </div>
             </div>
         </div>
     )

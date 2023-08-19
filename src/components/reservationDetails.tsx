@@ -11,6 +11,7 @@ import CalendarCheckIcon from "../../public/assets/calendar-check.svg";
 import HeartIcon from "../../public/assets/heart.svg";
 import HottubIcon from "../../public/assets/hottub.svg";
 import ReservationSummary from "./reservationSummary";
+import { PaymentStatus } from "../api/interfaces";
 
 interface Props {
   reservation: ReservationWithDetails;
@@ -18,14 +19,15 @@ interface Props {
 }
 
 const ReservationDetails: FC<Props> = ({ reservation, paymentId }) => {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
+  console.log(reservation)
 
   useEffect(() => {
     if (reservation?.date) {
       setDate(
-        new Intl.DateTimeFormat("en-US", {
+        new Intl.DateTimeFormat(i18n.language, {
           month: "2-digit",
           day: "2-digit",
           year: "numeric",
@@ -36,8 +38,9 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId }) => {
     }
 
     if (reservation?.dateOfPurchase) {
+      console.log(reservation.date, reservation.dateOfPurchase)
       setDateOfPurchase(
-        new Intl.DateTimeFormat("en-US", {
+        new Intl.DateTimeFormat(i18n.language, {
           month: "2-digit",
           day: "2-digit",
           year: "numeric",
@@ -46,7 +49,7 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId }) => {
         }).format(new Date(reservation?.dateOfPurchase))
       );
     }
-  }, [reservation?.date, reservation?.dateOfPurchase]);
+  }, [setDate, setDateOfPurchase, reservation?.date, reservation?.dateOfPurchase, i18n.language]);
 
   if (reservation) {
     const emailData = {
@@ -83,38 +86,37 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId }) => {
             <div className={thanksStyles.icon}>
               <CalendarCheckIcon />
             </div>
-            <label>Billing Details</label>
+            <label>{t("reservationDetails.billingDetails")}</label>
           </div>
           <div className={detailsStyles.details}>
             <div className={detailsStyles.details__row}>
-              <div>Name</div>
+              <div>{t("customer.name")}:</div>
               <div>
                 {reservation?.firstName} {reservation?.lastName}
               </div>
             </div>
             <div className={detailsStyles.details__row}>
-              <div>Email</div>
+              <div>{t("customer.email")}:</div>
               <div>{reservation?.email}</div>
             </div>
             <div className={detailsStyles.details__row}>
-              <div>Phone</div>
+              <div>{t("customer.phone")}:</div>
               <div>{reservation?.phoneNumber}</div>
             </div>
             <div className={detailsStyles.details__row}>
-              <div>Date of Purchase</div>
-              <div>{reservation?.dateOfPurchase}</div>
+              <div>{t("reservationDetails.totalPrice")}:</div>
+              <div>{reservation?.price} {t("summary.huf")}</div>
             </div>
             <div className={detailsStyles.details__row}>
-              <div>Total price</div>
-              <div>{reservation?.price} HUF</div>
+              <div>{t("reservationDetails.paymentStatus")}:</div>
+              <div>
+                {reservation.paymentStatus == PaymentStatus.Succeeded ? 
+                    t("reservationDetails.paid") : t("reservationDetails.outstanding")}
+              </div>
             </div>
             <div className={detailsStyles.details__row}>
-              <div>Amount paid</div>
-              <div></div>
-            </div>
-            <div className={detailsStyles.details__row}>
-              <div>Remaining balance</div>
-              <div></div>
+              <div>{t("reservationDetails.dateOfPurchase")}:</div>
+              <div>{dateOfPurchase}</div>
             </div>
           </div>
 

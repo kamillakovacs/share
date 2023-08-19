@@ -14,7 +14,7 @@ import { useAppContext } from "../../context/appContext";
 
 import Customer from "../components/customer";
 import reservationStyles from "../styles/reservation.module.scss";
-import barion from "../../public/assets/barion-card-strip-intl__small.png";
+import barion from "../../public/assets/barion.png";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
 import { ReservationData } from "../lib/interfaces";

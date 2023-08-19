@@ -53,7 +53,7 @@
     "details": {
       "yourDetails": "Adataid",
       "complete": "Beküldés",
-      "finishAndPay": "Bankkártyás fizetés Barionnal"
+      "finishAndPay": "Bankkártyás fizetés"
     },
     "customer": {
       "personalInformation": "Személyes adatok",
@@ -65,6 +65,7 @@
       "facebook": "Facebook",
       "instagram": "Instagram",
       "hotel": "Szállás",
+      "name": "Név",
       "firstName": "Keresztnév",
       "lastName": "Vezetéknév",
       "email": "Email cím",
@@ -90,7 +91,12 @@
       "date": "Időpont:",
       "lengthOfStay": "Foglalás időtartama:",
       "hourAndFifteenMins": "1 óra 15 perc",
-      "totalPrice": "Összesen:",
+      "totalPrice": "Összesen",
+      "dateOfPurchase": "Rendezve",
+      "paymentStatus": "Fizetés státusza",
+      "paid": "Fizetve",
+      "outstanding": "Nem fizetve",
+      "billingDetails": "Számlázási adatok",
       "lookForwardToSeeingYou": "Várunk szeretettel!",
       "notSuccessful": "Sikertelen fizetés",
       "submitPaymentAgain": "Kérjük, próbálkozz újra!"
