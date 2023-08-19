@@ -23,7 +23,6 @@
     "dotenv-webpack": "8.0.0",
     "firebase": "10.1.0",
     "firebase-admin": "11.10.1",
-    "formidable": "3.5.0",
     "formik": "2.2.9",
     "html-loader": "4.1.0",
     "mailgun.js": "7.0.4",
@@ -42,11 +41,11 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "13.4.13",
     "@svgr/webpack": "6.3.0",
     "@types/node": "18.0.6",
     "@types/react": "17.0.47",
     "@types/react-dom": "18.0.6",
+    "@types/react-select": "5.0.1",
     "@types/sass": "1.43.1",
     "@types/yup": "0.29.14",
     "@typescript-eslint/eslint-plugin": "5.62.0",
