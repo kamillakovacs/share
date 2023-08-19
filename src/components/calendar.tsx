@@ -3,6 +3,8 @@ import { DayPicker } from "react-day-picker";
 import React, { FC, memo } from "react";
 import classnames from "classnames";
 import { useFormikContext } from "formik";
+import { hu, enUS } from 'date-fns/locale';
+import { useTranslation } from "next-i18next";
 
 import CalendarIcon from "../../public/assets/calendar.svg";
 import ClockIcon from "../../public/assets/clock.svg";
@@ -22,6 +24,7 @@ const AVAILABLE_TUBS = 3;
 
 const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
+  const { i18n } = useTranslation();
 
   const selectDate = (date: Date) => {
     date.setHours(0);
@@ -143,6 +146,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
           selected={values.date}
           onDayClick={selectDate}
           fromMonth={new Date()}
+          locale={i18n.language == "en-US" ? enUS : hu}
           weekStartsOn={1}
           disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
           showOutsideDays
