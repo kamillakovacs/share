@@ -1,10 +1,10 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect } from "react";
 import firebase from "../lib/firebase";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
-import ReservationSummary from "../components/reservationSummary";
+import ReservationDetails from "../components/reservationDetails";
 import Unsuccessful from "../components/unsuccessful";
 
 import thanksStyles from "../styles/thanks.module.scss";
@@ -21,10 +21,14 @@ const Reservation: FC<Props> = ({ reservations, users }) => {
   const paymentId = query.paymentId as string
   const reservation: ReservationWithDetails = reservations[paymentId];
 
+  useEffect(() => {
+    console.log(reservation)
+  }), {}
+
   return (
     <article className={thanksStyles.container}>
       {reservation?.paymentStatus === PaymentStatus.Succeeded && (
-        <ReservationSummary reservation={reservation} paymentId={paymentId} />
+        <ReservationDetails reservation={reservation} paymentId={paymentId} />
       )}
       {(reservation?.paymentStatus === PaymentStatus.Canceled ||
         reservation?.paymentStatus === PaymentStatus.Expired) && (

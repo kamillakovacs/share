@@ -82,7 +82,7 @@
       "yourReservation": "Share Spa Foglalásod Részletei",
       "lookForwardToSeeingYou": "Várunk szeretettel a Share Spa-ban"
     },
-    "reservationSummary": {
+    "reservationDetails": {
       "reservationDetails": "Share Spa Foglalásod Részletei",
       "location": "Helyszín:",
       "shareSpa": "Share Spa, Szarvaskő",
@@ -91,7 +91,9 @@
       "lengthOfStay": "Foglalás időtartama:",
       "hourAndFifteenMins": "1 óra 15 perc",
       "totalPrice": "Összesen:",
-      "lookForwardToSeeingYou": "Várunk szeretettel!"
+      "lookForwardToSeeingYou": "Várunk szeretettel!",
+      "notSuccessful": "Sikertelen fizetés",
+      "submitPaymentAgain": "Kérjük, próbálkozz újra!"
     }
   }
   

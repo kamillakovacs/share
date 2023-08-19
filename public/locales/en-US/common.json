@@ -82,7 +82,7 @@
     "yourReservation": "Your Reservation at Share Spa",
     "lookForwardToSeeingYou": "We look forward to seeing you at Share Spa"
   },
-  "reservationSummary": {
+  "reservationDetails": {
     "reservationDetails": "Reservation Details",
     "location": "Location:",
     "shareSpa": "Share Spa, Szarvaskő, Hungary",
@@ -91,6 +91,8 @@
     "lengthOfStay": "Length of stay:",
     "hourAndFifteenMins": "1 hour 15 minutes",
     "totalPrice": "Total price (incl. VAT):",
-    "lookForwardToSeeingYou": "We're looking forward to seeing you"
+    "lookForwardToSeeingYou": "We're looking forward to seeing you",
+    "notSuccessful": "Your payment was not successful",
+    "submitPaymentAgain": "Submit your payment again"
   }
 }

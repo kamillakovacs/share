@@ -98,27 +98,27 @@ const YourReservation: FC<Props> = ({ reservations, currentReservations }) => {
               <div className={thanksStyles.icon}>
                 <CalendarCheckIcon />
               </div>
-              <label>{t("reservationSummary.reservationDetails")}</label>
+              <label>{t("reservationDetails.reservationDetails")}</label>
             </div>
             <div className={detailsStyles.details}>
               <div className={detailsStyles.details__row}>
-                <div>{t("reservationSummary.location")}</div>
-                <div>{t("reservationSummary.shareSpa")}</div>
+                <div>{t("reservationDetails.location")}</div>
+                <div>{t("reservationDetails.shareSpa")}</div>
               </div>
               <div className={detailsStyles.details__row}>
-                <div>{t("reservationSummary.tubsReserved")}</div>
+                <div>{t("reservationDetails.tubsReserved")}</div>
                 <div>{reservation?.numberOfTubs.label}</div>
               </div>
               <div className={detailsStyles.details__row}>
-                <div>{t("reservationSummary.date")}</div>
+                <div>{t("reservationDetails.date")}</div>
                 <div>{date}</div>
               </div>
               <div className={detailsStyles.details__row}>
-                <div>{t("reservationSummary.lengthOfStay")}</div>
-                <div>{t("reservationSummary.hourAndFifteenMins")}</div>
+                <div>{t("reservationDetails.lengthOfStay")}</div>
+                <div>{t("reservationDetails.hourAndFifteenMins")}</div>
               </div>
               <div className={detailsStyles.details__row}>
-                <div>{t("reservationSummary.totalPrice")}</div>
+                <div>{t("reservationDetails.totalPrice")}</div>
                 <div>
                   {reservation?.price} {t("summary.huf")}
                 </div>
@@ -156,7 +156,7 @@ const YourReservation: FC<Props> = ({ reservations, currentReservations }) => {
               <div className={thanksStyles.icon}>
                 <HeartIcon />
               </div>
-              <label>{t("reservationSummary.lookForwardToSeeingYou")}</label>
+              <label>{t("reservationDetails.lookForwardToSeeingYou")}</label>
             </div>
           </div>
         </div>

@@ -11,6 +11,7 @@ import thanksStyles from "../styles/thanks.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
 import detailsStyles from "../styles/details.module.scss";
 import barion from "../../public/assets/barion-card-strip-intl__small.png";
+import ReservationSummary from "./reservationSummary";
 
 interface Props {
   reservation: ReservationWithDetails;
@@ -18,9 +19,9 @@ interface Props {
 }
 
 const Unsuccessful: FC<Props> = ({ reservation, users }) => {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const router = useRouter();
-  const formattedDate = new Intl.DateTimeFormat("en-US", {
+  const formattedDate = new Intl.DateTimeFormat(i18n.language, {
     month: "2-digit",
     day: "2-digit",
     year: "numeric",
@@ -53,42 +54,24 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
   return (
     <article className={thanksStyles.container}>
       <label className={thanksStyles.reservation__title}>
-        <span>Your payment was not successful</span>
+        <span>{t("reservationDetails.notSuccessful")}</span>
       </label>
       <div style={{ color: "white", paddingLeft: 30, paddingTop: 10 }}>
-        Return to Barion to submit your payment again.
+      {t("reservationDetails.submitPaymentAgain")}
       </div>
-      <div className={detailsStyles.details}>
-        <div className={detailsStyles.details__row}>
-          <div>Location: </div>
-          <div>Share Spa, Szarvaskő, Hungary</div>
+      <ReservationSummary reservation={reservation} date={formattedDate} />
+
+      <div className={detailsStyles.margin}>
+        <Image src={barion} alt="barion-logo" className={detailsStyles.barion} />
+        <div className={reservationStyles.reservation__info}>
+          <button
+            type="submit"
+            className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__orange}`}
+            onClick={onSubmit}
+          >
+            {t("details.finishAndPay")}
+          </button>
         </div>
-        <div className={detailsStyles.details__row}>
-          <div>Tubs reserved:</div>
-          <div>{reservation.numberOfTubs?.label}</div>
-        </div>
-        <div className={detailsStyles.details__row}>
-          <div>Date:</div>
-          <div>{formattedDate}</div>
-        </div>
-        <div className={detailsStyles.details__row}>
-          <div>Length of stay:</div>
-          <div>1 hour 15 minutes</div>
-        </div>
-        <div className={detailsStyles.details__row}>
-          <div>Total price (incl. VAT):</div>
-          <div>{reservation.price} HUF</div>
-        </div>
-      </div>
-      <Image src={barion} alt="barion-logo" className={detailsStyles.barion} />
-      <div className={reservationStyles.reservation__info}>
-        <button
-          type="submit"
-          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__orange}`}
-          onClick={onSubmit}
-        >
-          {t("details.finishAndPay")}
-        </button>
       </div>
     </article>
   );
