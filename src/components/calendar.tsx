@@ -24,7 +24,7 @@ const AVAILABLE_TUBS = 3;
 
 const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const selectDate = (date: Date) => {
     date.setHours(0);
@@ -136,6 +136,8 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
     return tubsReserved >= AVAILABLE_TUBS;
   };
 
+  const getDayPickerLocale = i18n.language === "en-US" ? enUS : hu;
+
   return (
     <div className={dateStyles.reservationDate__calendar}>
       <div className={dateStyles.reservationDate__date}>
@@ -146,7 +148,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
           selected={values.date}
           onDayClick={selectDate}
           fromMonth={new Date()}
-          locale={i18n.language == "en-US" ? enUS : hu}
+          locale={getDayPickerLocale}
           weekStartsOn={1}
           disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
           showOutsideDays
@@ -159,10 +161,10 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
             <div className={styles.iconContainer}>
               <ClockIcon className={classnames(`${dateStyles.reservationDate__clockIcon} clockIcon`)} />
             </div>
-            <span>Time</span>
+            <span>{t("reservationDate.time")}</span>
           </div>
           <div className={classnames(`${dateStyles.reservationDate__timeOptions} reservationDate__timeOptions`)}>
-            {timeOptions.map((t, index) => (
+            {timeOptions.map((time, index) => (
               <button
                 key={index}
                 type="button"
@@ -171,7 +173,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
                 })}
                 onClick={selectTime}
               >
-                {t}
+                {time}
               </button>
             ))}
           </div>

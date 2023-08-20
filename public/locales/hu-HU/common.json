@@ -100,6 +100,10 @@
       "lookForwardToSeeingYou": "Várunk szeretettel!",
       "notSuccessful": "Sikertelen fizetés",
       "submitPaymentAgain": "Kérjük, próbálkozz újra!"
+    },
+    "receipt": {
+      "receiptFromShareSpa": "Share Spa nyugta",
+      "receiptEmailBody": "A nyugta"
     }
   }
   

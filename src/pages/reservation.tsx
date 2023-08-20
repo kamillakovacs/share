@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect } from "react";
+import React, { FC, memo } from "react";
 import firebase from "../lib/firebase";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -9,7 +9,10 @@ import Unsuccessful from "../components/unsuccessful";
 
 import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
-import { ReservationData } from "../lib/interfaces";
+import { ReceiptEmail, ReservationData } from "../lib/interfaces";
+import { sendPaymentReceipt } from "../api/sendPaymentReceipt";
+import { useTranslation } from "next-i18next";
+import { createPaymentReceipt } from "../api/createPaymentReceipt";
 
 interface Props {
   reservations: Reservations;
@@ -18,12 +21,17 @@ interface Props {
 
 const Reservation: FC<Props> = ({ reservations, users }) => {
   const { query } = useRouter();
+  const { t, i18n } = useTranslation();
   const paymentId = query.paymentId as string
   const reservation: ReservationWithDetails = reservations[paymentId];
+  const email: ReceiptEmail = {
+    subject: t("receipt.receiptFromShareSpa"),
+    body: t("receipt.receiptEmailBody")
+  }
 
-  useEffect(() => {
-    console.log(reservation)
-  }), {}
+  if (reservation) {
+    createPaymentReceipt(reservation, t("receipt.receiptFromShareSpa"), email)
+  }
 
   return (
     <article className={thanksStyles.container}>

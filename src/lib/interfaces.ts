@@ -20,3 +20,8 @@ export interface ReservationDataShort {
   numberOfGuests: { label: string; value: number };
   numberOfTubs: { label: string; value: number };
 }
+
+export interface ReceiptEmail {
+  subject: string;
+  body: string;
+}

@@ -4,7 +4,8 @@
     "continue": "Continue"
   },
   "reservationDate": {
-    "dateAndTime": "Date & Time"
+    "dateAndTime": "Date & Time",
+    "time": "Time"
   },
   "options": {
     "noOptions": "No options",
@@ -101,5 +102,9 @@
     "lookForwardToSeeingYou": "We're looking forward to seeing you",
     "notSuccessful": "Your payment was not successful",
     "submitPaymentAgain": "Submit your payment again"
+  },
+  "receipt": {
+    "receiptFromShareSpa": "Receipt from Share Spa",
+    "receiptEmailBody": "Here is your receipt"
   }
 }

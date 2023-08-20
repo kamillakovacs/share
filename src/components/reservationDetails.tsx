@@ -22,7 +22,6 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId }) => {
   const { t, i18n } = useTranslation("common");
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
-  console.log(reservation)
 
   useEffect(() => {
     if (reservation?.date) {
