@@ -15,7 +15,7 @@ const Summary: FC = () => {
     <>
       <div className={summaryStyles.label}>
         <div className={styles.cart} />
-        <label>{t("summary.yourExperience")}</label>
+        <label>{t("summary.details")}</label>
       </div>
 
       <div className={summaryStyles.container}>
@@ -26,7 +26,7 @@ const Summary: FC = () => {
               ? t("summary.people")
               : t("summary.person")
             : t("summary.person")
-        } in ${values.numberOfTubs ? values.numberOfTubs.value : 1} ${
+        } ${t("summary.in")} ${values.numberOfTubs ? values.numberOfTubs.value : 1} ${
           values.numberOfTubs
             ? values.numberOfTubs.value > 1
               ? t("summary.tubs")

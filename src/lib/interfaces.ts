@@ -25,3 +25,8 @@ export interface ReceiptEmail {
   subject: string;
   body: string;
 }
+
+export enum Action {
+  Change = "change",
+  Cancel = "cancel"
+}

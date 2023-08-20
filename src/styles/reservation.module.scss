@@ -83,13 +83,13 @@
   }
 
   &__finish {
-    width: 250px;
+    width: 150px;
     background-color: #343434;
     color: #707070;
 
     &__enabled {
       background-color: #fcb923;
-      color: #343434;
+      color: #111111;
       cursor: pointer;
     }
   }
@@ -97,9 +97,22 @@
   &__barion__container {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 650px;
     margin: 25px 0 0 32px;
   }
+
+  &__updated {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    &__text {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      margin: 20px 0 0 20px;
+    }
+   }
 
   &__finishchange {
     width: 250px;
@@ -107,6 +120,12 @@
 
   &__section {
     margin: 90px 0 0 0;
+    color: white;
+    font-weight: 200;
+  }
+
+  &__editSection {
+    margin: 40px 0 0 0;
     color: white;
     font-weight: 200;
   }

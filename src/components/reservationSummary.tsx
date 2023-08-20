@@ -20,7 +20,7 @@ const ReservationSummary: FC<Props> = ({ reservation, date }) => {
             </div>
             <div className={detailsStyles.details__row}>
               <div>{t("reservationDetails.tubsReserved")}:</div>
-              <div>{reservation?.numberOfTubs.label}</div>
+              <div>{reservation?.numberOfTubs?.label}</div>
             </div>
             <div className={detailsStyles.details__row}>
               <div>{t("reservationDetails.date")}:</div>

@@ -81,6 +81,9 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
 
   const allTubsAreReservedForGivenEntireDay = (day: Date) => {
     const reservationsOnDate = Object.values(currentReservations).filter((res: ReservationDataShort) => {
+      if (res.date === null) {
+        return;
+      }
       // find if there are reservations on given day
       let givenDay = new Date(day.getFullYear(), day.getMonth(), day.getDate());
       let reservationDateAndTime = new Date(res.date);
@@ -94,10 +97,9 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
     const hoursReservedOnGivenDay = reservationsOnDate
       .map((res: ReservationDataShort) => new Date(res.date).getHours())
       .sort();
-    const allTimesAreReservedOnGivenDay =
-      [10, 12, 14, 16, 18, 20].sort().toString() ===
-      hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay.indexOf(hour) == -index).toString();
 
+    const allTimesAreReservedOnGivenDay = [10, 12, 14, 16, 18, 20].sort().toString() ===
+      hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay.indexOf(hour) == -index).toString();
     const areAllTubsReservedAtAllTimesOfGivenDay = () => {
       if (!allTimesAreReservedOnGivenDay) {
         return false;
@@ -113,6 +115,10 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
 
   const allTubsAreReservedForGivenDayAndTime = (time: string): boolean => {
     const reservationsOnDateAndTime = Object.values(currentReservations).filter((res) => {
+      if (time === null || time === undefined) {
+        return;
+      }
+
       // find if there are reservations on given day and time
       let givenDayAndTime = new Date(
         values.date.getFullYear(),
@@ -169,7 +175,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
                 key={index}
                 type="button"
                 className={classnames({
-                  [dateStyles.reservationDate__timeOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(t)
+                  [dateStyles.reservationDate__timeOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(time)
                 })}
                 onClick={selectTime}
               >

@@ -3,7 +3,7 @@ import convert from 'xml-js';
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { ReceiptEmail } from "../lib/interfaces";
 
-export const sendPaymentReceipt = async (reservation: ReservationWithDetails, receiptNumber: string, email: ReceiptEmail) => {
+export const sendReceipt = async (reservation: ReservationWithDetails, receiptNumber: string, email: ReceiptEmail) => {
     const data = JSON.stringify({
         "_declaration":{"_attributes":{"version":"1.0","encoding":"utf-8"}},
         "xmlnyugtasend":{"_attributes":
@@ -28,14 +28,13 @@ export const sendPaymentReceipt = async (reservation: ReservationWithDetails, re
     })
 
     var options = {compact: true, ignoreComment: true, spaces: 4};
-    var result = convert.json2xml(data, options);
-    console.log(result);
+    var xml = convert.json2xml(data, options);
     const headers = {
         "Content-Type": "text/html"
       };
 
     // return axios
-    // .post("https://www.szamlazz.hu/szamla/", data, {
+    // .post("https://www.szamlazz.hu/szamla/", xml, {
     //   headers
     // })
     // .then(async (res: any) => {

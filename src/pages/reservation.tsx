@@ -3,25 +3,25 @@ import firebase from "../lib/firebase";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { Reservation as ReservationShort, Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import ReservationDetails from "../components/reservationDetails";
 import Unsuccessful from "../components/unsuccessful";
 
 import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
-import { ReceiptEmail, ReservationData } from "../lib/interfaces";
-import { sendPaymentReceipt } from "../api/sendPaymentReceipt";
+import { ReceiptEmail, ReservationData, ReservationDataShort } from "../lib/interfaces";
 import { useTranslation } from "next-i18next";
-import { createPaymentReceipt } from "../api/createPaymentReceipt";
+import { createReceipt } from "../api/createReceipt";
 
 interface Props {
   reservations: Reservations;
   users: ReservationData[];
+  currentReservations: ReservationDataShort[];
 }
 
-const Reservation: FC<Props> = ({ reservations, users }) => {
+const Reservation: FC<Props> = ({ reservations, users, currentReservations }) => {
   const { query } = useRouter();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const paymentId = query.paymentId as string
   const reservation: ReservationWithDetails = reservations[paymentId];
   const email: ReceiptEmail = {
@@ -29,14 +29,19 @@ const Reservation: FC<Props> = ({ reservations, users }) => {
     body: t("receipt.receiptEmailBody")
   }
 
-  if (reservation) {
-    createPaymentReceipt(reservation, t("receipt.receiptFromShareSpa"), email)
+  if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
+    createReceipt(reservation, t("receipt.receiptFromShareSpa"), email)
   }
 
   return (
     <article className={thanksStyles.container}>
       {reservation?.paymentStatus === PaymentStatus.Succeeded && (
-        <ReservationDetails reservation={reservation} paymentId={paymentId} />
+        <ReservationDetails
+          reservation={reservation} 
+          paymentId={paymentId} 
+          reservations={reservations} 
+          currentReservations={currentReservations} 
+        />
       )}
       {(reservation?.paymentStatus === PaymentStatus.Canceled ||
         reservation?.paymentStatus === PaymentStatus.Expired) && (
@@ -58,7 +63,17 @@ export async function getServerSideProps({ locale }) {
     return snapshot.val() || "Anonymous";
   });
 
-  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations, users } };
+  const currentReservations: ReservationDataShort[] = await res?.once("value").then(function (snapshot) {
+    return (
+      Object.values(snapshot.val()).map((res: ReservationShort) => ({
+        date: res.date ?? null,
+        numberOfGuests: res.numberOfGuests ?? null,
+        numberOfTubs: res.numberOfTubs ?? null
+      })) || []
+    );
+  });
+
+  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations, users, currentReservations } };
 }
 
 export default memo(Reservation);

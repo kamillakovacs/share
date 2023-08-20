@@ -24,14 +24,13 @@ export const queryReceipt = async (reservation: ReservationWithDetails, receiptN
     })
 
     var options = {compact: true, ignoreComment: true, spaces: 4};
-    var result = convert.json2xml(data, options);
-    console.log(result);
+    var xml = convert.json2xml(data, options);
     const headers = {
         "Content-Type": "text/html"
       };
 
     // return axios
-    // .post("https://www.szamlazz.hu/szamla/", data, {
+    // .post("https://www.szamlazz.hu/szamla/", xml, {
     //   headers
     // })
     // .then(async (res: any) => {

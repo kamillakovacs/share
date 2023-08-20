@@ -5,7 +5,12 @@
   },
   "reservationDate": {
     "dateAndTime": "Date & Time",
-    "time": "Time"
+    "time": "Time",
+    "changeReservationDate": "Change your reservation date",
+    "cancelReservation": "Cancel your reservation",
+    "finalizeDateChange": "Finalize date change",
+    "updated": "Thank you, we have updated your reservation date.",
+    "updateError": "There was an error updating your date. Please call us."
   },
   "options": {
     "noOptions": "No options",
@@ -34,6 +39,7 @@
     "sixPeople": "6 people"
   },
   "summary": {
+    "details": "Share Spa reservation details",
     "yourExperience": "Your Experience",
     "infraredSauna": "- 15 minute pre-treatment in infrared sauna",
     "soakFor": "- 40 minute soak for",
@@ -85,7 +91,7 @@
     "lookForwardToSeeingYou": "We look forward to seeing you at Share Spa"
   },
   "reservationDetails": {
-    "reservationDetails": "Reservation Details",
+    "summaryAndCheckout": "Summary & Checkout",
     "location": "Location:",
     "shareSpa": "Share Spa, Szarvaskő, Hungary",
     "tubsReserved": "Tubs reserved:",

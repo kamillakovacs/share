@@ -3,9 +3,9 @@ import convert from 'xml-js';
 
 import { ReceiptEmail } from "../lib/interfaces";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
-import { sendPaymentReceipt } from "./sendPaymentReceipt";
+import { sendReceipt } from "./sendReceipt";
 
-export const createPaymentReceipt = async (reservation: ReservationWithDetails, title: string, email: ReceiptEmail) => {
+export const createReceipt = async (reservation: ReservationWithDetails, title: string, email: ReceiptEmail) => {
     const price = parseInt(reservation.price)
     const tax = price * 0.05;
     const netPrice = price - tax;
@@ -50,14 +50,13 @@ export const createPaymentReceipt = async (reservation: ReservationWithDetails, 
     })
 
     var options = {compact: true, ignoreComment: true, spaces: 4};
-    var result = convert.json2xml(data, options);
-    console.log(result);
+    var xml = convert.json2xml(data, options);
     const headers = {
         "Content-Type": "text/html"
       };
 
     // return axios
-    // .post("https://www.szamlazz.hu/szamla/", data, {
+    // .post("https://www.szamlazz.hu/szamla/", xml, {
     //   headers
     // })
     // .then(async (res: any) => {

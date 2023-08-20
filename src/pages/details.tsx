@@ -3,6 +3,7 @@ import React, { FC, memo, useEffect } from "react";
 import classnames from "classnames";
 import { Formik } from "formik";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
@@ -18,7 +19,7 @@ import barion from "../../public/assets/barion.png";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
 import { ReservationData } from "../lib/interfaces";
-import Image from "next/image";
+import ReservationSummary from "../components/reservationSummary";
 
 interface Props {
   users: ReservationData[];
@@ -103,43 +104,17 @@ const Details: FC<Props> = ({ users }) => {
                 <Customer />
                 <div className={detailsStyles.details__detailTitle}>
                   <div className={`${styles.todoitem} ${styles.todoitem__four}`} />
-                  <label>Summary & Checkout</label>
+                  <label>{t("reservationDetails.summaryAndCheckout")}</label>
                 </div>
-                <div className={detailsStyles.details}>
-                  <div className={detailsStyles.details__row}>
-                    <div>Location: </div>
-                    <div>Share Spa, Szarvaskő, Hungary</div>
-                  </div>
-                  <div className={detailsStyles.details__row}>
-                    <div>Tubs reserved:</div>
-                    <div>{values.numberOfTubs?.label}</div>
-                  </div>
-                  <div className={detailsStyles.details__row}>
-                    <div>Date:</div>
-                    <div>{formattedDate}</div>
-                  </div>
-                  <div className={detailsStyles.details__row}>
-                    <div>Length of stay:</div>
-                    <div>1 hour 15 minutes</div>
-                  </div>
-                  <div className={detailsStyles.details__row}>
-                    <div>Total price (incl. VAT):</div>
-                    <div>{values.price} HUF</div>
-                  </div>
-                </div>
+                <ReservationSummary reservation={values} date={formattedDate} />
                 <div className={reservationStyles.reservation__barion__container}>
-                  <Image
-                    src={barion}
-                    alt="barion-logo"
-                    className={detailsStyles.barion}
-                  />
                   <div className={reservationStyles.reservation__info}>
                     <button
                       className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`}
                       type="button"
                       onClick={goBack}
                     >
-                      Back
+                      {t("details.back")}
                     </button>
                     <button
                       type="submit"
@@ -152,6 +127,10 @@ const Details: FC<Props> = ({ users }) => {
                     >
                       {t("details.finishAndPay")}
                     </button>
+                    <Image
+                    src={barion}
+                    alt="barion-logo"
+                  />
                   </div>
                 </div>
               </form>

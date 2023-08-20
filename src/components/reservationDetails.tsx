@@ -1,7 +1,7 @@
 import React, { FC, memo, useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 
-import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { ReservationWithDetails, Reservations } from "../lib/validation/validationInterfaces";
 
 import thanksStyles from "../styles/thanks.module.scss";
 import { sendThankYouEmail } from "../api/thankYouEmail";
@@ -12,13 +12,17 @@ import HeartIcon from "../../public/assets/heart.svg";
 import HottubIcon from "../../public/assets/hottub.svg";
 import ReservationSummary from "./reservationSummary";
 import { PaymentStatus } from "../api/interfaces";
+import EditReservation from "./editReservation";
+import { ReservationDataShort } from "../lib/interfaces";
 
 interface Props {
   reservation: ReservationWithDetails;
   paymentId: string;
+  reservations: Reservations;
+  currentReservations: ReservationDataShort[];
 }
 
-const ReservationDetails: FC<Props> = ({ reservation, paymentId }) => {
+const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, currentReservations }) => {
   const { t, i18n } = useTranslation("common");
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
@@ -77,7 +81,7 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId }) => {
             <div className={thanksStyles.icon}>
               <CalendarCheckIcon />
             </div>
-            <label>{t("reservationDetails.reservationDetails")}</label>
+            <label>{t("summary.details")}</label>
           </div>
           <ReservationSummary reservation={reservation} date={date} />
 
@@ -154,6 +158,7 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId }) => {
           </div>
         </div>
       </div>
+      <EditReservation reservations={reservations} currentReservations={currentReservations}/>
     </article>
   );
 };
