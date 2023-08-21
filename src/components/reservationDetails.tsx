@@ -26,6 +26,8 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
   const { t, i18n } = useTranslation("common");
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
+  const [thankYouEmailSent, setThankYouEmailSent] = useState(false)
+
 
   useEffect(() => {
     if (reservation?.date) {
@@ -41,7 +43,6 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
     }
 
     if (reservation?.dateOfPurchase) {
-      console.log(reservation.date, reservation.dateOfPurchase)
       setDateOfPurchase(
         new Intl.DateTimeFormat(i18n.language, {
           month: "2-digit",
@@ -54,17 +55,20 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
     }
   }, [setDate, setDateOfPurchase, reservation?.date, reservation?.dateOfPurchase, i18n.language]);
 
-  if (reservation) {
-    const emailData = {
-      name: `${reservation?.firstName} ${reservation?.lastName}`,
-      date,
-      dateOfPurchase,
-      numberOfTubs: reservation?.numberOfTubs.label,
-      totalPrice: reservation?.price,
-      paymentId
-    };
-    sendThankYouEmail(emailData);
-  }
+  useEffect(() => {
+    if (!!date.length && !!dateOfPurchase.length && !thankYouEmailSent) {
+      const emailData = {
+        name: `${reservation?.firstName} ${reservation?.lastName}`,
+        date,
+        dateOfPurchase,
+        numberOfTubs: reservation?.numberOfTubs.label,
+        totalPrice: reservation?.price,
+        paymentId
+      };
+      sendThankYouEmail(emailData);
+      setThankYouEmailSent(true)
+    }
+  }, [thankYouEmailSent, setThankYouEmailSent, reservation, date, dateOfPurchase, paymentId])
 
   return (
     <article className={thanksStyles.container}>
@@ -75,6 +79,7 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
         <div className={thanksStyles.navigators}>
           <div className={thanksStyles.verticalLine} />
           <div className={thanksStyles.verticalLine2} />
+          <div className={thanksStyles.verticalLine3} />
         </div>
         <div className={thanksStyles.reservation__summary}>
           <div className={thanksStyles.summaryLabel}>
