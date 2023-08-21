@@ -27,7 +27,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
   const router = useRouter();
   const [data, setData] = useAppContext();
   const { t } = useTranslation("common");
-
+console.log(currentReservations)
   const initialValues = {
     date: null,
     numberOfGuests: null,
@@ -115,7 +115,9 @@ export async function getServerSideProps({ locale }) {
   const currentReservations: ReservationDataShort[] = await reservations?.once("value").then(function (snapshot) {
     return (
       Object.values(snapshot.val())
-        .filter((res: ReservationWithDetails) => res.paymentStatus === PaymentStatus.Succeeded)
+        .filter((res: ReservationWithDetails) => 
+          res.paymentStatus === PaymentStatus.Succeeded && new Date(res.date) > new Date()
+        )
         .map((res: ReservationWithDetails) => ({
           date: res.date ?? null,
           numberOfGuests: res.numberOfGuests ?? null,

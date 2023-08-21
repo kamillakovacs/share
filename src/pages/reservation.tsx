@@ -28,6 +28,7 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
     subject: t("receipt.receiptFromShareSpa"),
     body: t("receipt.receiptEmailBody")
   }
+  console.log(currentReservations)
 
   if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
     createReceipt(reservation, t("receipt.receiptFromShareSpa"), email)
@@ -65,7 +66,11 @@ export async function getServerSideProps({ locale }) {
 
   const currentReservations: ReservationDataShort[] = await res?.once("value").then(function (snapshot) {
     return (
-      Object.values(snapshot.val()).map((res: ReservationShort) => ({
+      Object.values(snapshot.val())
+      .filter((res: ReservationWithDetails) => 
+        res.paymentStatus === PaymentStatus.Succeeded && new Date(res.date) > new Date()
+      )
+      .map((res: ReservationShort) => ({
         date: res.date ?? null,
         numberOfGuests: res.numberOfGuests ?? null,
         numberOfTubs: res.numberOfTubs ?? null

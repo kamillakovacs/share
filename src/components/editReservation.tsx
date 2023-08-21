@@ -21,7 +21,7 @@ interface Props {
 
 const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   const router = useRouter();
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const paymentId = router.query.paymentId as string;
   const reservation: ReservationWithDetails = reservations[paymentId];
 
@@ -32,7 +32,7 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   useEffect(() => {
     if (reservation?.date) {
       setDate(
-        new Intl.DateTimeFormat("en-US", {
+        new Intl.DateTimeFormat(i18n.language, {
           month: "2-digit",
           day: "2-digit",
           year: "numeric",
@@ -44,8 +44,14 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   }, [reservation?.date]);
 
   useEffect(() => {
-    if (document && document.querySelector("#changeButton")) {
+    if (document && document.querySelector("#changeButton") && action == Action.Change) {
         document.querySelector("#changeButton").scrollIntoView({behavior: "smooth", inline: "start"});
+    }
+  })
+
+  useEffect(() => {
+    if (updateResponse === 200) {
+      window.location.reload()
     }
   })
 
