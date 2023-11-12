@@ -45,7 +45,13 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
       email: reservation.email,
       whereYouHeard: reservation.whereYouHeard ? reservation.whereYouHeard : null,
       paymentStatus: null,
-      paymentMethod: reservation.paymentMethod
+      paymentMethod: reservation.paymentMethod,
+      canceledByCustomer: false,
+      communication: {
+        reservationEmailSent: reservation.communication.reservationEmailSent,
+        rescheduleEmailSentCount: reservation.communication.rescheduleEmailSentCount,
+        cancelationEmailSent: reservation.communication.cancelationEmailSent
+      }
     };
 
     return redirectToStartPayment(reservationData);
@@ -57,7 +63,7 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
         <span>{t("reservationDetails.notSuccessful")}</span>
       </label>
       <div style={{ color: "white", paddingLeft: 30, paddingTop: 10 }}>
-      {t("reservationDetails.submitPaymentAgain")}
+        {t("reservationDetails.submitPaymentAgain")}
       </div>
       <ReservationSummary reservation={reservation} date={formattedDate} />
 

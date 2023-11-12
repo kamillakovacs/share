@@ -12,6 +12,7 @@ import { Action, ReservationDataShort } from "../lib/interfaces";
 import Calendar from "../components/calendar";
 
 import reservationStyles from "../styles/reservation.module.scss";
+import { PaymentStatus } from "../api/interfaces";
 
 
 interface Props {
@@ -28,6 +29,7 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   const [date, setDate] = useState("");
   const [action, setAction] = useState("");
   const [updateResponse, setUpdateResponse] = useState(0);
+  const [canceled, setCanceled] = useState(false);
 
   useEffect(() => {
     if (reservation?.date) {
@@ -45,7 +47,7 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
 
   useEffect(() => {
     if (document && document.querySelector("#changeButton") && action == Action.Change) {
-        document.querySelector("#changeButton").scrollIntoView({behavior: "smooth", inline: "start"});
+      document.querySelector("#changeButton").scrollIntoView({ behavior: "smooth", inline: "start" });
     }
   })
 
@@ -61,7 +63,8 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
 
   const cancel = async () => {
     setAction(Action.Cancel);
-    await cancelPayment.useCancelPaymentRequest(paymentId, reservation.transactionId, reservation.price, router);
+    await cancelPayment.useCancelPaymentRequest(paymentId, reservation.transactionId, reservation.price)
+      .then(() => window.location.reload())
   };
 
   const redirectToChangeReservation = async (date: Date) =>
@@ -81,70 +84,69 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
 
   const onSubmit = (values: Reservation) => {
     return redirectToChangeReservation(values.date)
-        .then(() => setUpdateResponse(200))
-        .catch(() => setUpdateResponse(500))
+      .then(() => setUpdateResponse(200))
+      .catch(() => setUpdateResponse(500))
   };
 
   return (
     <div>
-        <div className={reservationStyles.reservation__info}>
-            <button
-            className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
-            id="changeButton"
-            type="button"
-            onClick={change}
-            >
-                {t("reservationDate.changeReservationDate")}
-            </button>
-            <button
-            type="submit"
-            className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
-            onClick={cancel}
-            >
-                {t("reservationDate.cancelReservation")}
-            </button>
-        </div>
-
-        <Formik<Reservation>
-            initialValues={initialValues}
-            onSubmit={(values) => {
-                onSubmit(values);
-            }}
-            validateOnChange
+      <div className={reservationStyles.reservation__info}>
+        <button
+          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
+          id="changeButton"
+          type="button"
+          onClick={change}
         >
-            {({ values, errors, dirty, handleSubmit }) => {
-                  const isFinalizeButtonEnabled = !!dirty && !Object.keys(errors).length && values.date.getHours() !== 0;
-            return (
-                <form onSubmit={handleSubmit}>
-                {action === Action.Change && (
-                    <section className={reservationStyles.reservation__editSection}>
-                    <Calendar currentReservations={currentReservations} isExistingReservation={true} />
-                    <div className={reservationStyles.reservation__barion__container}>
-                        <div className={reservationStyles.reservation__updated}>
-                            <button
-                            type="submit"
-                            className={classnames(
-                                `${reservationStyles.reservation__button} ${reservationStyles.reservation__finish} `,
-                                { [reservationStyles.reservation__finish__enabled]: isFinalizeButtonEnabled }
-                            )}
-                            >
-                                {t("reservationDate.finalizeDateChange")}
-                            </button>
-                            {updateResponse === 200 && (
-                                <div className={reservationStyles.reservation__updated__text}>{t("reservationDate.updated")}</div>
-                            )}
-                            {updateResponse === 500 && (
-                                <div className={reservationStyles.reservation__updated__text}>{t("reservationDate.updateError")}</div>
-                            )}
-                        </div>
-                    </div>
-                    </section>
-                )}
-                </form>
-            );
-            }}
-        </Formik>
+          {t("reservationDate.changeReservationDate")}
+        </button>
+        <button
+          type="submit"
+          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
+          onClick={cancel}
+        >
+          {t("reservationDate.cancelReservation")}
+        </button>
       </div>
+      <Formik<Reservation>
+        initialValues={initialValues}
+        onSubmit={(values) => {
+          onSubmit(values);
+        }}
+        validateOnChange
+      >
+        {({ values, errors, dirty, handleSubmit }) => {
+          const isFinalizeButtonEnabled = !!dirty && !Object.keys(errors).length && values.date.getHours() !== 0;
+          return (
+            <form onSubmit={handleSubmit}>
+              {action === Action.Change && (
+                <section className={reservationStyles.reservation__editSection}>
+                  <Calendar currentReservations={currentReservations} isExistingReservation={true} />
+                  <div className={reservationStyles.reservation__barion__container}>
+                    <div className={reservationStyles.reservation__updated}>
+                      <button
+                        type="submit"
+                        className={classnames(
+                          `${reservationStyles.reservation__button} ${reservationStyles.reservation__finish} `,
+                          { [reservationStyles.reservation__finish__enabled]: isFinalizeButtonEnabled }
+                        )}
+                      >
+                        {t("reservationDate.finalizeDateChange")}
+                      </button>
+                      {updateResponse === 200 && (
+                        <div className={reservationStyles.reservation__updated__text}>{t("reservationDate.updated")}</div>
+                      )}
+                      {updateResponse === 500 && (
+                        <div className={reservationStyles.reservation__updated__text}>{t("reservationDate.updateError")}</div>
+                      )}
+                    </div>
+                  </div>
+                </section>
+              )}
+            </form>
+          );
+        }}
+      </Formik>
+    </div>
   );
 };
 

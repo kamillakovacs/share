@@ -12,6 +12,8 @@ export interface ReservationData {
   whereYouHeard?: { label: string; value: string };
   paymentStatus: string;
   paymentMethod: string;
+  canceledByCustomer: boolean;
+  communication: Communication;
   transactionId?: string;
 }
 
@@ -24,6 +26,12 @@ export interface ReservationDataShort {
 export interface ReceiptEmail {
   subject: string;
   body: string;
+}
+
+export interface Communication {
+  reservationEmailSent: boolean;
+  rescheduleEmailSentCount: number;
+  cancelationEmailSent: boolean;
 }
 
 export enum Action {

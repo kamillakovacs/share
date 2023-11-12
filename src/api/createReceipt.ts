@@ -9,7 +9,7 @@ export const createReceipt = async (reservation: ReservationWithDetails, title: 
     const price = parseInt(reservation.price)
     const tax = price * 0.05;
     const netPrice = price - tax;
-    const receiptNumber = "NYGTA-2017-111";
+    const receiptNumber = "NYGTA-" + new Date().getFullYear() + "-111";
 
     const data = JSON.stringify({
         "_declaration":{"_attributes":{"version":"1.0","encoding":"utf-8"}},
@@ -20,11 +20,11 @@ export const createReceipt = async (reservation: ReservationWithDetails, title: 
                 "xsi:schemaLocation": "https://www.szamlazz.hu/szamla/docs/xsds/nyugtacreate/xmlnyugtacreate.xsd",
             },
             "beallitasok": {
-                "szamlaagentkulcs": "In order to generate an Agent key, the owner or administrator of the account needs to login to the Szamlazz.hu website scroll down to the bottom of the dashboard. There's a section called Számla Agent kulcsok (= Számla Agent Keys), and you can generate a key by clicking the key button on the right side. The key is generated immediately and is ready to use. You can copy it directly by clicking the icon next to it.",
+                "szamlaagentkulcs": process.env.SZAMLAZZ_SZAMLA_AGENT_KULCS,
                 "pdfLetoltes": false
             }, 
             "fejlec": {
-                "hivasAzonosito": "You should use <hivasAzonosito/> in the posted XML to make the call fault tolerant. If this field is in use, it needs to be unique, otherwise the API call will be unsuccessful. This ensures that if the same XML is posted multiple times, it will not duplicate an existing receipt.",
+                "hivasAzonosito": reservation.firstName+reservation.lastName+reservation.transactionId,
                 "elotag": receiptNumber,
                 "fizmod": "barion",
                 "penznem": "Ft"
@@ -51,15 +51,10 @@ export const createReceipt = async (reservation: ReservationWithDetails, title: 
 
     var options = {compact: true, ignoreComment: true, spaces: 4};
     var xml = convert.json2xml(data, options);
-    const headers = {
-        "Content-Type": "text/html"
-      };
 
-    // return axios
-    // .post("https://www.szamlazz.hu/szamla/", xml, {
-    //   headers
-    // })
-    // .then(async (res: any) => {
-        // queryReceipt(reservation, receiptNumber, email)
-    // });
+    return axios.post("https://www.szamlazz.hu/szamla/", xml)
+        .then(async (res: any) => {
+            console.log(res)
+            // queryReceipt(reservation, receiptNumber, email)
+        });
 }

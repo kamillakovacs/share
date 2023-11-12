@@ -14,6 +14,7 @@ import ReservationSummary from "./reservationSummary";
 import { PaymentStatus } from "../api/interfaces";
 import EditReservation from "./editReservation";
 import { ReservationDataShort } from "../lib/interfaces";
+import Receipt from "./receipt";
 
 interface Props {
   reservation: ReservationWithDetails;
@@ -73,7 +74,11 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
   return (
     <article className={thanksStyles.container}>
       <label className={thanksStyles.reservation__title}>
-        <span>{t("thanks.thankYou")}</span>
+        <span>{
+          reservation?.canceledByCustomer ?
+            t("thanks.thisReservationWasCanceled") :
+            t("thanks.thankYou")}
+        </span>
       </label>
       <div className={thanksStyles.reservation}>
         <div className={thanksStyles.navigators}>
@@ -118,8 +123,8 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
             <div className={detailsStyles.details__row}>
               <div>{t("reservationDetails.paymentStatus")}:</div>
               <div>
-                {reservation.paymentStatus == PaymentStatus.Succeeded ? 
-                    t("reservationDetails.paid") : t("reservationDetails.outstanding")}
+                {reservation.paymentStatus == PaymentStatus.Succeeded ?
+                  t("reservationDetails.paid") : t("reservationDetails.outstanding")}
               </div>
             </div>
             <div className={detailsStyles.details__row}>
@@ -136,19 +141,17 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
           </div>
           <div className={detailsStyles.details}>
             <div>{t("summary.infraredSauna")}</div>
-            <div>{`${t("summary.soakFor")} ${reservation?.numberOfGuests ? reservation?.numberOfGuests.value : 1} ${
-              reservation?.numberOfGuests
-                ? reservation.numberOfGuests.value > 1
-                  ? t("summary.people")
-                  : t("summary.person")
+            <div>{`${t("summary.soakFor")} ${reservation?.numberOfGuests ? reservation?.numberOfGuests.value : 1} ${reservation?.numberOfGuests
+              ? reservation.numberOfGuests.value > 1
+                ? t("summary.people")
                 : t("summary.person")
-            } in ${reservation?.numberOfTubs ? reservation?.numberOfTubs.value : 1} ${
-              reservation?.numberOfTubs
+              : t("summary.person")
+              } in ${reservation?.numberOfTubs ? reservation?.numberOfTubs.value : 1} ${reservation?.numberOfTubs
                 ? reservation?.numberOfTubs.value > 1
                   ? t("summary.tubs")
                   : t("summary.tub")
                 : t("summary.tub")
-            } ${t("summary.ofBeerBath")} `}</div>
+              } ${t("summary.ofBeerBath")} `}</div>
             <div>{t("summary.strawBed")} </div>
             <div>{t("summary.unlimitedBeer")} </div>
             <div>{t("summary.towelsAndRobes")} </div>
@@ -163,7 +166,8 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
           </div>
         </div>
       </div>
-      <EditReservation reservations={reservations} currentReservations={currentReservations}/>
+      {!reservation.canceledByCustomer && <EditReservation reservations={reservations} currentReservations={currentReservations} />}
+      {/* <Receipt /> */}
     </article>
   );
 };

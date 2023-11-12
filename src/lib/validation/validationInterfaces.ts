@@ -1,4 +1,5 @@
 import { PaymentStatus } from "../../api/interfaces";
+import { Communication } from "../interfaces";
 
 export interface Reservation {
   date: Date;
@@ -20,6 +21,8 @@ export interface ReservationWithDetails {
   whereYouHeard?: { label: string; value: string };
   paymentMethod: string;
   paymentStatus?: PaymentStatus;
+  canceledByCustomer: boolean;
+  communication: Communication;
   transactionId?: string;
 }
 

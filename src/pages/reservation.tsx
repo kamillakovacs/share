@@ -28,26 +28,25 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
     subject: t("receipt.receiptFromShareSpa"),
     body: t("receipt.receiptEmailBody")
   }
-  console.log(currentReservations)
 
-  if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
-    createReceipt(reservation, t("receipt.receiptFromShareSpa"), email)
-  }
+  // if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
+  //   createReceipt(reservation, t("receipt.receiptFromShareSpa"), email)
+  // }
 
   return (
     <article className={thanksStyles.container}>
       {reservation?.paymentStatus === PaymentStatus.Succeeded && (
         <ReservationDetails
-          reservation={reservation} 
-          paymentId={paymentId} 
-          reservations={reservations} 
-          currentReservations={currentReservations} 
+          reservation={reservation}
+          paymentId={paymentId}
+          reservations={reservations}
+          currentReservations={currentReservations}
         />
       )}
       {(reservation?.paymentStatus === PaymentStatus.Canceled ||
         reservation?.paymentStatus === PaymentStatus.Expired) && (
-        <Unsuccessful reservation={reservation} users={users} />
-      )}
+          <Unsuccessful reservation={reservation} users={users} />
+        )}
     </article>
   );
 };
@@ -67,14 +66,14 @@ export async function getServerSideProps({ locale }) {
   const currentReservations: ReservationDataShort[] = await res?.once("value").then(function (snapshot) {
     return (
       Object.values(snapshot.val())
-      .filter((res: ReservationWithDetails) => 
-        res.paymentStatus === PaymentStatus.Succeeded && new Date(res.date) > new Date()
-      )
-      .map((res: ReservationShort) => ({
-        date: res.date ?? null,
-        numberOfGuests: res.numberOfGuests ?? null,
-        numberOfTubs: res.numberOfTubs ?? null
-      })) || []
+        .filter((res: ReservationWithDetails) =>
+          res.paymentStatus === PaymentStatus.Succeeded && new Date(res.date) > new Date()
+        )
+        .map((res: ReservationShort) => ({
+          date: res.date ?? null,
+          numberOfGuests: res.numberOfGuests ?? null,
+          numberOfTubs: res.numberOfTubs ?? null
+        })) || []
     );
   });
 

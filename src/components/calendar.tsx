@@ -80,6 +80,9 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
   const resetIconColor = (selector: string) => ((document.querySelector(selector) as HTMLElement).style.fill = "white");
 
   const allTubsAreReservedForGivenEntireDay = (day: Date) => {
+    if (!currentReservations) {
+      return false;
+    }
     const reservationsOnDate = Object.values(currentReservations).filter((res: ReservationDataShort) => {
       if (res.date === null) {
         return;
@@ -114,6 +117,9 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
   };
 
   const allTubsAreReservedForGivenDayAndTime = (time: string): boolean => {
+    if (!currentReservations) {
+      return false;
+    }
     const reservationsOnDateAndTime = Object.values(currentReservations).filter((res) => {
       if (time === null || time === undefined) {
         return;

@@ -4,7 +4,8 @@ export enum PaymentStatus {
   Reserved = "Reserved",
   Authorized = "Authorized",
   Canceled = "Canceled",
-  Expired = "Expired"
+  Expired = "Expired",
+  CanceledReservation = "CanceledReservation"
 }
 
 export interface BarionTransaction {

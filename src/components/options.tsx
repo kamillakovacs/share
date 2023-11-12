@@ -22,7 +22,7 @@ const Options: FC<Props> = ({ currentReservations }) => {
   const { values, touched, setFieldValue, setFieldTouched } = useFormikContext<Reservation>();
   const { t } = useTranslation("common");
   const AVAILABLE_TUBS = 3;
-  const reservationsSelectedOnDateAndTime = Object.values(currentReservations).filter((res) => {
+  const reservationsSelectedOnDateAndTime = currentReservations && Object.values(currentReservations).filter((res) => {
     if (!values.date) {
       return [];
     }
@@ -78,6 +78,10 @@ const Options: FC<Props> = ({ currentReservations }) => {
   }, [values.numberOfTubs, values.numberOfGuests, setFieldValue, t]);
 
   const numberOfAvailableTubs = (): number => {
+    if (!reservationsSelectedOnDateAndTime) {
+      return 3;
+    }
+
     let tubsReserved = 0;
     reservationsSelectedOnDateAndTime.forEach((res) => (tubsReserved += res.numberOfTubs?.value));
     return AVAILABLE_TUBS - tubsReserved;
@@ -156,9 +160,8 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const numberOfTubsAvailableText =
     numberOfAvailableTubs() > 0
-      ? `${t("options.openParentheses")}${numberOfAvailableTubs()} ${
-          numberOfAvailableTubs() > 1 ? t("options.tubs") : t("options.tub")
-        } ${t("options.forMax")} ${numberOfAvailableTubs() * 2} ${t("options.peopleAtSelectedTime")}`
+      ? `${t("options.openParentheses")}${numberOfAvailableTubs()} ${numberOfAvailableTubs() > 1 ? t("options.tubs") : t("options.tub")
+      } ${t("options.forMax")} ${numberOfAvailableTubs() * 2} ${t("options.peopleAtSelectedTime")}`
       : t("options.noTubsAtSelectedTime");
 
   return (

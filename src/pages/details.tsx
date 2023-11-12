@@ -73,7 +73,13 @@ const Details: FC<Props> = ({ users }) => {
       email: values.email,
       whereYouHeard: values.whereYouHeard ? values.whereYouHeard : null,
       paymentStatus: null,
-      paymentMethod: values.paymentMethod
+      paymentMethod: values.paymentMethod,
+      canceledByCustomer: false,
+      communication: {
+        reservationEmailSent: false,
+        rescheduleEmailSentCount: 0,
+        cancelationEmailSent: false
+      }
     };
 
     return redirectToStartPayment(reservationData);
@@ -128,9 +134,9 @@ const Details: FC<Props> = ({ users }) => {
                       {t("details.finishAndPay")}
                     </button>
                     <Image
-                    src={barion}
-                    alt="barion-logo"
-                  />
+                      src={barion}
+                      alt="barion-logo"
+                    />
                   </div>
                 </div>
               </form>

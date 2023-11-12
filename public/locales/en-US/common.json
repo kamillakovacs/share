@@ -60,7 +60,7 @@
   "details": {
     "yourDetails": "Your Details",
     "complete": "Complete",
-    "finishAndPay": "Finish & Pay using Barion"
+    "finishAndPay": "Finish & Pay"
   },
   "customer": {
     "personalInformation": "Personal Information",
@@ -88,7 +88,8 @@
   "thanks": {
     "thankYou": "Thank you for your reservation",
     "yourReservation": "Your Reservation at Share Spa",
-    "lookForwardToSeeingYou": "We look forward to seeing you at Share Spa"
+    "lookForwardToSeeingYou": "We look forward to seeing you at Share Spa",
+    "thisReservationWasCanceled": "Your reservation was canceled."
   },
   "reservationDetails": {
     "summaryAndCheckout": "Summary & Checkout",

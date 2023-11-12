@@ -1,13 +1,11 @@
 import axios from "axios";
-import { NextRouter } from "next/router";
 
 import * as cancelReservation from "../api/makeReservation";
 
 export const useCancelPaymentRequest = async (
   paymentId: string,
   transactionId: string,
-  price: string,
-  router: NextRouter
+  price: string
 ) => {
   const headers = {
     "Content-Type": "application/json"
@@ -15,7 +13,7 @@ export const useCancelPaymentRequest = async (
 
   const transactionToRefund = {
     TransactionId: transactionId,
-    POSTransactionId: "",
+    POSTransactionId: transactionId,
     AmountToRefund: parseFloat(price)
   };
 
@@ -32,7 +30,8 @@ export const useCancelPaymentRequest = async (
     .then(async () => {
       await cancelReservation
         .markReservationCanceled(paymentId)
-        .then(() => router.replace(""))
+        .then(() => console.log("Reservation has been canceled and refunded"))
         .catch((e) => e);
-    });
+    })
+    .catch(e => console.log("Error refunding payment:" + e))
 };

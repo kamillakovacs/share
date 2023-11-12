@@ -27,7 +27,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
   const router = useRouter();
   const [data, setData] = useAppContext();
   const { t } = useTranslation("common");
-console.log(currentReservations)
+
   const initialValues = {
     date: null,
     numberOfGuests: null,
@@ -58,7 +58,13 @@ console.log(currentReservations)
       email: "",
       whereYouHeard: { value: "", label: "" },
       paymentStatus: null,
-      paymentMethod: null
+      paymentMethod: null,
+      canceledByCustomer: false,
+      communication: {
+        reservationEmailSent: false,
+        rescheduleEmailSentCount: 0,
+        cancelationEmailSent: false
+      }
     };
 
     return redirectToDetailsPage(reservationData);
@@ -113,17 +119,22 @@ console.log(currentReservations)
 export async function getServerSideProps({ locale }) {
   const reservations = firebase.database().ref("reservations");
   const currentReservations: ReservationDataShort[] = await reservations?.once("value").then(function (snapshot) {
-    return (
-      Object.values(snapshot.val())
-        .filter((res: ReservationWithDetails) => 
-          res.paymentStatus === PaymentStatus.Succeeded && new Date(res.date) > new Date()
-        )
-        .map((res: ReservationWithDetails) => ({
-          date: res.date ?? null,
-          numberOfGuests: res.numberOfGuests ?? null,
-          numberOfTubs: res.numberOfTubs ?? null
-        })) || []
-    );
+    if (snapshot.val()) {
+      return (
+        Object.values(snapshot.val())
+          .filter((res: ReservationWithDetails) =>
+            res.paymentStatus === PaymentStatus.Succeeded && new Date(res.date) > new Date()
+          )
+          .map((res: ReservationWithDetails) => ({
+            date: res.date ?? null,
+            numberOfGuests: res.numberOfGuests ?? null,
+            numberOfTubs: res.numberOfTubs ?? null
+          })) || []
+      );
+    } else {
+      return null;
+    }
+
   });
 
   return {
