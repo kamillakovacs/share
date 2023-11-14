@@ -14,7 +14,6 @@ import ReservationSummary from "./reservationSummary";
 import { PaymentStatus } from "../api/interfaces";
 import EditReservation from "./editReservation";
 import { ReservationDataShort } from "../lib/interfaces";
-import Receipt from "./receipt";
 
 interface Props {
   reservation: ReservationWithDetails;
