@@ -75,7 +75,7 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
     <article className={thanksStyles.container}>
       <label className={thanksStyles.reservation__title}>
         <span>{
-          reservation?.canceledByCustomer ?
+          reservation?.canceled ?
             t("thanks.thisReservationWasCanceled") :
             t("thanks.thankYou")}
         </span>
@@ -166,7 +166,7 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
           </div>
         </div>
       </div>
-      {!reservation.canceledByCustomer && <EditReservation reservations={reservations} currentReservations={currentReservations} />}
+      {!reservation.canceled && <EditReservation reservations={reservations} currentReservations={currentReservations} />}
       {/* <Receipt /> */}
     </article>
   );

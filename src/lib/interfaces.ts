@@ -12,7 +12,7 @@ export interface ReservationData {
   whereYouHeard?: { label: string; value: string };
   paymentStatus: string;
   paymentMethod: string;
-  canceledByCustomer: boolean;
+  canceled: CanceledBy;
   communication: Communication;
   transactionId?: string;
 }
@@ -37,4 +37,9 @@ export interface Communication {
 export enum Action {
   Change = "change",
   Cancel = "cancel"
+}
+
+export enum CanceledBy {
+  User = "user",
+  BeerSpa = "beerspa"
 }

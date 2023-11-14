@@ -46,7 +46,7 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
       whereYouHeard: reservation.whereYouHeard ? reservation.whereYouHeard : null,
       paymentStatus: null,
       paymentMethod: reservation.paymentMethod,
-      canceledByCustomer: false,
+      canceled: null,
       communication: {
         reservationEmailSent: reservation.communication.reservationEmailSent,
         rescheduleEmailSentCount: reservation.communication.rescheduleEmailSentCount,

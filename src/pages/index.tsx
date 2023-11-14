@@ -59,7 +59,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
       whereYouHeard: { value: "", label: "" },
       paymentStatus: null,
       paymentMethod: null,
-      canceledByCustomer: false,
+      canceled: null,
       communication: {
         reservationEmailSent: false,
         rescheduleEmailSentCount: 0,

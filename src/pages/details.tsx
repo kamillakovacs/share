@@ -52,7 +52,13 @@ const Details: FC<Props> = ({ users }) => {
     lastName: null,
     phoneNumber: null,
     email: null,
-    paymentMethod: null
+    paymentMethod: null,
+    canceled: null,
+    communication: {
+      reservationEmailSent: false,
+      rescheduleEmailSentCount: 0,
+      cancelationEmailSent: false
+    }
   };
 
   const goBack = () => router.replace("/");
@@ -74,7 +80,7 @@ const Details: FC<Props> = ({ users }) => {
       whereYouHeard: values.whereYouHeard ? values.whereYouHeard : null,
       paymentStatus: null,
       paymentMethod: values.paymentMethod,
-      canceledByCustomer: false,
+      canceled: null,
       communication: {
         reservationEmailSent: false,
         rescheduleEmailSentCount: 0,
