@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import { ReservationWithDetails, Reservations } from "../lib/validation/validationInterfaces";
 
 import thanksStyles from "../styles/thanks.module.scss";
-import { sendThankYouEmail } from "../api/thankYouEmail";
+// import { sendThankYouEmail } from "../api/thankYouEmail";
 import detailsStyles from "../styles/details.module.scss";
 
 import CalendarCheckIcon from "../../public/assets/calendar-check.svg";
@@ -66,8 +66,8 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
         totalPrice: reservation?.price,
         paymentId
       };
-      sendThankYouEmail(emailData);
-      setThankYouEmailSent(true)
+      // sendThankYouEmail(emailData);
+      // setThankYouEmailSent(true)
     }
   }, [thankYouEmailSent, setThankYouEmailSent, reservation, date, dateOfPurchase, paymentId])
 

@@ -23,7 +23,6 @@
 //     .then((msg) => console.log(msg)) // logs response data
 //     .catch((err) => console.error(err)); // logs any error
 
-import 'dotenv/config';
 import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
 const mailerSend = new MailerSend({
@@ -31,17 +30,17 @@ const mailerSend = new MailerSend({
 });
 
 export const sendThankYouEmail = async ({ name, email, date, dateOfPurchase, numberOfTubs, totalPrice, paymentId }) => {
-  const sentFrom = new Sender("kamilla525@yahoo.com", "Craft Beer Spa");
+  // const sentFrom = new Sender("kamilla525@yahoo.com", "Craft Beer Spa");
 
-  const recipients = [new Recipient(email, name)];
+  // const recipients = [new Recipient(email, name)];
 
-  const emailParams = new EmailParams()
-    .setFrom(sentFrom)
-    .setTo(recipients)
-    .setReplyTo(sentFrom)
-    .setTemplateId("pq3enl68o3542vwr")
-    .setSubject("Your Craft Beer Spa reservation");
+  // const emailParams = new EmailParams()
+  //   .setFrom(sentFrom)
+  //   .setTo(recipients)
+  //   .setReplyTo(sentFrom)
+  //   .setTemplateId("pq3enl68o3542vwr")
+  //   .setSubject("Your Craft Beer Spa reservation");
 
-  await mailerSend.email.send(emailParams);
+  // await mailerSend.email.send(emailParams);
 }
 
