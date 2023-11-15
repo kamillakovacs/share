@@ -1,15 +1,4 @@
 import * as firebase from "firebase-admin";
-import crypto from "crypto";
-import service from "../../service-account.enc";
-
-const algorithm = "aes-128-cbc";
-const decipher = crypto.createDecipheriv(
-  algorithm,
-  process.env.SERVICE_ENCRYPTION_KEY,
-  process.env.SERVICE_ENCRYPTION_IV
-);
-let decrypted = decipher.update(service.encrypted, "base64", "utf8");
-decrypted += decipher.final("utf8");
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -20,7 +9,11 @@ const firebaseConfig = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-  credential: firebase.credential.cert(JSON.parse(decrypted)),
+  credential: firebase.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+  }),
   databaseAuthVariableOverride: {
     uid: "share-service-worker",
   },

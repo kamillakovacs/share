@@ -24,10 +24,10 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
   const { t } = useTranslation();
   const paymentId = query.paymentId as string
   const reservation: ReservationWithDetails = reservations[paymentId];
-  const email: ReceiptEmail = {
-    subject: t("receipt.receiptFromShareSpa"),
-    body: t("receipt.receiptEmailBody")
-  }
+  // const email: ReceiptEmail = {
+  //   subject: t("receipt.receiptFromShareSpa"),
+  //   body: t("receipt.receiptEmailBody")
+  // }
 
   // if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
   //   createReceipt(reservation, t("receipt.receiptFromShareSpa"), email)

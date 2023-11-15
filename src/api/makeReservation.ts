@@ -8,13 +8,16 @@ export const makeReservation = async (
   paymentId: string,
   transactionId: string
 ) => {
-  const customerAlreadyInDatabase = !!Object.values(users).filter(
-    (user) =>
-      user.firstName.toLowerCase() === reservationData.firstName.toLowerCase() &&
-      user.lastName.toLowerCase() === reservationData.lastName.toLowerCase() &&
-      user.phoneNumber.toLowerCase() === reservationData.phoneNumber.toLowerCase() &&
-      user.email.toLowerCase() === reservationData.email.toLowerCase()
-  ).length;
+  const customerAlreadyInDatabase = Object.values(users).filter(
+    (user) => {
+      if (user.firstName) {
+        return user.firstName.toLowerCase() === reservationData.firstName.toLowerCase() &&
+          user.lastName.toLowerCase() === reservationData.lastName.toLowerCase() &&
+          user.phoneNumber.toLowerCase() === reservationData.phoneNumber.toLowerCase() &&
+          user.email.toLowerCase() === reservationData.email.toLowerCase()
+      }
+    }
+  ).length
 
   const newCustomer = {
     firstName: reservationData.firstName,
@@ -32,7 +35,10 @@ export const makeReservation = async (
 
   const firebaseResponse = await axios
     .post("/api/reservation", { reservationData, newCustomer, paymentId, customerAlreadyInDatabase }, { headers })
-    .then((res) => res.data)
+    .then((res) => {
+      console.log(res)
+      return res.data
+    })
     .catch((e) => e);
 
   return firebaseResponse;

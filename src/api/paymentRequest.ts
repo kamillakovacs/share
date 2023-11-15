@@ -53,6 +53,7 @@ export const useSendPaymentRequest = async (
       headers
     })
     .then(async (res: BarionPaymentConfirmationResponseData) => {
+      console.log(res)
       await newReservation
         .makeReservation(reservationData, users, res.data.PaymentId, res.data.Transactions[0].TransactionId)
         .then(() => router.replace(res.data.GatewayUrl))
