@@ -59,6 +59,7 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
     if (!!date.length && !!dateOfPurchase.length && !thankYouEmailSent) {
       const emailData = {
         name: `${reservation?.firstName} ${reservation?.lastName}`,
+        email: reservation?.email,
         date,
         dateOfPurchase,
         numberOfTubs: reservation?.numberOfTubs.label,
