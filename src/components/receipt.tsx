@@ -8,7 +8,7 @@ const Receipt: FC = () => {
         '<beallitasok><pdfLetoltes>false</pdfLetoltes></beallitasok>' +
         '<fejlec><hivasAzonosito>KamiKovacsdb18ac023b40ee118bf8001dd8b71cc5</hivasAzonosito><elotag>NYGTA-2023-111</elotag><fizmod>barion</fizmod><penznem>Ft</penznem></fejlec>' +
         '<tetelek><tetel>' +
-        '<megnevezes>Share Spa nyugta</megnevezes><azonosito/><mennyiseg>1.0</mennyiseg><mennyisegiEgyseg>db</mennyisegiEgyseg><nettoEgysegar>20900</nettoEgysegar><netto>20900</netto><afakulcs>5</afakulcs><afa>1100</afa><brutto>22000</brutto><fokonyv><arbevetel/><afa/></fokonyv>' +
+        '<megnevezes>Craft Beer Spa nyugta</megnevezes><azonosito/><mennyiseg>1.0</mennyiseg><mennyisegiEgyseg>db</mennyisegiEgyseg><nettoEgysegar>20900</nettoEgysegar><netto>20900</netto><afakulcs>5</afakulcs><afa>1100</afa><brutto>22000</brutto><fokonyv><arbevetel/><afa/></fokonyv>' +
         '</tetel></tetelek>' +
         '</xmlnyugtacreate>';
 

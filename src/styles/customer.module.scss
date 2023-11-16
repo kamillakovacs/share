@@ -1,4 +1,6 @@
 .customer {
+  width: 300px;
+
   label {
     vertical-align: super;
     margin-left: 0;
@@ -45,6 +47,10 @@
     &:last-of-type {
       margin-bottom: 10px;
     }
+
+    @media only screen and (max-width: 400px) {
+      width: 320px;
+    }
   }
 
   .select {
@@ -53,7 +59,7 @@
     height: 64px;
     font-weight: 200px;
 
-    > div {
+    >div {
       height: 100%;
       color: #ffffff;
       background-color: #343434;
@@ -65,7 +71,7 @@
       fill: #707070;
     }
 
-    > div > div {
+    >div>div {
       background-color: #343434;
       border-radius: 5px;
       margin-left: 0;
@@ -74,7 +80,7 @@
         outline: none;
       }
 
-      > div {
+      >div {
         display: flex;
         align-items: center;
         font-weight: 300;
@@ -84,13 +90,17 @@
       }
     }
 
-    > div:nth-child(4) > div > div {
+    >div:nth-child(4)>div>div {
       background-color: transparent;
       padding-left: 20px;
     }
 
     span {
       display: none;
+    }
+
+    @media only screen and (max-width: 400px) {
+      width: 320px;
     }
   }
 

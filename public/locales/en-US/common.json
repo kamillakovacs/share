@@ -39,7 +39,7 @@
     "sixPeople": "6 people"
   },
   "summary": {
-    "details": "Share Spa reservation details",
+    "details": "Craft Beer Spa reservation details",
     "yourExperience": "Your Experience",
     "infraredSauna": "- 15 minute pre-treatment in infrared sauna",
     "soakFor": "- 40 minute soak for",
@@ -87,14 +87,14 @@
   },
   "thanks": {
     "thankYou": "Thank you for your reservation",
-    "yourReservation": "Your Reservation at Share Spa",
-    "lookForwardToSeeingYou": "We look forward to seeing you at Share Spa",
+    "yourReservation": "Your Reservation at Craft Beer Spa",
+    "lookForwardToSeeingYou": "We look forward to seeing you at Craft Beer Spa",
     "thisReservationWasCanceled": "Your reservation was canceled."
   },
   "reservationDetails": {
     "summaryAndCheckout": "Summary & Checkout",
     "location": "Location:",
-    "shareSpa": "Share Spa, Szarvaskő, Hungary",
+    "shareSpa": "Craft Beer Spa, Szarvaskő, Hungary",
     "tubsReserved": "Tubs reserved:",
     "date": "Date:",
     "lengthOfStay": "Length of stay:",
@@ -111,7 +111,7 @@
     "submitPaymentAgain": "Submit your payment again"
   },
   "receipt": {
-    "receiptFromShareSpa": "Receipt from Share Spa",
+    "receiptFromShareSpa": "Receipt from Craft Beer Spa",
     "receiptEmailBody": "Here is your receipt"
   }
 }

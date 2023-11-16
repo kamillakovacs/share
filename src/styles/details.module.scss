@@ -7,7 +7,7 @@
   padding: 20px;
   color: white;
   background-color: #343434;
-  margin: 10px 0 0 25px;
+  margin: 10px 0 0 10px;
   line-height: 25px;
 
   &__title {
@@ -22,10 +22,18 @@
   &__row {
     display: flex;
     justify-content: space-between;
+
+    &Label {
+      max-width: 120px;
+    }
   }
 
   &__total {
     padding-top: 15px;
+  }
+
+  @media only screen and (max-width: 400px) {
+    width: 320px;
   }
 }
 

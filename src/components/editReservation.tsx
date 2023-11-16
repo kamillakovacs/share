@@ -12,6 +12,7 @@ import { Action, ReservationDataShort } from "../lib/interfaces";
 import Calendar from "../components/calendar";
 
 import reservationStyles from "../styles/reservation.module.scss";
+import dateStyles from "../styles/reservationDate.module.scss";
 import { PaymentStatus } from "../api/interfaces";
 
 
@@ -119,28 +120,34 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
           return (
             <form onSubmit={handleSubmit}>
               {action === Action.Change && (
-                <section className={reservationStyles.reservation__editSection}>
-                  <Calendar currentReservations={currentReservations} isExistingReservation={true} />
-                  <div className={reservationStyles.reservation__barion__container}>
-                    <div className={reservationStyles.reservation__updated}>
-                      <button
-                        type="submit"
-                        className={classnames(
-                          `${reservationStyles.reservation__button} ${reservationStyles.reservation__finish} `,
-                          { [reservationStyles.reservation__finish__enabled]: isFinalizeButtonEnabled }
-                        )}
-                      >
-                        {t("reservationDate.finalizeDateChange")}
-                      </button>
-                      {updateResponse === 200 && (
-                        <div className={reservationStyles.reservation__updated__text}>{t("reservationDate.updated")}</div>
-                      )}
-                      {updateResponse === 500 && (
-                        <div className={reservationStyles.reservation__updated__text}>{t("reservationDate.updateError")}</div>
-                      )}
+                <>
+                  <section className={dateStyles.reservationDate}>
+                    <div className={dateStyles.reservationDate__label}>
+
+                      <label>{t("reservationDate.dateAndTime")}</label>
                     </div>
-                  </div>
-                </section>
+                    <Calendar currentReservations={currentReservations} isExistingReservation={true} />
+                    <div className={reservationStyles.reservation__barion__container}>
+                      <div className={reservationStyles.reservation__updated}>
+                        <button
+                          type="submit"
+                          className={classnames(
+                            `${reservationStyles.reservation__button} ${reservationStyles.reservation__finish} `,
+                            { [reservationStyles.reservation__finish__enabled]: isFinalizeButtonEnabled }
+                          )}
+                        >
+                          {t("reservationDate.finalizeDateChange")}
+                        </button>
+                        {updateResponse === 200 && (
+                          <div className={reservationStyles.reservation__updated__text}>{t("reservationDate.updated")}</div>
+                        )}
+                        {updateResponse === 500 && (
+                          <div className={reservationStyles.reservation__updated__text}>{t("reservationDate.updateError")}</div>
+                        )}
+                      </div>
+                    </div>
+                  </section>
+                </>
               )}
             </form>
           );

@@ -1,6 +1,6 @@
 {
   "index": {
-    "reserveYourExperience": "Foglald le a Share Spa élményt",
+    "reserveYourExperience": "Foglald le a Craft Beer Spa élményt",
     "continue": "Tovább"
   },
   "reservationDate": {
@@ -39,8 +39,8 @@
     "sixPeople": "6 fő"
   },
   "summary": {
-    "details": "Share Spa foglalásod részletei",
-    "yourExperience": "A Share Spa élményed",
+    "details": "Craft Beer Spa foglalásod részletei",
+    "yourExperience": "A Craft Beer Spa élményed",
     "infraredSauna": "- 15 perces infraszauna",
     "soakFor": "- 40 perces fürdőzés",
     "people": "fő részére",
@@ -52,7 +52,7 @@
     "strawBed": "- 15 perces relaxáció szalma ágyunkon",
     "unlimitedBeer": "- Korlátlan sörfogyasztás a foglalásod időtartama alatt",
     "towelsAndRobes": "- Fürdőköpenyek és fürdőlepedők",
-    "exclusiveUse": "- Exkluzív Share Spa használat",
+    "exclusiveUse": "- Exkluzív Craft Beer Spa használat",
     "total": "Összesen: ",
     "vat": "(ÁFA-val)",
     "huf": "Ft."
@@ -88,17 +88,17 @@
   },
   "thanks": {
     "thankYou": "Köszönjük a foglalást",
-    "yourReservation": "Share Spa Foglalásod Részletei",
-    "lookForwardToSeeingYou": "Várunk szeretettel a Share Spa-ban",
+    "yourReservation": "Craft Beer Spa Foglalásod Részletei",
+    "lookForwardToSeeingYou": "Várunk szeretettel a Craft Beer Spa-ban",
     "thisReservationWasCanceled": "A foglalásodat töröltük."
   },
   "reservationDetails": {
     "summaryAndCheckout": "Összegzés és fizetés",
     "location": "Helyszín",
-    "shareSpa": "Share Spa, Szarvaskő",
-    "tubsReserved": "Lefoglalt kádak száma:",
+    "shareSpa": "Craft Beer Spa, Szarvaskő",
+    "tubsReserved": "Kádak",
     "date": "Időpont",
-    "lengthOfStay": "Foglalás időtartama",
+    "lengthOfStay": "Időtartam",
     "hourAndFifteenMins": "1 óra 15 perc",
     "totalPrice": "Összesen",
     "dateOfPurchase": "Rendezve",
@@ -111,7 +111,7 @@
     "submitPaymentAgain": "Kérjük, próbálkozz újra!"
   },
   "receipt": {
-    "receiptFromShareSpa": "Share Spa nyugta",
+    "receiptFromShareSpa": "Craft Beer Spa nyugta",
     "receiptEmailBody": "A nyugta"
   }
 }
