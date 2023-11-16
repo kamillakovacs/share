@@ -175,43 +175,44 @@ const Options: FC<Props> = ({ currentReservations }) => {
         />
         <div className={optionStyles.options__tubsLabel}>
           <label>{t("options.numberOfPeopleAndTubs")}</label>
-          {values.date && values.date.getHours() !== 0 && (
+          {/* {values.date && values.date.getHours() !== 0 && (
             <div className={optionStyles.options__availableTubs}>{numberOfTubsAvailableText}</div>
-          )}
+          )} */}
         </div>
       </div>
 
       <div className={optionStyles.options__container}>
-        <div className={styles.iconContainer}>
-          <PeopleIcon className={classNames(`${optionStyles.options__icon} numberOfGuests`)} />
+        <div className={optionStyles.options__box}>
+          <div className={styles.iconContainer}>
+            <PeopleIcon className={classNames(`${optionStyles.options__icon} numberOfGuests`)} />
+          </div>
+          <Select
+            className={optionStyles.select}
+            classNamePrefix={optionStyles.select}
+            options={availableNumberOfGuestsOptions}
+            placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : t("options.selectGuests")}</>}
+            name="numberOfGuests"
+            onChange={setOption}
+            value={values.numberOfGuests}
+            instanceId="number-of-guests"
+            isSearchable={false}
+            noOptionsMessage={() => t("options.noOptions")}
+          />
+          <div className={styles.iconContainer}>
+            <HottubIcon className={classNames(`${optionStyles.options__icon} numberOfTubs`)} />
+          </div>
+          <Select
+            className={optionStyles.select}
+            options={getTubOptions()}
+            placeholder={<>{values.numberOfTubs ? values.numberOfTubs.label : t("options.selectTubs")}</>}
+            name="numberOfTubs"
+            onChange={setOption}
+            value={values.numberOfTubs}
+            instanceId="number-of-tubs"
+            isSearchable={false}
+            noOptionsMessage={() => t("options.noOptions")}
+          />
         </div>
-
-        <Select
-          className={optionStyles.select}
-          classNamePrefix={optionStyles.select}
-          options={availableNumberOfGuestsOptions}
-          placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : t("options.selectGuests")}</>}
-          name="numberOfGuests"
-          onChange={setOption}
-          value={values.numberOfGuests}
-          instanceId="number-of-guests"
-          isSearchable={false}
-          noOptionsMessage={() => t("options.noOptions")}
-        />
-        <div className={styles.iconContainer}>
-          <HottubIcon className={classNames(`${optionStyles.options__icon} numberOfTubs`)} />
-        </div>
-        <Select
-          className={optionStyles.select}
-          options={getTubOptions()}
-          placeholder={<>{values.numberOfTubs ? values.numberOfTubs.label : t("options.selectTubs")}</>}
-          name="numberOfTubs"
-          onChange={setOption}
-          value={values.numberOfTubs}
-          instanceId="number-of-tubs"
-          isSearchable={false}
-          noOptionsMessage={() => t("options.noOptions")}
-        />
       </div>
     </>
   );

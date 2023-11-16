@@ -117,14 +117,14 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
   };
 
   const allTubsAreReservedForGivenDayAndTime = (time: string): boolean => {
-    if (!currentReservations) {
+    if (!currentReservations || !values.date) {
       return false;
     }
     const reservationsOnDateAndTime = Object.values(currentReservations).filter((res) => {
       if (time === null || time === undefined) {
         return;
       }
-
+      console.log(values)
       // find if there are reservations on given day and time
       let givenDayAndTime = new Date(
         values.date.getFullYear(),

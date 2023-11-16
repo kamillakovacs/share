@@ -55,6 +55,10 @@
       display: flex;
       justify-content: flex-end;
     }
+
+    @media only screen and (max-width: 400px) {
+      margin: 20px 0 0 120px;
+    }
   }
 
   &__continue {
