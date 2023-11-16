@@ -122,10 +122,6 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
               {action === Action.Change && (
                 <>
                   <section className={dateStyles.reservationDate}>
-                    <div className={dateStyles.reservationDate__label}>
-
-                      <label>{t("reservationDate.dateAndTime")}</label>
-                    </div>
                     <Calendar currentReservations={currentReservations} isExistingReservation={true} />
                     <div className={reservationStyles.reservation__barion__container}>
                       <div className={reservationStyles.reservation__updated}>
