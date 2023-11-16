@@ -12,6 +12,7 @@ import { PaymentStatus } from "../api/interfaces";
 import { ReceiptEmail, ReservationData, ReservationDataShort } from "../lib/interfaces";
 import { useTranslation } from "next-i18next";
 import { createReceipt } from "../api/createReceipt";
+import { sendReservationConfirmationEmail } from "./api/email";
 
 interface Props {
   reservations: Reservations;
@@ -27,10 +28,6 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
   // const email: ReceiptEmail = {
   //   subject: t("receipt.receiptFromShareSpa"),
   //   body: t("receipt.receiptEmailBody")
-  // }
-
-  // if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
-  //   createReceipt(reservation, t("receipt.receiptFromShareSpa"), email)
   // }
 
   return (
@@ -51,7 +48,7 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
   );
 };
 
-export async function getServerSideProps({ locale }) {
+export async function getServerSideProps(router) {
   const res = firebase.database().ref("reservations");
   const customers = firebase.database().ref("customers");
 
@@ -77,7 +74,15 @@ export async function getServerSideProps({ locale }) {
     );
   });
 
-  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations, users, currentReservations } };
+  const reservation: ReservationWithDetails = reservations[router.query.paymentId];
+
+  if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
+    sendReservationConfirmationEmail(`${reservation.firstName} ${reservation.lastName}`, reservation.email);
+    // createReceipt(reservation, t("receipt.receiptFromShareSpa"), email)
+  }
+
+
+  return { props: { ...(await serverSideTranslations(router.locale, ["common"])), reservations, users, currentReservations } };
 }
 
 export default memo(Reservation);

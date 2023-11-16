@@ -15,7 +15,7 @@ import { useAppContext } from "../../context/appContext";
 
 import Customer from "../components/customer";
 import reservationStyles from "../styles/reservation.module.scss";
-import barion from "../../public/assets/barion.png";
+import barion from "../../public/assets/barion-card-strip-intl__medium.png";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
 import { ReservationData } from "../lib/interfaces";
@@ -139,11 +139,11 @@ const Details: FC<Props> = ({ users }) => {
                     >
                       {t("details.finishAndPay")}
                     </button>
-                    <Image
-                      src={barion}
-                      alt="barion-logo"
-                    />
                   </div>
+                  <Image
+                    src={barion}
+                    alt="barion-logo"
+                  />
                 </div>
               </form>
             );

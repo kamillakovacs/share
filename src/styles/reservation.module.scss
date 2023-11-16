@@ -18,6 +18,7 @@
   &__info {
     display: flex;
     align-items: center;
+    margin-bottom: 30px;
   }
 
   &__price {
@@ -97,7 +98,7 @@
   &__barion__container {
     display: flex;
     flex-direction: column;
-    width: 650px;
+    max-width: 400px;
     margin: 25px 0 0 32px;
   }
 
@@ -112,7 +113,7 @@
       align-items: center;
       margin: 20px 0 0 20px;
     }
-   }
+  }
 
   &__finishchange {
     width: 250px;
@@ -128,5 +129,11 @@
     margin: 40px 0 0 0;
     color: white;
     font-weight: 200;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .reservation {
+    width: 377px;
   }
 }

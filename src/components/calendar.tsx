@@ -151,47 +151,71 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
   const getDayPickerLocale = i18n.language === "en-US" ? enUS : hu;
 
   return (
-    <div className={dateStyles.reservationDate__calendar}>
-      <div className={dateStyles.reservationDate__date}>
-        <div>
-          <CalendarIcon className={classnames(`${dateStyles.reservationDate__calendarIcon} calendarIcon`)} />
+    <>
+      <div className={dateStyles.reservationDate__calendar}>
+        <div className={dateStyles.reservationDate__date}>
+          <div>
+            <CalendarIcon className={classnames(`${dateStyles.reservationDate__calendarIcon} calendarIcon`)} />
+          </div>
+          <DayPicker
+            selected={values.date}
+            onDayClick={selectDate}
+            fromMonth={new Date()}
+            locale={getDayPickerLocale}
+            weekStartsOn={1}
+            disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
+            showOutsideDays
+            fixedWeeks
+          />
         </div>
-        <DayPicker
-          selected={values.date}
-          onDayClick={selectDate}
-          fromMonth={new Date()}
-          locale={getDayPickerLocale}
-          weekStartsOn={1}
-          disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
-          showOutsideDays
-          fixedWeeks
-        />
-      </div>
-      {values.date && (
-        <div className={dateStyles.reservationDate__time}>
-          <div className={dateStyles.reservationDate__timeTitle}>
-            <div className={styles.iconContainer}>
-              <ClockIcon className={classnames(`${dateStyles.reservationDate__clockIcon} clockIcon`)} />
+        {values.date && (
+          <div className={dateStyles.reservationDate__time}>
+            <div className={dateStyles.reservationDate__timeTitle}>
+              <div className={styles.iconContainer}>
+                <ClockIcon className={classnames(`${dateStyles.reservationDate__clockIcon} clockIcon`)} />
+              </div>
+              <span>{t("reservationDate.time")}</span>
             </div>
-            <span>{t("reservationDate.time")}</span>
+            <div className={classnames(`${dateStyles.reservationDate__timeOptions} reservationDate__timeOptions`)}>
+              {timeOptions.map((time, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className={classnames({
+                    [dateStyles.reservationDate__timeOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(time)
+                  })}
+                  onClick={selectTime}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
           </div>
-          <div className={classnames(`${dateStyles.reservationDate__timeOptions} reservationDate__timeOptions`)}>
-            {timeOptions.map((time, index) => (
-              <button
-                key={index}
-                type="button"
-                className={classnames({
-                  [dateStyles.reservationDate__timeOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(time)
-                })}
-                onClick={selectTime}
-              >
-                {time}
-              </button>
-            ))}
+        )}
+      </div>
+      <div className={dateStyles.reservationDate__timeResponsive}>
+        <div className={dateStyles.reservationDate__timeTitle}>
+          <div className={styles.iconContainer}>
+            <ClockIcon className={classnames(`${dateStyles.reservationDate__clockIcon} clockIcon`)} />
           </div>
+          <span>{t("reservationDate.time")}</span>
         </div>
-      )}
-    </div>
+        <div className={classnames(`${dateStyles.reservationDate__timeResponsiveOptions} reservationDate__timeOptions`)}>
+          {timeOptions.map((time, index) => (
+            <button
+              key={index}
+              type="button"
+              className={classnames({
+                [dateStyles.reservationDate__timeResponsiveOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(time)
+              })}
+              onClick={selectTime}
+            >
+              {time}
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 

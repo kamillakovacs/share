@@ -7,6 +7,7 @@ const Dotenv = require("dotenv-webpack");
 module.exports = {
   i18n,
   webpack: (config) => {
+    config.resolve.fallback = { ...config.resolve.fallback, net: false, os: false };
     config.module.rules.push({
       test: /\.html$/i,
       loader: "html-loader"

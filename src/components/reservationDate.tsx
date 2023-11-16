@@ -32,46 +32,6 @@ const ReservationDate: FC<Props> = ({ currentReservations }) => {
         <label>{t("reservationDate.dateAndTime")}</label>
       </div>
       <Calendar currentReservations={currentReservations} />
-      {/* <div className={dateStyles.reservationDate__calendar}>
-        <div className={dateStyles.reservationDate__date}>
-          <div>
-            <CalendarIcon className={classnames(`${dateStyles.reservationDate__calendarIcon} calendarIcon`)} />
-          </div>
-          <DayPicker
-            selected={values.date}
-            onDayClick={selectDate}
-            fromMonth={new Date()}
-            weekStartsOn={1}
-            disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
-            showOutsideDays
-            fixedWeeks
-          />
-        </div>
-        {values.date && (
-          <div className={dateStyles.reservationDate__time}>
-            <div className={dateStyles.reservationDate__timeTitle}>
-              <div className={styles.iconContainer}>
-                <ClockIcon className={classnames(`${dateStyles.reservationDate__clockIcon} clockIcon`)} />
-              </div>
-              <span>Time</span>
-            </div>
-            <div className={classnames(`${dateStyles.reservationDate__timeOptions} reservationDate__timeOptions`)}>
-              {timeOptions.map((t, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  className={classnames({
-                    [dateStyles.reservationDate__timeOptionsDisabled]: allTubsAreReservedForGivenDayAndTime(t)
-                  })}
-                  onClick={selectTime}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </div> */}
     </section>
   );
 };
