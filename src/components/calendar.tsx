@@ -87,6 +87,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
     if (!currentReservations) {
       return false;
     }
+
     const reservationsOnDate = Object.values(currentReservations).filter((res: ReservationDataShort) => {
       if (res.date === null) {
         return;
@@ -101,29 +102,26 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
       );
       return reservationDate.toISOString() === givenDay.toISOString();
     });
+
     const hoursReservedOnGivenDay = reservationsOnDate
       .map((res: ReservationDataShort) => new Date(res.date).getHours())
       .sort();
 
     const allTimesAreReservedOnGivenDay = [10, 12, 14, 16, 18, 20].sort().toString() ===
-      hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay.indexOf(hour) == -index).toString();
-    const areAllTubsReservedAtAllTimesOfGivenDay = () => {
-      if (!allTimesAreReservedOnGivenDay) {
-        return false;
-      }
+      hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay.indexOf(hour) == index).toString();
 
-      let tubsReserved = 0;
-      reservationsOnDate.forEach((res: ReservationDataShort) => (tubsReserved += res.numberOfTubs.value));
-      return tubsReserved >= AVAILABLE_TUBS;
-    };
+    if (!allTimesAreReservedOnGivenDay) {
+      return false;
+    }
 
-    return areAllTubsReservedAtAllTimesOfGivenDay();
+    return reservationsOnDate.length > 0;
   };
 
   const allTubsAreReservedForGivenDayAndTime = (time: string): boolean => {
     if (!currentReservations || !values.date) {
       return false;
     }
+
     const reservationsOnDateAndTime = Object.values(currentReservations).filter((res) => {
       if (time === null || time === undefined) {
         return;
@@ -146,9 +144,9 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
     });
 
     // find if all tubs are reserved on given day and time
-    let tubsReserved = 0;
-    reservationsOnDateAndTime.forEach((res) => (tubsReserved += res.numberOfTubs.value));
-    return tubsReserved >= AVAILABLE_TUBS;
+    // let tubsReserved = 0;
+    // reservationsOnDateAndTime.forEach((res) => (tubsReserved += res.numberOfTubs.value));
+    return reservationsOnDateAndTime.length > 0;
   };
 
   const getDayPickerLocale = i18n.language === "en-US" ? enUS : hu;
