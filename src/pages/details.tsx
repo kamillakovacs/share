@@ -111,6 +111,7 @@ const Details: FC<Props> = ({ users }) => {
           validateOnChange
         >
           {({ dirty, errors, values, handleSubmit }) => {
+            console.log(errors)
             return (
               <form onSubmit={handleSubmit}>
                 <Customer />
