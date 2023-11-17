@@ -35,10 +35,7 @@ export const makeReservation = async (
 
   const firebaseResponse = await axios
     .post("/api/reservation", { reservationData, newCustomer, paymentId, customerAlreadyInDatabase }, { headers })
-    .then((res) => {
-      console.log(res)
-      return res.data
-    })
+    .then((res) => res.data)
     .catch((e) => e);
 
   return firebaseResponse;

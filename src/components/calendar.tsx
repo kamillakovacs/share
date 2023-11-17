@@ -76,8 +76,12 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
   };
 
   const colorIconGreen = (selector: string) =>
-    ((document.querySelector(selector) as HTMLElement).style.fill = "#00d531");
-  const resetIconColor = (selector: string) => ((document.querySelector(selector) as HTMLElement).style.fill = "white");
+    ((document.querySelectorAll(selector).forEach(s => (s as HTMLElement).style.fill = "#00d531")));
+
+
+  const resetIconColor = (selector: string) =>
+    ((document.querySelector(selector) as HTMLElement).style.fill = "white");
+
 
   const allTubsAreReservedForGivenEntireDay = (day: Date) => {
     if (!currentReservations) {
@@ -124,7 +128,6 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
       if (time === null || time === undefined) {
         return;
       }
-      console.log(values)
       // find if there are reservations on given day and time
       let givenDayAndTime = new Date(
         values.date.getFullYear(),
@@ -166,6 +169,8 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
             disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
             showOutsideDays
             fixedWeeks
+            className={dateStyles.reservationDate__datePicker}
+
           />
         </div>
         {values.date && (
@@ -194,7 +199,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
         )}
       </div>
       <div className={dateStyles.reservationDate__timeResponsive}>
-        <div className={dateStyles.reservationDate__timeTitle}>
+        <div className={dateStyles.reservationDate__timeResponsiveTitle}>
           <div className={styles.iconContainer}>
             <ClockIcon className={classnames(`${dateStyles.reservationDate__clockIcon} clockIcon`)} />
           </div>

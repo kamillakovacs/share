@@ -68,8 +68,8 @@
       cursor: pointer;
     }
 
-    @media only screen and (max-width: 400px) {
-      margin: 20px 0 0 120px;
+    @media only screen and (max-width: 500px) {
+      width: 100%;
     }
   }
 
@@ -136,8 +136,8 @@
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
   .reservation {
-    width: 377px;
+    width: 500px;
   }
 }

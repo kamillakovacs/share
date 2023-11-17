@@ -36,6 +36,20 @@
     border-radius: 10px;
     border: 1px #222222 solid;
     color: white;
+
+    &Picker>div>div>table {
+      margin: 0 1em 1em;
+      width: 300px;
+      max-width: none;
+    }
+
+    &Picker>div>div>div:first-child {
+      margin: 10px;
+
+      >div {
+        margin-right: 10px;
+      }
+    }
   }
 
   &__time {
@@ -52,9 +66,13 @@
       height: 50px;
       width: 90px;
       display: flex;
-      justify-content: space-around;
       align-items: center;
       color: white;
+      padding-left: 15px;
+
+      >div {
+        margin-right: 10px;
+      }
     }
 
     &Options {
@@ -97,15 +115,37 @@
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 500px) {
   .reservationDate {
+
+    &__calendar {
+      height: auto;
+
+      &Icon {
+        left: 25px;
+        top: 30px;
+      }
+    }
+
     &__date {
-      width: 310px;
+      width: 450px;
+      height: 400px;
       background-color: #343434;
       position: relative;
       border-radius: 10px;
       border: 1px #222222 solid;
       color: white;
+
+      &Picker>div>div>table {
+        font-size: 20px;
+        margin: 1em;
+        width: 400px;
+        max-width: none;
+      }
+
+      &Picker>div>div>div:first-child {
+        margin: 10px;
+      }
     }
 
     &__time {
@@ -115,21 +155,27 @@
     &__timeResponsive {
       display: inline;
       align-items: center;
-      margin: 5px 0 0 30px;
-      width: 310px;
+      margin: 5px 15px 0 30px;
       background-color: #343434;
       border: 1px solid #222222;
       border-radius: 10px;
-      font-size: 20px;
       padding: 23px 1em;
 
       &Title {
         height: 50px;
         width: 90px;
         display: flex;
-        justify-content: space-around;
         align-items: center;
         color: white;
+        padding-left: 10px;
+
+        >div {
+          margin-right: 10px;
+        }
+
+        >span {
+          font-size: 20px;
+        }
       }
 
       &Options {
@@ -143,12 +189,11 @@
           border-radius: 5px;
           color: #fafafa;
           border: none;
-          font-size: 15px;
+          font-size: 20px;
           height: 43px;
           font-weight: 200;
           cursor: pointer;
           font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-          padding: 5px 20px;
 
           &.selected {
             color: #222222;

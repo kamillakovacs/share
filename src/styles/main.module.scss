@@ -5,6 +5,8 @@
   background-color: #222222;
   padding-bottom: 50px;
   padding: 40px 0;
+  min-width: 550px;
+
 
   label {
     font-weight: 400;
@@ -21,7 +23,7 @@
   .navigators {
     .verticalLine {
       border-left: 1px solid #343434;
-      height: 430px;
+      height: 500px;
       margin: 32px 0 10px 12px;
     }
 

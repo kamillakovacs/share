@@ -11,6 +11,7 @@ import Calendar from "./calendar";
 import dateStyles from "../styles/reservationDate.module.scss";
 import styles from "../styles/main.module.scss";
 
+
 interface Props {
   currentReservations: ReservationDataShort[];
 }
