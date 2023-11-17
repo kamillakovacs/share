@@ -88,34 +88,33 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
       return false;
     }
 
-    const reservationsOnDate = Object.values(currentReservations).filter((res: ReservationDataShort) => {
-      if (res.date === null) {
-        return;
-      }
-      // find if there are reservations on given day
-      let givenDay = new Date(day.getFullYear(), day.getMonth(), day.getDate());
-      let reservationDateAndTime = new Date(res.date);
-      let reservationDate = new Date(
-        reservationDateAndTime.getFullYear(),
-        reservationDateAndTime.getMonth(),
-        reservationDateAndTime.getDate()
-      );
-      return reservationDate.toISOString() === givenDay.toISOString();
-    });
+    const hoursReservedOnGivenDay = getReservationsOnDate(day).map((res: ReservationDataShort) => new Date(res.date).getHours());
 
-    const hoursReservedOnGivenDay = reservationsOnDate
-      .map((res: ReservationDataShort) => new Date(res.date).getHours())
-      .sort();
+    const timesReservationOnDay: number[] = hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay?.indexOf(hour) == index);
 
-    const allTimesAreReservedOnGivenDay = [10, 12, 14, 16, 18, 20].sort().toString() ===
-      hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay.indexOf(hour) == index).toString();
+    const allTimesAreReservedOnGivenDay: boolean = [10, 12, 14, 16, 18, 20].every(time => timesReservationOnDay?.includes(time));
 
     if (!allTimesAreReservedOnGivenDay) {
       return false;
     }
 
-    return reservationsOnDate.length > 0;
+    return getReservationsOnDate(day).length > 0;
   };
+
+  const getReservationsOnDate = (day: Date) => Object.values(currentReservations).filter((res: ReservationDataShort) => {
+    if (res.date === null) {
+      return;
+    }
+    // find if there are reservations on given day
+    let givenDay = new Date(day.getFullYear(), day.getMonth(), day.getDate());
+    let reservationDateAndTime = new Date(res.date);
+    let reservationDate = new Date(
+      reservationDateAndTime.getFullYear(),
+      reservationDateAndTime.getMonth(),
+      reservationDateAndTime.getDate()
+    );
+    return reservationDate.toISOString() === givenDay.toISOString();
+  });
 
   const allTubsAreReservedForGivenDayAndTime = (time: string): boolean => {
     if (!currentReservations || !values.date) {
@@ -143,9 +142,6 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
       return reservationDate.toISOString() === givenDayAndTime.toISOString();
     });
 
-    // find if all tubs are reserved on given day and time
-    // let tubsReserved = 0;
-    // reservationsOnDateAndTime.forEach((res) => (tubsReserved += res.numberOfTubs.value));
     return reservationsOnDateAndTime.length > 0;
   };
 
