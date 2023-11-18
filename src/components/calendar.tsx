@@ -20,7 +20,6 @@ interface Props {
 }
 
 const timeOptions = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
-const AVAILABLE_TUBS = 3;
 
 const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => {
   const { values, setFieldValue } = useFormikContext<Reservation>();
@@ -89,9 +88,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
     }
 
     const hoursReservedOnGivenDay = getReservationsOnDate(day).map((res: ReservationDataShort) => new Date(res.date).getHours());
-
     const timesReservationOnDay: number[] = hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay?.indexOf(hour) == index);
-
     const allTimesAreReservedOnGivenDay: boolean = [10, 12, 14, 16, 18, 20].every(time => timesReservationOnDay?.includes(time));
 
     if (!allTimesAreReservedOnGivenDay) {

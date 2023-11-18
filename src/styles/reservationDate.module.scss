@@ -3,26 +3,26 @@
   flex-direction: column;
   font-weight: 200;
 
-  &__calendarIcon {
-    position: absolute;
-    top: 36px;
-    left: 27px;
-    right: auto;
-    width: 24px;
-    height: 24px;
-  }
-
   &__calendar {
     display: flex;
     flex-direction: row;
     margin-left: 32px;
-    height: 380px;
+
+    &Icon {
+      position: absolute;
+      top: 42px;
+      left: 45px;
+      right: auto;
+      width: 24px;
+      height: 24px;
+    }
   }
 
   &__label {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
+    font-size: 22px;
 
     label {
       margin-left: 10px;
@@ -30,21 +30,56 @@
   }
 
   &__date {
-    width: 330px;
+    width: 470px;
+    height: 530px;
     background-color: #343434;
     position: relative;
     border-radius: 10px;
     border: 1px #222222 solid;
     color: white;
 
-    &Picker>div>div>table {
-      margin: 0 1em 1em;
-      width: 300px;
-      max-width: none;
+    &Picker>div>div {
+      margin-left: 10px !important;
+
+      >div>h2 {
+        font-size: 22px !important;
+        margin-left: 10px;
+      }
+
+      >table {
+        margin: 0 1em 1em;
+        width: 400px;
+        max-width: none;
+        font-size: 22px;
+
+        >thead>tr {
+          height: 50px;
+
+          >th {
+            font-size: 22px;
+          }
+        }
+
+        >tbody>tr {
+          height: 60px;
+
+          >td {
+            width: 60px;
+            height: 60px;
+
+            >button {
+              width: 55px;
+              height: 55px;
+              max-width: none;
+              font-weight: 200 !important;
+            }
+          }
+        }
+      }
     }
 
     &Picker>div>div>div:first-child {
-      margin: 10px;
+      margin: 20px 20px 10px !important;
 
       >div {
         margin-right: 10px;
@@ -63,7 +98,7 @@
     padding: 23px 1em;
 
     &Title {
-      height: 50px;
+      height: 60px;
       width: 90px;
       display: flex;
       align-items: center;
@@ -78,16 +113,15 @@
     &Options {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-      height: 290px;
+      height: 420px;
 
       button {
         background-color: #343434;
         border-radius: 5px;
         color: #fafafa;
         border: none;
-        font-size: 15px;
-        height: 43px;
+        font-size: 22px;
+        height: 70px;
         font-weight: 200;
         cursor: pointer;
         font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;

@@ -76,10 +76,6 @@ const Main: FC<Props> = ({ currentReservations }) => {
         <span>{t("index.reserveYourExperience")}</span>
       </label>
       <section className={styles.main__container}>
-        <div className={styles.navigators}>
-          <div className={styles.verticalLine} />
-          <div className={styles.verticalLine2} />
-        </div>
         <Formik<Reservation>
           initialValues={initialValues}
           onSubmit={(values) => {
