@@ -81,11 +81,6 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
         </span>
       </label>
       <div className={thanksStyles.reservation}>
-        <div className={thanksStyles.navigators}>
-          <div className={thanksStyles.verticalLine} />
-          <div className={thanksStyles.verticalLine2} />
-          <div className={thanksStyles.verticalLine3} />
-        </div>
         <div className={thanksStyles.reservation__summary}>
           <div className={thanksStyles.summaryLabel}>
             <div className={thanksStyles.icon}>
