@@ -98,7 +98,7 @@ const Customer: FC = () => {
         <PhoneInput
           className={customerStyles.customer__input}
           name="phoneNumber"
-          placeholder="Enter phone number"
+          placeholder={t("customer.phone")}
           defaultCountry="HU"
           onChange={onPhoneNumberInput}
         />

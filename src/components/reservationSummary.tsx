@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { FC, memo } from "react";
+import { FC, memo, useEffect, useState } from "react";
 
 import detailsStyles from "../styles/details.module.scss";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
@@ -10,7 +10,22 @@ interface Props {
 }
 
 const ReservationSummary: FC<Props> = ({ reservation, date }) => {
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
+  const [resDate, setResDate] = useState("");
+
+  useEffect(() => {
+    if (date) {
+      setResDate(
+        new Intl.DateTimeFormat(i18n.language, {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(new Date(date))
+      );
+    }
+  }, [setResDate, date, i18n.language]);
 
   return (
     <div className={detailsStyles.details}>
@@ -24,7 +39,7 @@ const ReservationSummary: FC<Props> = ({ reservation, date }) => {
       </div>
       <div className={detailsStyles.details__row}>
         <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.date")}:</div>
-        <div>{date}</div>
+        <div>{resDate}</div>
       </div>
       <div className={detailsStyles.details__row}>
         <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.lengthOfStay")}:</div>

@@ -97,11 +97,6 @@ const Details: FC<Props> = ({ users }) => {
         <span>{t("details.yourDetails")}</span>
       </label>
       <section className={styles.main__container}>
-        <div className={styles.navigators}>
-          <div className={styles.verticalLineDetails} />
-          <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails2}`} />
-          <div className={`${styles.verticalLineDetails} ${styles.verticalLineDetails3}`} />
-        </div>
         <Formik<ReservationWithDetails>
           initialValues={initialValues}
           onSubmit={(values) => {
