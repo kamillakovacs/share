@@ -10,7 +10,7 @@ import { useTranslation } from "next-i18next";
 import * as payment from "../api/paymentRequest";
 import firebase from "../lib/firebase";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
-import { reservation } from "../lib/validation/validationSchemas";
+import { details, reservation } from "../lib/validation/validationSchemas";
 import { useAppContext } from "../../context/appContext";
 
 import Customer from "../components/customer";
@@ -53,6 +53,7 @@ const Details: FC<Props> = ({ users }) => {
     phoneNumber: null,
     email: null,
     paymentMethod: null,
+    whereYouHeard: { value: "", label: "" },
     canceled: null,
     communication: {
       reservationEmailSent: false,
@@ -77,7 +78,7 @@ const Details: FC<Props> = ({ users }) => {
       lastName: values.lastName,
       phoneNumber: values.phoneNumber,
       email: values.email,
-      whereYouHeard: values.whereYouHeard ? values.whereYouHeard : null,
+      whereYouHeard: values.whereYouHeard,
       paymentStatus: null,
       paymentMethod: values.paymentMethod,
       canceled: null,
@@ -99,14 +100,15 @@ const Details: FC<Props> = ({ users }) => {
       <section className={styles.main__container}>
         <Formik<ReservationWithDetails>
           initialValues={initialValues}
-          onSubmit={(values) => {
+          onSubmit={async (values) => {
             onSubmit(values);
           }}
-          validationSchema={reservation}
+          validationSchema={details}
           validateOnChange
         >
           {({ dirty, errors, values, handleSubmit }) => {
             console.log(errors)
+            console.log(values)
             return (
               <form onSubmit={handleSubmit}>
                 <Customer />

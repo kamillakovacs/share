@@ -4,9 +4,7 @@ import classNames from "classnames";
 import { useFormikContext } from "formik";
 import { useTranslation } from "next-i18next";
 
-//@ts-ignore
 import HottubIcon from "../../public/assets/hottub.svg";
-//@ts-ignore
 import PeopleIcon from "../../public/assets/people.svg";
 import { Reservation } from "../lib/validation/validationInterfaces";
 
@@ -158,12 +156,6 @@ const Options: FC<Props> = ({ currentReservations }) => {
 
   const resetIconColor = (selector: string) => ((document.querySelector(selector) as HTMLElement).style.fill = "white");
 
-  const numberOfTubsAvailableText =
-    numberOfAvailableTubs() > 0
-      ? `${t("options.openParentheses")}${numberOfAvailableTubs()} ${numberOfAvailableTubs() > 1 ? t("options.tubs") : t("options.tub")
-      } ${t("options.forMax")} ${numberOfAvailableTubs() * 2} ${t("options.peopleAtSelectedTime")}`
-      : t("options.noTubsAtSelectedTime");
-
   return (
     <>
       <div className={optionStyles.options}>
@@ -175,9 +167,6 @@ const Options: FC<Props> = ({ currentReservations }) => {
         />
         <div className={optionStyles.options__tubsLabel}>
           <label>{t("options.numberOfPeopleAndTubs")}</label>
-          {/* {values.date && values.date.getHours() !== 0 && (
-            <div className={optionStyles.options__availableTubs}>{numberOfTubsAvailableText}</div>
-          )} */}
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, memo } from "react";
+import React, { ChangeEvent, FC, memo, useEffect } from "react";
 import Select, { ActionMeta } from "react-select";
 import classNames from "classnames";
 import { useFormikContext, ErrorMessage } from "formik";
@@ -13,8 +13,12 @@ import styles from "../styles/main.module.scss";
 
 const Customer: FC = () => {
   const { t } = useTranslation("common");
-
   const { values, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
+
+  useEffect(() => {
+
+  }, [values.whereYouHeard, setFieldValue]);
+
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setFieldTouched(e.target.name);

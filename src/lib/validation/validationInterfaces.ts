@@ -18,7 +18,7 @@ export interface ReservationWithDetails {
   lastName: string;
   phoneNumber: string;
   email: string;
-  whereYouHeard?: { label: string; value: string };
+  whereYouHeard: { label: string; value: string };
   paymentMethod: string;
   paymentStatus?: PaymentStatus;
   canceled: CanceledBy;
