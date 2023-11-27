@@ -1,10 +1,7 @@
 import React, { FC, memo, useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 
-import { ReservationWithDetails, Reservations } from "../lib/validation/validationInterfaces";
-
 import thanksStyles from "../styles/thanks.module.scss";
-// import { sendThankYouEmail } from "../api/thankYouEmail";
 import detailsStyles from "../styles/details.module.scss";
 
 import CalendarCheckIcon from "../../public/assets/calendar-check.svg";
@@ -13,21 +10,20 @@ import HottubIcon from "../../public/assets/hottub.svg";
 import ReservationSummary from "./reservationSummary";
 import { PaymentStatus } from "../api/interfaces";
 import EditReservation from "./editReservation";
+
 import { ReservationDataShort } from "../lib/interfaces";
+import { ReservationWithDetails, Reservations } from "../lib/validation/validationInterfaces";
 
 interface Props {
   reservation: ReservationWithDetails;
-  paymentId: string;
   reservations: Reservations;
   currentReservations: ReservationDataShort[];
 }
 
-const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, currentReservations }) => {
+const ReservationDetails: FC<Props> = ({ reservation, reservations, currentReservations }) => {
   const { t, i18n } = useTranslation("common");
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
-  const [thankYouEmailSent, setThankYouEmailSent] = useState(false)
-
 
   useEffect(() => {
     if (reservation?.date) {
@@ -54,22 +50,6 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
       );
     }
   }, [setDate, setDateOfPurchase, reservation?.date, reservation?.dateOfPurchase, i18n.language]);
-
-  useEffect(() => {
-    if (!!date.length && !!dateOfPurchase.length && !thankYouEmailSent) {
-      const emailData = {
-        name: `${reservation?.firstName} ${reservation?.lastName}`,
-        email: reservation?.email,
-        date,
-        dateOfPurchase,
-        numberOfTubs: reservation?.numberOfTubs.label,
-        totalPrice: reservation?.price,
-        paymentId
-      };
-      // sendThankYouEmail(emailData);
-      // setThankYouEmailSent(true)
-    }
-  }, [thankYouEmailSent, setThankYouEmailSent, reservation, date, dateOfPurchase, paymentId])
 
   return (
     <article className={thanksStyles.container}>
@@ -162,7 +142,6 @@ const ReservationDetails: FC<Props> = ({ reservation, paymentId, reservations, c
         </div>
       </div>
       {!reservation.canceled && <EditReservation reservations={reservations} currentReservations={currentReservations} />}
-      {/* <Receipt /> */}
     </article>
   );
 };

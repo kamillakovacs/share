@@ -10,7 +10,7 @@ import { useTranslation } from "next-i18next";
 import * as payment from "../api/paymentRequest";
 import firebase from "../lib/firebase";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
-import { details, reservation } from "../lib/validation/validationSchemas";
+import { details } from "../lib/validation/validationSchemas";
 import { useAppContext } from "../../context/appContext";
 
 import Customer from "../components/customer";
@@ -107,8 +107,6 @@ const Details: FC<Props> = ({ users }) => {
           validateOnChange
         >
           {({ dirty, errors, values, handleSubmit }) => {
-            console.log(errors)
-            console.log(values)
             return (
               <form onSubmit={handleSubmit}>
                 <Customer />
