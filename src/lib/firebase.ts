@@ -15,7 +15,7 @@ const firebaseConfig = {
     privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
   }),
   databaseAuthVariableOverride: {
-    uid: "share-service-worker",
+    uid: process.env.FIREBASE_AUTH_ID,
   },
 };
 
