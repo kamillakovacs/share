@@ -57,6 +57,7 @@ const Details: FC<Props> = ({ users }) => {
     canceled: null,
     communication: {
       reservationEmailSent: false,
+      receiptSent: false,
       rescheduleEmailSentCount: 0,
       cancelationEmailSent: false
     }
@@ -84,6 +85,7 @@ const Details: FC<Props> = ({ users }) => {
       canceled: null,
       communication: {
         reservationEmailSent: false,
+        receiptSent: false,
         rescheduleEmailSentCount: 0,
         cancelationEmailSent: false
       }

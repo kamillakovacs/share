@@ -1,9 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios';
 import { ReservationWithDetails } from '../../lib/validation/validationInterfaces';
+import firebase from "firebase-admin";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const reservation: ReservationWithDetails = req.body.data;
+    const reservation: ReservationWithDetails = req.body.reservation;
+    const database = firebase.database();
+    const reservations = database.ref("reservations");
+
     const data = {
         "name": reservation.firstName + " " + reservation.lastName,
         "emails": [reservation.email],
@@ -23,7 +27,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await axios
         .post(process.env.BILLINGO_RECEIPT_URL, data,
             { headers: { "Content-Type": "application/json", "X-API-KEY": process.env.BILLINGO_API_KEY } })
-        .then(async (res: any) => res.data)
+        .then(async (res: any) => {
+            await reservations.update({
+                [`${req.body.paymentId}/communication/receiptSent`]: true
+            });
+            return res.data
+        })
         .catch(e => e)
 
     return res.status(200).json({ success: true });

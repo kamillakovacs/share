@@ -11,7 +11,6 @@ import Unsuccessful from "../components/unsuccessful";
 import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
 import { ReceiptEmail, ReservationData, ReservationDataShort } from "../lib/interfaces";
-import { useTranslation } from "next-i18next";
 import { sendReservationConfirmationEmail } from "./api/email";
 
 interface Props {
@@ -22,26 +21,19 @@ interface Props {
 
 const Reservation: FC<Props> = ({ reservations, users, currentReservations }) => {
   const { query } = useRouter();
-  const { t } = useTranslation();
   const paymentId = query.paymentId as string
   const reservation: ReservationWithDetails = reservations[paymentId];
 
   useEffect(() => {
-    async function getReceipt() {
-      const headers = {
-        "Content-Type": "application/json"
-      };
+    const createAndSendReceipt = async () => await axios
+      .post("/api/receipt", { reservation, paymentId })
+      .then((res) => res.data)
+      .catch((e) => e);
 
-      return await axios
-        .post("/api/receipt", { data: reservation }, { headers })
-        .then((res) => res.data)
-        .catch((e) => e);
+    if (reservation?.paymentStatus === PaymentStatus.Succeeded && !reservation?.communication?.receiptSent) {
+      createAndSendReceipt();
     }
-
-    if (reservation?.firstName) {
-      getReceipt();
-    }
-  }, [reservation])
+  }, [reservation, paymentId])
 
   return (
     <article className={thanksStyles.container}>

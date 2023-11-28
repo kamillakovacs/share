@@ -62,6 +62,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
       canceled: null,
       communication: {
         reservationEmailSent: false,
+        receiptSent: false,
         rescheduleEmailSentCount: 0,
         cancelationEmailSent: false
       }

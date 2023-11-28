@@ -30,6 +30,7 @@ export interface ReceiptEmail {
 
 export interface Communication {
   reservationEmailSent: boolean;
+  receiptSent: boolean;
   rescheduleEmailSentCount: number;
   cancelationEmailSent: boolean;
 }

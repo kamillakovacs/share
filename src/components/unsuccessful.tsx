@@ -49,6 +49,7 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
       canceled: null,
       communication: {
         reservationEmailSent: reservation.communication.reservationEmailSent,
+        receiptSent: reservation.communication.receiptSent,
         rescheduleEmailSentCount: reservation.communication.rescheduleEmailSentCount,
         cancelationEmailSent: reservation.communication.cancelationEmailSent
       }
