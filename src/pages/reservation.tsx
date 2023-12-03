@@ -10,8 +10,9 @@ import Unsuccessful from "../components/unsuccessful";
 
 import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
-import { ReceiptEmail, ReservationData, ReservationDataShort } from "../lib/interfaces";
+import { ReservationData, ReservationDataShort } from "../lib/interfaces";
 import { sendReservationConfirmationEmail } from "./api/email";
+import { i18n, useTranslation } from "next-i18next";
 
 interface Props {
   reservations: Reservations;
@@ -82,21 +83,7 @@ export async function getServerSideProps(router) {
   const reservation: ReservationWithDetails = reservations[paymentId];
 
   if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
-    const emailData = {
-      name: `${reservation?.firstName} ${reservation?.lastName}`,
-      email: reservation?.email,
-      date: reservation?.date,
-      dateOfPurchase: reservation?.dateOfPurchase,
-      numberOfTubs: reservation?.numberOfTubs.label,
-      totalPrice: reservation?.price,
-      paymentId
-    };
-    // sendReservationConfirmationEmail(`${reservation.firstName} ${reservation.lastName}`, reservation.email);
-
-    const email: ReceiptEmail = {
-      subject: "subject",
-      body: "body"
-    }
+    sendReservationConfirmationEmail(reservation, paymentId, i18n.language);
   }
 
   return { props: { ...(await serverSideTranslations(router.locale, ["common"])), reservations, users, currentReservations } };
