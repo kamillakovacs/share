@@ -12,7 +12,7 @@ import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
 import { ReservationData, ReservationDataShort } from "../lib/interfaces";
 import { sendReservationConfirmationEmail } from "./api/email";
-import { i18n, useTranslation } from "next-i18next";
+import { i18n } from "next-i18next";
 
 interface Props {
   reservations: Reservations;
@@ -83,7 +83,7 @@ export async function getServerSideProps(router) {
   const reservation: ReservationWithDetails = reservations[paymentId];
 
   if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
-    sendReservationConfirmationEmail(reservation, paymentId, i18n.language);
+    sendReservationConfirmationEmail(reservation, paymentId, router.locale);
   }
 
   return { props: { ...(await serverSideTranslations(router.locale, ["common"])), reservations, users, currentReservations } };
