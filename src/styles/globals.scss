@@ -30,6 +30,7 @@ a {
     padding-left: 40px !important;
     height: 64px;
     margin-bottom: 0 !important;
+
     &_label {
       display: flex;
       align-items: center;
@@ -87,6 +88,7 @@ a {
     height: 16px !important;
     margin-top: -7px !important;
   }
+
   &-mark {
     width: 4px !important;
     height: 4px !important;
@@ -133,7 +135,7 @@ a {
       padding: 0;
       padding: 10px;
       width: 100%;
-      color: #fdb924;
+      color: #fdb923;
     }
 
     &__panel {
@@ -172,11 +174,11 @@ a {
       }
     }
 
-    &--open > .Accordion__indicator .Accordion__indicator--contentItem--rotate .Accordion__indicator--icon {
+    &--open>.Accordion__indicator .Accordion__indicator--contentItem--rotate .Accordion__indicator--icon {
       transform: rotate(-180deg);
     }
 
-    &--open > .Accordion__panel {
+    &--open>.Accordion__panel {
       max-height: 10000px;
       transition: max-height 0.8s ease;
       padding: 10px;

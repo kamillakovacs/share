@@ -47,19 +47,22 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
   }, [reservation, paymentId, i18n])
 
   return (
-    <article className={thanksStyles.container}>
-      {reservation?.paymentStatus === PaymentStatus.Succeeded && (
-        <ReservationDetails
-          reservation={reservation}
-          reservations={reservations}
-          currentReservations={currentReservations}
-        />
-      )}
-      {(reservation?.paymentStatus === PaymentStatus.Canceled ||
-        reservation?.paymentStatus === PaymentStatus.Expired) && (
-          <Unsuccessful reservation={reservation} users={users} />
+    <>
+      <div id="modal-root"></div>
+      <article className={thanksStyles.container}>
+        {reservation?.paymentStatus === PaymentStatus.Succeeded && (
+          <ReservationDetails
+            reservation={reservation}
+            reservations={reservations}
+            currentReservations={currentReservations}
+          />
         )}
-    </article>
+        {(reservation?.paymentStatus === PaymentStatus.Canceled ||
+          reservation?.paymentStatus === PaymentStatus.Expired) && (
+            <Unsuccessful reservation={reservation} users={users} />
+          )}
+      </article>
+    </>
   );
 };
 

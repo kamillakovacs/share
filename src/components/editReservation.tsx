@@ -13,6 +13,9 @@ import Calendar from "../components/calendar";
 
 import reservationStyles from "../styles/reservation.module.scss";
 import dateStyles from "../styles/reservationDate.module.scss";
+import modalStyles from "../styles/modal.module.scss";
+
+import Modal from "./modal";
 
 
 interface Props {
@@ -22,28 +25,13 @@ interface Props {
 
 const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   const router = useRouter();
-  const { t, i18n } = useTranslation("common");
+  const { t } = useTranslation("common");
   const paymentId = router.query.paymentId as string;
   const reservation: ReservationWithDetails = reservations[paymentId];
 
-  const [date, setDate] = useState("");
   const [action, setAction] = useState("");
   const [updateResponse, setUpdateResponse] = useState(0);
-  const [canceled, setCanceled] = useState(false);
-
-  useEffect(() => {
-    if (reservation?.date) {
-      setDate(
-        new Intl.DateTimeFormat(i18n.language, {
-          month: "2-digit",
-          day: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
-        }).format(new Date(reservation?.date))
-      );
-    }
-  }, [reservation?.date, i18n.language]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (document && document.querySelector("#changeButton") && action == Action.Change) {
@@ -61,10 +49,15 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
     setAction(Action.Change);
   };
 
+  const openModal = () => setShowModal(true)
+
   const cancel = async () => {
     setAction(Action.Cancel);
     await cancelPayment.useCancelPaymentRequest(paymentId, reservation.transactionId, reservation.price)
-      .then(() => window.location.reload())
+      .then(() => {
+        setShowModal(false);
+        window.location.reload()
+      })
   };
 
   const redirectToChangeReservation = async (date: Date) =>
@@ -100,12 +93,24 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
           {t("reservationDate.changeReservationDate")}
         </button>
         <button
-          type="submit"
+          type="button"
           className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
-          onClick={cancel}
+          onClick={openModal}
         >
           {t("reservationDate.cancelReservation")}
         </button>
+        {showModal &&
+          <Modal onClose={() => setShowModal(false)} title="Cancelation">
+            <span>Are you sure you want to cancel your reservation?</span>
+            <button
+              type="submit"
+              className={`${modalStyles.button} ${reservationStyles.reservation__margin}`}
+              onClick={cancel}
+            >
+              Yes, cancel it
+            </button>
+          </Modal>
+        }
       </div>
       <Formik<Reservation>
         initialValues={initialValues}
