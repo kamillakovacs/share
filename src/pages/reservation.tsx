@@ -3,6 +3,7 @@ import firebase from "../lib/firebase";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 import { Reservation as ReservationShort, Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import ReservationDetails from "../components/reservationDetails";
@@ -11,8 +12,6 @@ import Unsuccessful from "../components/unsuccessful";
 import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
 import { ReservationData, ReservationDataShort } from "../lib/interfaces";
-import { sendReservationConfirmationEmail } from "./api/email";
-import { i18n } from "next-i18next";
 
 interface Props {
   reservations: Reservations;
@@ -22,19 +21,30 @@ interface Props {
 
 const Reservation: FC<Props> = ({ reservations, users, currentReservations }) => {
   const { query } = useRouter();
+  const { i18n } = useTranslation("common");
   const paymentId = query.paymentId as string
   const reservation: ReservationWithDetails = reservations[paymentId];
 
   useEffect(() => {
+    const createAndSendConfirmationEmail = async () => await axios
+      .post("/api/email", { reservation, paymentId, language: i18n.language })
+      .then((res) => res.data)
+      .catch((e) => e);
+
     const createAndSendReceipt = async () => await axios
       .post("/api/receipt", { reservation, paymentId })
       .then((res) => res.data)
       .catch((e) => e);
 
-    if (reservation?.paymentStatus === PaymentStatus.Succeeded && !reservation?.communication?.receiptSent) {
-      createAndSendReceipt();
+    if (reservation?.paymentStatus === PaymentStatus.Succeeded) {
+      if (!reservation?.communication.receiptSent) {
+        createAndSendReceipt();
+      }
+      if (!reservation?.communication.reservationEmailSent) {
+        createAndSendConfirmationEmail()
+      }
     }
-  }, [reservation, paymentId])
+  }, [reservation, paymentId, i18n])
 
   return (
     <article className={thanksStyles.container}>
@@ -53,10 +63,9 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
   );
 };
 
-export async function getServerSideProps(router) {
+export async function getServerSideProps({ locale }) {
   const res = firebase.database().ref("reservations");
   const customers = firebase.database().ref("customers");
-  const paymentId = router.query.paymentId;
 
   const reservations = await res.once("value").then(function (snapshot) {
     return snapshot.val() || "Anonymous";
@@ -80,13 +89,7 @@ export async function getServerSideProps(router) {
     );
   });
 
-  const reservation: ReservationWithDetails = reservations[paymentId];
-
-  if (reservation && reservation?.paymentStatus === PaymentStatus.Succeeded) {
-    sendReservationConfirmationEmail(reservation, paymentId, router.locale);
-  }
-
-  return { props: { ...(await serverSideTranslations(router.locale, ["common"])), reservations, users, currentReservations } };
+  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations, users, currentReservations } };
 }
 
 export default memo(Reservation);

@@ -13,7 +13,6 @@ import Calendar from "../components/calendar";
 
 import reservationStyles from "../styles/reservation.module.scss";
 import dateStyles from "../styles/reservationDate.module.scss";
-import { PaymentStatus } from "../api/interfaces";
 
 
 interface Props {
@@ -44,7 +43,7 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
         }).format(new Date(reservation?.date))
       );
     }
-  }, [reservation?.date]);
+  }, [reservation?.date, i18n.language]);
 
   useEffect(() => {
     if (document && document.querySelector("#changeButton") && action == Action.Change) {
