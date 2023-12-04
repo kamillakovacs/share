@@ -16,6 +16,7 @@ import dateStyles from "../styles/reservationDate.module.scss";
 import modalStyles from "../styles/modal.module.scss";
 
 import Modal from "./modal";
+import { PaymentStatus } from "../api/interfaces";
 
 
 interface Props {
@@ -44,6 +45,10 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
       window.location.reload()
     }
   })
+
+  //@ts-ignore
+  const reservationIsMoreThan48HoursAway: boolean = Math.floor(Math.abs(new Date() - new Date(reservation.date)) / 36e5) >= 48
+  const reservationIsInTheFuture: boolean = new Date(reservation.date).valueOf() > new Date().setHours(new Date().getHours() + 2)
 
   const change = () => {
     setAction(Action.Change);
@@ -84,33 +89,46 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   return (
     <div>
       <div className={reservationStyles.reservation__info}>
-        <button
-          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
-          id="changeButton"
-          type="button"
-          onClick={change}
-        >
-          {t("reservationDate.changeReservationDate")}
-        </button>
-        <button
-          type="button"
-          className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
-          onClick={openModal}
-        >
-          {t("reservationDate.cancelReservation")}
-        </button>
-        {showModal &&
-          <Modal onClose={() => setShowModal(false)} title="Cancelation">
-            <span>Are you sure you want to cancel your reservation?</span>
+        {
+          !reservation.canceled && reservation.paymentStatus === PaymentStatus.Succeeded && reservationIsInTheFuture && (
             <button
-              type="submit"
-              className={`${modalStyles.button} ${reservationStyles.reservation__margin}`}
-              onClick={cancel}
+              className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
+              id="changeButton"
+              type="button"
+              onClick={change}
             >
-              Yes, cancel it
+              {t("reservationDate.changeReservationDate")}
             </button>
-          </Modal>
+          )
         }
+        {
+          !reservation.canceled && reservation.paymentStatus === PaymentStatus.Succeeded && !!reservationIsMoreThan48HoursAway && (
+            <>
+              <button
+                type="button"
+                className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
+                onClick={openModal}
+              >
+                {t("reservationDate.cancelReservation")}
+              </button>
+              {showModal &&
+                <Modal onClose={() => setShowModal(false)} title="Cancelation">
+                  <span>Are you sure you want to cancel your reservation?</span>
+                  <button
+                    type="submit"
+                    className={`${modalStyles.button} ${reservationStyles.reservation__margin}`}
+                    onClick={cancel}
+                  >
+                    Yes, cancel it
+                  </button>
+                </Modal>
+              }
+            </>
+          )
+        }
+
+
+
       </div>
       <Formik<Reservation>
         initialValues={initialValues}
