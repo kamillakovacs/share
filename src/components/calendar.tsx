@@ -113,6 +113,9 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
     return reservationDate.toISOString() === givenDay.toISOString();
   });
 
+  const isSixtyDaysFromToday = (day: Date) => day.valueOf() > new Date().setDate(new Date().getDate() + 60)
+  const availableDates = (day: Date) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day) || isSixtyDaysFromToday(day)
+
   const allTubsAreReservedForGivenDayAndTime = (time: string): boolean => {
     if (!currentReservations || !values.date) {
       return false;
@@ -157,7 +160,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
             fromMonth={new Date()}
             locale={getDayPickerLocale}
             weekStartsOn={1}
-            disabled={(day) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day)}
+            disabled={(day) => availableDates(day)}
             showOutsideDays
             fixedWeeks
             className={dateStyles.reservationDate__datePicker}
