@@ -21,30 +21,30 @@ interface Props {
 
 const Reservation: FC<Props> = ({ reservations, users, currentReservations }) => {
   const { query } = useRouter();
-  const { i18n } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const paymentId = query.paymentId as string
   const reservation: ReservationWithDetails = reservations[paymentId];
 
   useEffect(() => {
     const createAndSendConfirmationEmail = async () => await axios
-      .post("/api/email", { reservation, paymentId, language: i18n.language })
+      .post("/api/email", { reservation, paymentId, language: i18n.language, t })
       .then((res) => res.data)
-      .catch((e) => e);
+      .catch((e) => console.log(e));
 
     const createAndSendReceipt = async () => await axios
       .post("/api/receipt", { reservation, paymentId })
       .then((res) => res.data)
-      .catch((e) => e);
+      .catch((e) => console.log(e));
 
     if (reservation?.paymentStatus === PaymentStatus.Succeeded) {
-      if (!reservation?.communication.receiptSent) {
-        createAndSendReceipt();
-      }
-      if (!reservation?.communication.reservationEmailSent) {
-        createAndSendConfirmationEmail()
-      }
+      // if (!reservation?.communication.receiptSent) {
+      createAndSendReceipt();
+      // }
+      // if (!reservation?.communication.reservationEmailSent) {
+      createAndSendConfirmationEmail()
+      // }
     }
-  }, [reservation, paymentId, i18n])
+  }, [reservation, paymentId, i18n, t])
 
   return (
     <>

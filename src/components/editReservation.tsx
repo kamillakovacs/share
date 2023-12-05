@@ -1,8 +1,9 @@
 import React, { FC, memo, useEffect, useState } from "react";
+import axios from "axios";
 import classnames from "classnames";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
+import { i18n, useTranslation } from "next-i18next";
 
 import * as cancelPayment from "../api/paymentCancelation";
 import * as changeReservation from "../api/makeReservation";
@@ -26,9 +27,10 @@ interface Props {
 
 const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   const router = useRouter();
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   const paymentId = router.query.paymentId as string;
   const reservation: ReservationWithDetails = reservations[paymentId];
+  const [date, setDate] = useState(reservation.date);
 
   const [action, setAction] = useState("");
   const [updateResponse, setUpdateResponse] = useState(0);
@@ -50,23 +52,32 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   const reservationIsMoreThan48HoursAway: boolean = Math.floor(Math.abs(new Date() - new Date(reservation.date)) / 36e5) >= 48
   const reservationIsInTheFuture: boolean = new Date(reservation.date).valueOf() > new Date().setHours(new Date().getHours() + 2)
 
-  const change = () => {
+  const change = async () => {
     setAction(Action.Change);
+    await axios
+      .post("/api/email", { reservation, paymentId, language: i18n.language, t, change: true, date })
+      .then((res) => res.data)
+      .catch((e) => {
+        console.log("Error sending email confirming change")
+        return e;
+      });
   };
 
   const openModal = () => setShowModal(true)
 
   const cancel = async () => {
     setAction(Action.Cancel);
-    await cancelPayment.useCancelPaymentRequest(paymentId, reservation.transactionId, reservation.price)
+    await cancelPayment.useCancelPaymentRequest(paymentId, reservation, reservation.price, i18n.language)
       .then(() => {
         setShowModal(false);
         window.location.reload()
       })
   };
 
-  const redirectToChangeReservation = async (date: Date) =>
+  const redirectToChangeReservation = async (date: Date) => {
+    setDate(date);
     await changeReservation.updateReservationDate(date, paymentId).catch((e) => e);
+  }
 
   const initialValues = {
     date: null,

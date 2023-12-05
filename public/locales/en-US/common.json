@@ -113,5 +113,9 @@
   "receipt": {
     "receiptFromShareSpa": "Receipt from Craft Beer Spa",
     "receiptEmailBody": "Here is your receipt"
+  },
+  "email": {
+    "initial": "We look forward to seeing you at Craft Beer Spa! Thanks for choosing us.",
+    "changed": "Your reservation date has been updated."
   }
 }

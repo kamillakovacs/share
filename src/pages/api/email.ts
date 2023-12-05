@@ -1,48 +1,49 @@
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
-import { ReservationWithDetails } from "../../lib/validation/validationInterfaces";
 import firebase from "firebase-admin";
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 import { NextApiRequest, NextApiResponse } from "next";
 
+import { ReservationWithDetails } from "../../lib/validation/validationInterfaces";
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const reservation: ReservationWithDetails = req.body.reservation;
+    const { reservation, paymentId, language, change, date } = req.body;
     const database = firebase.database();
     const reservations = database.ref("reservations");
-    const mailerSend = new MailerSend({
-        apiKey: process.env.MAILERSEND_API_KEY,
-    });
+    const isHungarian = language === "hu-HU";
+
+    const mailerSend = new MailerSend({ apiKey: process.env.MAILERSEND_API_KEY });
     const sentFrom = new Sender(process.env.MAILERSEND_FROM_EMAIL, "Craft Beer Spa");
-    const recipients = [
-        new Recipient(reservation.email, `${reservation.firstName} ${reservation.lastName}`)
-    ];
+    const recipients = [new Recipient(reservation.email, `${reservation.firstName} ${reservation.lastName}`)];
     const emailParams = new EmailParams()
         .setFrom(sentFrom)
         .setTo(recipients)
         .setReplyTo(sentFrom)
-        .setSubject("Your Craft Beer Spa reservation")
-        .setTemplateId(process.env.MAILERSEND_TEMPLATE_ID_ENGLISH)
-        .setVariables(getVariables(reservation, req.body.language, req.body.paymentId));
+        .setSubject(isHungarian ? "Craft Beer Spa foglalás" : "Your Craft Beer Spa reservation")
+        .setTemplateId(isHungarian ? process.env.MAILERSEND_TEMPLATE_ID_HUNGARIAN : process.env.MAILERSEND_TEMPLATE_ID_ENGLISH)
+        .setVariables(getVariables(reservation, language, paymentId, change, date));
 
     await mailerSend.email.send(emailParams)
-        .then(async res => {
-            await reservations.update({
-                [`${req.body.paymentId}/communication/reservationEmailSent`]: true
-            });
-            return res.body
-        })
-        .catch(e => e);
+        .then(async () => await reservations.update({
+            [`${req.body.paymentId}/communication/reservationEmailSent`]: true
+        }))
+        .catch(e => console.log(e));
 
     return res.status(200).json({ success: true });
 }
 
-const getVariables = (reservation: ReservationWithDetails, language: string, paymentId: string) => {
+const getVariables = (
+    reservation: ReservationWithDetails,
+    language: string,
+    paymentId: string,
+    change?: boolean,
+    amendedDate?: Date
+) => {
     const date = new Intl.DateTimeFormat(language, {
         month: "2-digit",
         day: "2-digit",
         year: "numeric",
         hour: "2-digit",
         minute: "2-digit"
-    }).format(new Date(reservation?.date))
-
+    }).format(new Date(amendedDate ? amendedDate : reservation?.date))
 
     const dateOfPurchase = new Intl.DateTimeFormat(language, {
         month: "2-digit",
@@ -66,7 +67,9 @@ const getVariables = (reservation: ReservationWithDetails, language: string, pay
                 },
                 {
                     "var": "tubsAndGuests",
-                    "value": `${reservation.numberOfTubs.value} tubs for ${reservation.numberOfGuests.value} guests`,
+                    "value": language === "hu-HU" ?
+                        `${reservation.numberOfTubs.value} kád ${reservation.numberOfGuests.value} vendég számára` :
+                        `${reservation.numberOfTubs.value} tubs for ${reservation.numberOfGuests.value} guests`,
                 },
                 {
                     "var": "dateOfPurchase",
@@ -87,8 +90,25 @@ const getVariables = (reservation: ReservationWithDetails, language: string, pay
                 {
                     "var": "url",
                     "value": `${process.env.RESERVATION_BASE_URL}${paymentId}`
+                },
+                {
+                    "var": "message",
+                    "value": getMessage(language, change)
+                },
+                {
+                    "var": "paymentStatus",
+                    "value": reservation.paymentStatus
                 }
             ]
         }
     ]
 }
+
+const getMessage = (language: string, change: boolean) =>
+    language === "hu-HU" ?
+        change ?
+            "Foglalásod időpontját frissítettük." :
+            "Boldog szeretettel várunk a Craft Beer Spa-ban! Köszönjük, hogy ellátogatsz hozzánk." :
+        change ?
+            "Your reservation date has been updated" :
+            "We look forward to seeing you at Craft Beer Spa! Thanks for choosing us."
