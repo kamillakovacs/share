@@ -11,7 +11,7 @@ import Unsuccessful from "../components/unsuccessful";
 
 import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
-import { ReservationData, ReservationDataShort } from "../lib/interfaces";
+import { Action, ReservationData, ReservationDataShort } from "../lib/interfaces";
 
 interface Props {
   reservations: Reservations;
@@ -27,7 +27,7 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
 
   useEffect(() => {
     const createAndSendConfirmationEmail = async () => await axios
-      .post("/api/email", { reservation, paymentId, language: i18n.language, t })
+      .post("/api/email", { reservation, paymentId, language: i18n.language, action: Action.None })
       .then((res) => res.data)
       .catch((e) => console.log(e));
 
@@ -37,14 +37,14 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
       .catch((e) => console.log(e));
 
     if (reservation?.paymentStatus === PaymentStatus.Succeeded) {
-      // if (!reservation?.communication.receiptSent) {
-      createAndSendReceipt();
-      // }
-      // if (!reservation?.communication.reservationEmailSent) {
-      createAndSendConfirmationEmail()
-      // }
+      if (!reservation?.communication.receiptSent) {
+        createAndSendReceipt();
+      }
+      if (!reservation?.communication.reservationEmailSent) {
+        createAndSendConfirmationEmail()
+      }
     }
-  }, [reservation, paymentId, i18n, t])
+  }, [reservation, paymentId, i18n.language])
 
   return (
     <>

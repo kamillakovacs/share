@@ -46,46 +46,23 @@
       }
     }
 
+    &__error {
+      border-color: red;
+    }
+
     @media only screen and (max-width: 500px) {
       width: 450px;
     }
   }
 
   .select {
-    margin: 20px 0 20px 25px;
-    width: 650px;
-    height: 64px;
-    font-size: 22px;
-
-    >div {
-      height: 100%;
-      color: #ffffff;
-      background-color: #343434;
-      border: 1px solid #707070;
-      cursor: pointer !important;
-    }
-
     .css-1okebmr-indicatorSeparator {
       fill: #707070;
     }
 
     >div>div {
-      background-color: #343434;
-      border-radius: 5px;
-      margin-left: 0;
-      max-height: 350px;
-
       &:focus {
         outline: none;
-      }
-
-      >div {
-        display: flex;
-        align-items: center;
-        font-weight: 200;
-        color: white;
-        cursor: pointer !important;
-        padding-left: 10px;
       }
     }
 
@@ -101,12 +78,6 @@
     @media only screen and (max-width: 500px) {
       width: 450px;
     }
-  }
-
-  .ErrorMessage {
-    text-align: right;
-    font-size: 12px;
-    color: red;
   }
 
   @media only screen and (max-width: 500px) {

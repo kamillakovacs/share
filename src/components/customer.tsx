@@ -13,7 +13,7 @@ import styles from "../styles/main.module.scss";
 
 const Customer: FC = () => {
   const { t } = useTranslation("common");
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
+  const { values, errors, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
 
   useEffect(() => {
 
@@ -60,25 +60,23 @@ const Customer: FC = () => {
       </div>
       <div className={customerStyles.detail}>
         <input
-          className={customerStyles.customer__input}
+          className={classNames(customerStyles.customer__input, {
+            [customerStyles.customer__input__error]: errors.firstName
+          })}
           name="firstName"
           placeholder={t("customer.firstName")}
           type="text"
           onChange={onChangeInput}
         />
-        <div className={customerStyles.ErrorMessage}>
-          <ErrorMessage name="firstName" />
-        </div>
         <input
-          className={customerStyles.customer__input}
+          className={classNames(customerStyles.customer__input, {
+            [customerStyles.customer__input__error]: errors.lastName
+          })}
           name="lastName"
           placeholder={t("customer.lastName")}
           type="text"
           onChange={onChangeInput}
         />
-        <div className={customerStyles.ErrorMessage}>
-          <ErrorMessage name="lastName" />
-        </div>
       </div>
       <div className={customerStyles.detailTitle}>
         <div
@@ -90,37 +88,82 @@ const Customer: FC = () => {
       </div>
       <div className={customerStyles.detail}>
         <input
-          className={customerStyles.customer__input}
+          className={classNames(customerStyles.customer__input, {
+            [customerStyles.customer__input__error]: errors.email
+          })}
           name="email"
           placeholder={t("customer.email")}
           type="email"
           onChange={onChangeInput}
         />
-        <div className={customerStyles.ErrorMessage}>
-          <ErrorMessage name="email" />
-        </div>
         <PhoneInput
-          className={customerStyles.customer__input}
+          className={classNames(customerStyles.customer__input, {
+            [customerStyles.customer__input__error]: errors.phoneNumber
+          })}
           name="phoneNumber"
           placeholder={t("customer.phone")}
           defaultCountry="HU"
           onChange={onPhoneNumberInput}
         />
       </div>
-      <div className={customerStyles.ErrorMessage}>
-        <ErrorMessage name="phoneNumber" />
-      </div>
       <div className={customerStyles.detailTitle}>
         <div
           className={classNames(`${styles.todoitem} ${styles.todoitem__three}`, {
-            [styles.todoitem__done]: values.whereYouHeard
+            [styles.todoitem__done]: values.whereYouHeard?.value
           })}
         />
         <label>{t("customer.whereDidYouHearAboutUs")}</label>
       </div>
       <div className={customerStyles.detail}>
         <Select
-          className={customerStyles.select}
+          styles={{
+            container: (baseStyles) => ({
+              ...baseStyles,
+              paddingBottom: "20px"
+            }),
+            control: (baseStyles) => ({
+              ...baseStyles,
+              height: "64px",
+              backgroundColor: "#343434",
+              borderWidth: "1px",
+              borderColor: errors && errors.whereYouHeard && errors.whereYouHeard?.value ? "red" : "#707070",
+              cursor: "pointer !important",
+              margin: "20px 0 0 25px",
+              width: "650px",
+              fontSize: "22px",
+              fontWeight: "200",
+              ":focus": { borderColor: "#707070" },
+              ":hover": { borderColor: "#707070", boxShadow: "0 0 0 1px #707070" },
+            }),
+            singleValue: (baseStyles) => ({
+              ...baseStyles,
+              color: "white",
+            }),
+            menu: (baseStyles) => ({
+              ...baseStyles,
+              backgroundColor: "#343434",
+              borderRadius: "5px",
+              marginLeft: "25px",
+              fontSize: "22px",
+              color: "white",
+              paddingLeft: "10px",
+              width: "650px"
+            }),
+            menuList: (baseStyles) => ({
+              ...baseStyles,
+              maxHeight: "auto"
+            }),
+            option: (baseStyles) => ({
+              ...baseStyles,
+              backgroundColor: "#343434",
+              borderRadius: "5px",
+              display: "flex",
+              alignItems: "center",
+              fontWeight: "200",
+              cursor: "pointer",
+              paddingLeft: "10px"
+            }),
+          }}
           options={whereYouHeardOptions}
           name="whereYouHeard"
           onChange={setOption}

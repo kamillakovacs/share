@@ -11,7 +11,7 @@ import ReservationSummary from "./reservationSummary";
 import { PaymentStatus } from "../api/interfaces";
 import EditReservation from "./editReservation";
 
-import { ReservationDataShort } from "../lib/interfaces";
+import { CanceledBy, ReservationDataShort } from "../lib/interfaces";
 import { ReservationWithDetails, Reservations } from "../lib/validation/validationInterfaces";
 
 interface Props {
@@ -55,7 +55,7 @@ const ReservationDetails: FC<Props> = ({ reservation, reservations, currentReser
     <article className={thanksStyles.container}>
       <label className={thanksStyles.reservation__title}>
         <span>{
-          reservation?.canceled ?
+          reservation?.canceled && reservation?.canceled !== CanceledBy.BeerSpa ?
             t("thanks.thisReservationWasCanceled") :
             t("thanks.thankYou")}
         </span>

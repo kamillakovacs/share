@@ -33,12 +33,10 @@ export const makeReservation = async (
   reservationData.paymentStatus = PaymentStatus.Prepared;
   reservationData.transactionId = transactionId;
 
-  const firebaseResponse = await axios
+  return await axios
     .post("/api/reservation", { reservationData, newCustomer, paymentId, customerAlreadyInDatabase }, { headers })
     .then((res) => res.data)
     .catch((e) => e);
-
-  return firebaseResponse;
 };
 
 export const updateReservationDate = async (date: Date, paymentId: string) => {
@@ -46,12 +44,10 @@ export const updateReservationDate = async (date: Date, paymentId: string) => {
     "Content-Type": "application/json; charset=utf-8"
   };
 
-  const firebaseResponse = await axios
+  return await axios
     .post("/api/updateReservationDate", { date, paymentId }, { headers })
     .then((res) => res.data)
     .catch((e) => e);
-
-  return firebaseResponse;
 };
 
 export const markReservationCanceled = async (paymentId: string) => {
@@ -59,10 +55,9 @@ export const markReservationCanceled = async (paymentId: string) => {
     "Content-Type": "application/json; charset=utf-8"
   };
 
-  const firebaseResponse = await axios
+  return await axios
     .post("/api/cancelReservation", { paymentId }, { headers })
     .then((res) => res.data)
     .catch((e) => e);
-
-  return firebaseResponse;
 };
+

@@ -44,7 +44,7 @@ export const details = Yup.object().shape({
     .required("Required"),
   whereYouHeard: Yup.object()
     .shape({
-      value: Yup.string(),
-      label: Yup.string()
+      value: Yup.string().required("Required"),
+      label: Yup.string().required("Required")
     })
 });

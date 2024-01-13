@@ -9,7 +9,7 @@ import * as cancelPayment from "../api/paymentCancelation";
 import * as changeReservation from "../api/makeReservation";
 
 import { Reservation, Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
-import { Action, ReservationDataShort } from "../lib/interfaces";
+import { Action, CanceledBy, ReservationDataShort } from "../lib/interfaces";
 import Calendar from "../components/calendar";
 
 import reservationStyles from "../styles/reservation.module.scss";
@@ -36,6 +36,10 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   const [updateResponse, setUpdateResponse] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
+  //@ts-ignore
+  const reservationIsMoreThan48HoursAway: boolean = Math.floor(Math.abs(new Date() - new Date(reservation.date)) / 36e5) >= 48
+  const reservationIsInTheFuture: boolean = new Date(reservation.date).valueOf() > new Date().setHours(new Date().getHours() + 2)
+
   useEffect(() => {
     if (document && document.querySelector("#changeButton") && action == Action.Change) {
       document.querySelector("#changeButton").scrollIntoView({ behavior: "smooth", inline: "start" });
@@ -48,14 +52,23 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
     }
   })
 
-  //@ts-ignore
-  const reservationIsMoreThan48HoursAway: boolean = Math.floor(Math.abs(new Date() - new Date(reservation.date)) / 36e5) >= 48
-  const reservationIsInTheFuture: boolean = new Date(reservation.date).valueOf() > new Date().setHours(new Date().getHours() + 2)
+  useEffect(() => {
+    const markUncancelable = async () => await axios
+      .post("/api/markUncancelable", { paymentId })
+      .then((res) => res.data)
+      .catch((e) => {
+        console.log("Error sending email confirming change")
+        return e;
+      });
+    // if (!reservationIsMoreThan48HoursAway) {
+    markUncancelable();
+    // }
+  }, [reservationIsMoreThan48HoursAway, paymentId])
 
   const change = async () => {
     setAction(Action.Change);
     await axios
-      .post("/api/email", { reservation, paymentId, language: i18n.language, t, change: true, date })
+      .post("/api/email", { reservation, paymentId, language: i18n.language, t, action: Action.Change, date })
       .then((res) => res.data)
       .catch((e) => {
         console.log("Error sending email confirming change")
@@ -67,6 +80,7 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
 
   const cancel = async () => {
     setAction(Action.Cancel);
+    setDate(date);
     await cancelPayment.useCancelPaymentRequest(paymentId, reservation, reservation.price, i18n.language)
       .then(() => {
         setShowModal(false);
@@ -75,7 +89,6 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   };
 
   const redirectToChangeReservation = async (date: Date) => {
-    setDate(date);
     await changeReservation.updateReservationDate(date, paymentId).catch((e) => e);
   }
 
@@ -92,16 +105,24 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
   };
 
   const onSubmit = (values: Reservation) => {
+    console.log("submit")
+    setDate(values.date);
     return redirectToChangeReservation(values.date)
       .then(() => setUpdateResponse(200))
       .catch(() => setUpdateResponse(500))
   };
 
+  const showCanceledButton =
+    (!reservation.canceled || reservation.canceled === CanceledBy.BeerSpa) &&
+    reservation.paymentStatus === PaymentStatus.Succeeded &&
+    reservationIsInTheFuture;
+
   return (
     <div>
       <div className={reservationStyles.reservation__info}>
-        {
-          !reservation.canceled && reservation.paymentStatus === PaymentStatus.Succeeded && reservationIsInTheFuture && (
+        {!reservation.canceled &&
+          reservation.paymentStatus === PaymentStatus.Succeeded &&
+          reservationIsInTheFuture && (
             <button
               className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
               id="changeButton"
@@ -112,30 +133,29 @@ const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
             </button>
           )
         }
-        {
-          !reservation.canceled && reservation.paymentStatus === PaymentStatus.Succeeded && !!reservationIsMoreThan48HoursAway && (
-            <>
-              <button
-                type="button"
-                className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
-                onClick={openModal}
-              >
-                {t("reservationDate.cancelReservation")}
-              </button>
-              {showModal &&
-                <Modal onClose={() => setShowModal(false)} title="Cancelation">
-                  <span>Are you sure you want to cancel your reservation?</span>
-                  <button
-                    type="submit"
-                    className={`${modalStyles.button} ${reservationStyles.reservation__margin}`}
-                    onClick={cancel}
-                  >
-                    Yes, cancel it
-                  </button>
-                </Modal>
-              }
-            </>
-          )
+        {showCanceledButton && (
+          <>
+            <button
+              type="button"
+              className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
+              onClick={openModal}
+            >
+              {t("reservationDate.cancelReservation")}
+            </button>
+            {showModal &&
+              <Modal onClose={() => setShowModal(false)} title="Cancelation">
+                <span>Are you sure you want to cancel your reservation?</span>
+                <button
+                  type="submit"
+                  className={`${modalStyles.button} ${reservationStyles.reservation__margin}`}
+                  onClick={cancel}
+                >
+                  Yes, cancel it
+                </button>
+              </Modal>
+            }
+          </>
+        )
         }
 
 

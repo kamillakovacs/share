@@ -3,9 +3,10 @@ import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { ReservationWithDetails } from "../../lib/validation/validationInterfaces";
+import { Action } from "../../lib/interfaces";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { reservation, paymentId, language, change, date } = req.body;
+    const { reservation, paymentId, language, action, date } = req.body;
     const database = firebase.database();
     const reservations = database.ref("reservations");
     const isHungarian = language === "hu-HU";
@@ -17,9 +18,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .setFrom(sentFrom)
         .setTo(recipients)
         .setReplyTo(sentFrom)
-        .setSubject(isHungarian ? "Craft Beer Spa foglalás" : "Your Craft Beer Spa reservation")
-        .setTemplateId(isHungarian ? process.env.MAILERSEND_TEMPLATE_ID_HUNGARIAN : process.env.MAILERSEND_TEMPLATE_ID_ENGLISH)
-        .setVariables(getVariables(reservation, language, paymentId, change, date));
+        .setSubject(getSubject(isHungarian, action))
+        .setTemplateId(isHungarian ?
+            process.env.MAILERSEND_CONFIRMATION_TEMPLATE_ID_HUNGARIAN :
+            process.env.MAILERSEND_CONFIRMATION_TEMPLATE_ID_ENGLISH)
+        .setPersonalization(getPersonalization(reservation, action))
+        .setVariables(getVariables(reservation, language, paymentId, action, date));
 
     await mailerSend.email.send(emailParams)
         .then(async () => await reservations.update({
@@ -30,11 +34,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({ success: true });
 }
 
+const getSubject = (isHungarian: boolean, action: Action) => {
+    switch (action) {
+        case Action.None:
+        default:
+            return isHungarian ?
+                "Craft Beer Spa foglalás" :
+                "Your Craft Beer Spa reservation"
+        case Action.Change:
+            return isHungarian ?
+                "Craft Beer Spa foglalás módosítása" :
+                "Your Craft Beer Spa reservation update"
+        case Action.Cancel:
+            return isHungarian ?
+                "Craft Beer Spa foglalás lemondása" :
+                "Your Craft Beer Spa reservation cancelation"
+    }
+}
+
+const getPersonalization = (reservation: ReservationWithDetails, action: Action) => [
+    {
+        "email": reservation.email,
+        "data": {
+            "canceled": action === Action.Cancel ? true : false
+        }
+    }
+]
+
 const getVariables = (
     reservation: ReservationWithDetails,
     language: string,
     paymentId: string,
-    change?: boolean,
+    action: Action,
     amendedDate?: Date
 ) => {
     const date = new Intl.DateTimeFormat(language, {
@@ -58,8 +89,12 @@ const getVariables = (
             "email": reservation.email,
             "substitutions": [
                 {
-                    "var": "name",
+                    "var": "firstName",
                     "value": reservation.firstName
+                },
+                {
+                    "var": "lastName",
+                    "value": reservation.lastName
                 },
                 {
                     "var": "date",
@@ -93,7 +128,7 @@ const getVariables = (
                 },
                 {
                     "var": "message",
-                    "value": getMessage(language, change)
+                    "value": getMessage(language, action)
                 },
                 {
                     "var": "paymentStatus",
@@ -104,11 +139,22 @@ const getVariables = (
     ]
 }
 
-const getMessage = (language: string, change: boolean) =>
-    language === "hu-HU" ?
-        change ?
-            "Foglalásod időpontját frissítettük." :
-            "Boldog szeretettel várunk a Craft Beer Spa-ban! Köszönjük, hogy ellátogatsz hozzánk." :
-        change ?
-            "Your reservation date has been updated" :
-            "We look forward to seeing you at Craft Beer Spa! Thanks for choosing us."
+const getMessage = (language: string, action: Action) => {
+    switch (action) {
+        case Action.None:
+        default:
+            return language === "hu-HU" ?
+                "Boldog szeretettel várunk a Craft Beer Spa-ban! Köszönjük, hogy ellátogatsz hozzánk." :
+                "We look forward to seeing you at Craft Beer Spa! Thanks for choosing us."
+        case Action.Change:
+            return language === "hu-HU" ?
+                "Foglalásod időpontját frissítettük." :
+                "Your reservation date has been updated."
+        case Action.Cancel:
+            return language === "hu-HU" ?
+                "Foglalásodat töröltük, és kártyádra visszautaltuk a foglalás összegét, mínusz egy 0,5% kezelési díjat." :
+                "Your reservation was canceled, and the reservation cost, minus a 1.5% handling fee, was refunded to your card."
+    }
+
+}
+

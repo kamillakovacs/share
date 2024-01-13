@@ -2,6 +2,7 @@ import axios from "axios";
 
 import * as cancelReservation from "../api/makeReservation";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { Action } from "../lib/interfaces";
 
 export const useCancelPaymentRequest = async (
   paymentId: string,
@@ -33,7 +34,7 @@ export const useCancelPaymentRequest = async (
     .then(async (res) => {
       console.log(res)
       await axios
-        .post("/api/email", { reservation, paymentId, language })
+        .post("/api/email", { reservation, paymentId, language, action: Action.Cancel })
         .then((res) => res.data)
         .catch((e) => {
           console.log("Error sending email confirming cancelation")

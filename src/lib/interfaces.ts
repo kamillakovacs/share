@@ -36,11 +36,13 @@ export interface Communication {
 }
 
 export enum Action {
+  None = "none",
   Change = "change",
   Cancel = "cancel"
 }
 
 export enum CanceledBy {
+  TooLate = "tooLate",
   User = "user",
   BeerSpa = "beerspa"
 }
