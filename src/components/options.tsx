@@ -177,7 +177,6 @@ const Options: FC<Props> = ({ currentReservations }) => {
           </div>
           <Select
             className={optionStyles.select}
-            classNamePrefix={optionStyles.select}
             options={availableNumberOfGuestsOptions}
             placeholder={<>{values.numberOfGuests ? values.numberOfGuests.label : t("options.selectGuests")}</>}
             name="numberOfGuests"
@@ -191,7 +190,61 @@ const Options: FC<Props> = ({ currentReservations }) => {
             <HottubIcon className={classNames(`${optionStyles.options__icon} numberOfTubs`)} />
           </div>
           <Select
-            className={optionStyles.select}
+            styles={{
+              container: (baseStyles) => ({
+                ...baseStyles,
+                ":focus-visible": { outline: "none" },
+              }),
+              control: (baseStyles) => ({
+                ...baseStyles,
+                width: "297px",
+                height: "64px",
+                backgroundColor: "#343434",
+                fontSize: "20px",
+                fontWeight: "200",
+                border: "1px solid #707070",
+                outline: "none",
+                ":focus": { borderColor: "#707070" },
+                ":hover": { borderColor: "#707070", boxShadow: "0 0 0 1px #707070" },
+              }),
+              valueContainer: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: "#343434",
+                borderRadius: "5px",
+                marginLeft: "50px",
+              }),
+              singleValue: (baseStyles) => ({
+                ...baseStyles,
+                color: "white",
+              }),
+              placeholder: (baseStyles) => ({
+                ...baseStyles,
+                color: "white"
+              }),
+              indicatorSeparator: (baseStyles) => ({
+                ...baseStyles,
+                display: "none"
+              }),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: "#343434",
+                borderRadius: "5px",
+                fontSize: "20px",
+                fontWeight: "200",
+                border: "1px solid #707070",
+                boxShadow: "0 0 0 0"
+              }),
+              option: (baseStyles) => ({
+                ...baseStyles,
+                backgroundColor: "#343434",
+                display: "flex",
+                alignItems: "center",
+                fontWeight: "200",
+                cursor: "pointer",
+                paddingLeft: "10px",
+              }),
+            }}
+            // className={optionStyles.select}
             options={getTubOptions()}
             placeholder={<>{values.numberOfTubs ? values.numberOfTubs.label : t("options.selectTubs")}</>}
             name="numberOfTubs"

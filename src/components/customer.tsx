@@ -133,7 +133,7 @@ const Customer: FC = () => {
               fontSize: "22px",
               fontWeight: "200",
               ":focus": { borderColor: "#707070" },
-              ":hover": { borderColor: "#707070", boxShadow: "0 0 0 1px #707070" },
+              ":hover": { borderColor: errors && errors.whereYouHeard && errors.whereYouHeard?.value ? "red" : "#707070", boxShadow: "0 0 0 0" },
             }),
             singleValue: (baseStyles) => ({
               ...baseStyles,
@@ -142,6 +142,7 @@ const Customer: FC = () => {
             menu: (baseStyles) => ({
               ...baseStyles,
               backgroundColor: "#343434",
+              border: "1px solid #707070",
               borderRadius: "5px",
               marginLeft: "25px",
               fontSize: "22px",
