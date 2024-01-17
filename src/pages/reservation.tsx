@@ -1,29 +1,26 @@
 import React, { FC, memo, useEffect } from "react";
 import firebase from "../lib/firebase";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
-import { Reservation as ReservationShort, Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { Reservation as ReservationShort, ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import ReservationDetails from "../components/reservationDetails";
 import Unsuccessful from "../components/unsuccessful";
 
 import thanksStyles from "../styles/thanks.module.scss";
 import { PaymentStatus } from "../api/interfaces";
-import { Action, ReservationData, ReservationDataShort } from "../lib/interfaces";
+import { Action, ReservationDataShort, User } from "../lib/interfaces";
 
 interface Props {
-  reservations: Reservations;
-  users: ReservationData[];
+  reservation: ReservationWithDetails;
+  paymentId: string;
+  customerAlreadyInDatabase: boolean;
   currentReservations: ReservationDataShort[];
 }
 
-const Reservation: FC<Props> = ({ reservations, users, currentReservations }) => {
-  const { query } = useRouter();
-  const { t, i18n } = useTranslation("common");
-  const paymentId = query.paymentId as string
-  const reservation: ReservationWithDetails = reservations[paymentId];
+const Reservation: FC<Props> = ({ reservation, paymentId, customerAlreadyInDatabase, currentReservations }) => {
+  const { i18n } = useTranslation("common");
 
   useEffect(() => {
     const createAndSendConfirmationEmail = async () => await axios
@@ -53,30 +50,43 @@ const Reservation: FC<Props> = ({ reservations, users, currentReservations }) =>
         {reservation?.paymentStatus === PaymentStatus.Succeeded && (
           <ReservationDetails
             reservation={reservation}
-            reservations={reservations}
             currentReservations={currentReservations}
           />
         )}
         {(reservation?.paymentStatus === PaymentStatus.Canceled ||
           reservation?.paymentStatus === PaymentStatus.Expired) && (
-            <Unsuccessful reservation={reservation} users={users} />
+            <Unsuccessful reservation={reservation} customerAlreadyInDatabase={customerAlreadyInDatabase} />
           )}
       </article>
     </>
   );
 };
 
-export async function getServerSideProps({ locale }) {
+export async function getServerSideProps({ query, locale }) {
   const res = firebase.database().ref("reservations");
   const customers = firebase.database().ref("customers");
 
   const reservations = await res.once("value").then(function (snapshot) {
     return snapshot.val() || "Anonymous";
   });
+  const paymentId = query.paymentId as string
+  const reservation: ReservationWithDetails = reservations[paymentId];
 
-  const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
+
+  const users: User[] = await customers.once("value").then(function (snapshot) {
     return snapshot.val() || "Anonymous";
   });
+
+  const customerAlreadyInDatabase = Object.values(users).filter(
+    (user) => {
+      if (user.firstName) {
+        return user.firstName.toLowerCase() === reservation.firstName.toLowerCase() &&
+          user.lastName.toLowerCase() === reservation.lastName.toLowerCase() &&
+          user.phoneNumber.toLowerCase() === reservation.phoneNumber.toLowerCase() &&
+          user.email.toLowerCase() === reservation.email.toLowerCase()
+      }
+    }
+  ).length > 0;
 
   const currentReservations: ReservationDataShort[] = await res?.once("value").then(function (snapshot) {
     return (
@@ -92,7 +102,7 @@ export async function getServerSideProps({ locale }) {
     );
   });
 
-  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservations, users, currentReservations } };
+  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservation, customerAlreadyInDatabase, currentReservations } };
 }
 
 export default memo(Reservation);

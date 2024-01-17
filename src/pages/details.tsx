@@ -18,14 +18,14 @@ import reservationStyles from "../styles/reservation.module.scss";
 import barion from "../../public/assets/barion-card-strip-intl__medium.png";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
-import { ReservationData } from "../lib/interfaces";
 import ReservationSummary from "../components/reservationSummary";
+import { User } from "../lib/interfaces";
 
 interface Props {
-  users: ReservationData[];
+  customerAlreadyInDatabase: boolean;
 }
 
-const Details: FC<Props> = ({ users }) => {
+const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
   const router = useRouter();
   const [data, setData] = useAppContext();
   const { t } = useTranslation("common");
@@ -65,11 +65,11 @@ const Details: FC<Props> = ({ users }) => {
 
   const goBack = () => router.replace("/");
 
-  const redirectToStartPayment = async (reservationData: ReservationData) =>
-    payment.useSendPaymentRequest(reservationData, users, router);
+  const redirectToStartPayment = async (reservationData: ReservationWithDetails) =>
+    payment.useSendPaymentRequest(reservationData, customerAlreadyInDatabase, router);
 
   const onSubmit = async (values: ReservationWithDetails) => {
-    const reservationData: ReservationData = {
+    const reservationData: ReservationWithDetails = {
       date: data.date,
       dateOfPurchase: new Date(),
       numberOfGuests: data.numberOfGuests,
@@ -154,14 +154,25 @@ const Details: FC<Props> = ({ users }) => {
 
 export async function getServerSideProps({ locale }) {
   const customers = firebase.database().ref("customers");
-  const users: ReservationData[] = await customers.once("value").then(function (snapshot) {
+  const users: User[] = await customers.once("value").then(function (snapshot) {
     return snapshot.val() || "Anonymous";
   });
+
+  const customerAlreadyInDatabase = Object.values(users).filter(
+    (user) => {
+      if (user.firstName) {
+        return user.firstName.toLowerCase() === user.firstName.toLowerCase() &&
+          user.lastName.toLowerCase() === user.lastName.toLowerCase() &&
+          user.phoneNumber.toLowerCase() === user.phoneNumber.toLowerCase() &&
+          user.email.toLowerCase() === user.email.toLowerCase()
+      }
+    }
+  ).length
 
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"])),
-      users
+      customerAlreadyInDatabase
     }
   };
 }

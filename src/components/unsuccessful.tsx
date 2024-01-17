@@ -4,7 +4,6 @@ import { useTranslation } from "next-i18next";
 import Image from "next/image";
 
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
-import { ReservationData } from "../lib/interfaces";
 
 import * as payment from "../api/paymentRequest";
 import thanksStyles from "../styles/thanks.module.scss";
@@ -14,11 +13,11 @@ import barion from "../../public/assets/barion.png";
 import ReservationSummary from "./reservationSummary";
 
 interface Props {
+  customerAlreadyInDatabase: boolean;
   reservation: ReservationWithDetails;
-  users: ReservationData[];
 }
 
-const Unsuccessful: FC<Props> = ({ reservation, users }) => {
+const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => {
   const { t, i18n } = useTranslation("common");
   const router = useRouter();
   const formattedDate = new Intl.DateTimeFormat(i18n.language, {
@@ -29,11 +28,11 @@ const Unsuccessful: FC<Props> = ({ reservation, users }) => {
     minute: "2-digit"
   }).format(new Date(reservation.date));
 
-  const redirectToStartPayment = async (reservationData: ReservationData) =>
-    payment.useSendPaymentRequest(reservationData, users, router);
+  const redirectToStartPayment = async (reservationData: ReservationWithDetails) =>
+    payment.useSendPaymentRequest(reservationData, customerAlreadyInDatabase, router);
 
   const onSubmit = async () => {
-    const reservationData: ReservationData = {
+    const reservationData: ReservationWithDetails = {
       date: reservation.date,
       dateOfPurchase: new Date(),
       numberOfGuests: reservation.numberOfGuests,

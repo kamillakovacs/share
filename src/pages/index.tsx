@@ -17,7 +17,7 @@ import ReservationDate from "../components/reservationDate";
 import Summary from "../components/summary";
 import reservationStyles from "../styles/reservation.module.scss";
 import styles from "../styles/main.module.scss";
-import { ReservationData, ReservationDataShort } from "../lib/interfaces";
+import { ReservationDataShort } from "../lib/interfaces";
 
 interface Props {
   currentReservations: ReservationDataShort[];
@@ -40,13 +40,13 @@ const Main: FC<Props> = ({ currentReservations }) => {
     paymentMethod: ""
   };
 
-  const redirectToDetailsPage = (reservationData: ReservationData) => {
+  const redirectToDetailsPage = (reservationData: ReservationWithDetails) => {
     setData(reservationData);
     router.replace("/details");
   };
 
   const onSubmit = (values: Reservation) => {
-    const reservationData: ReservationData = {
+    const reservationData: ReservationWithDetails = {
       date: values.date,
       dateOfPurchase: new Date(),
       numberOfGuests: values.numberOfGuests,

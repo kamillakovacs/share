@@ -2,12 +2,12 @@ import axios from "axios";
 import { NextRouter } from "next/router";
 
 import * as newReservation from "../api/makeReservation";
-import { ReservationData } from "../lib/interfaces";
 import { BarionPaymentConfirmationResponseData } from "./interfaces";
+import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
 export const useSendPaymentRequest = async (
-  reservationData: ReservationData,
-  users: ReservationData[],
+  reservationData: ReservationWithDetails,
+  customerAlreadyInDatabase: boolean,
   router: NextRouter
 ) => {
   const headers = {
@@ -54,7 +54,7 @@ export const useSendPaymentRequest = async (
     })
     .then(async (res: BarionPaymentConfirmationResponseData) => {
       await newReservation
-        .makeReservation(reservationData, users, res.data.PaymentId, res.data.Transactions[0].TransactionId)
+        .makeReservation(reservationData, customerAlreadyInDatabase, res.data.PaymentId, res.data.Transactions[0].TransactionId)
         .then(() => router.replace(res.data.GatewayUrl))
         .catch((e) => e);
     });

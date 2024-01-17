@@ -8,7 +8,7 @@ import { i18n, useTranslation } from "next-i18next";
 import * as cancelPayment from "../api/paymentCancelation";
 import * as changeReservation from "../api/makeReservation";
 
-import { Reservation, Reservations, ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { Reservation, ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { Action, CanceledBy, ReservationDataShort } from "../lib/interfaces";
 import Calendar from "../components/calendar";
 
@@ -21,15 +21,14 @@ import { PaymentStatus } from "../api/interfaces";
 
 
 interface Props {
-  reservations: Reservations;
+  reservation: ReservationWithDetails;
   currentReservations: ReservationDataShort[];
 }
 
-const EditReservation: FC<Props> = ({ reservations, currentReservations }) => {
+const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
   const router = useRouter();
   const { t, i18n } = useTranslation("common");
   const paymentId = router.query.paymentId as string;
-  const reservation: ReservationWithDetails = reservations[paymentId];
   const [date, setDate] = useState(reservation.date);
 
   const [action, setAction] = useState("");

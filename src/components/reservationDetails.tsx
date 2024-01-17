@@ -16,11 +16,10 @@ import { ReservationWithDetails, Reservations } from "../lib/validation/validati
 
 interface Props {
   reservation: ReservationWithDetails;
-  reservations: Reservations;
   currentReservations: ReservationDataShort[];
 }
 
-const ReservationDetails: FC<Props> = ({ reservation, reservations, currentReservations }) => {
+const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => {
   const { t, i18n } = useTranslation("common");
   const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
@@ -141,7 +140,7 @@ const ReservationDetails: FC<Props> = ({ reservation, reservations, currentReser
           </div>
         </div>
       </div>
-      {!reservation.canceled && <EditReservation reservations={reservations} currentReservations={currentReservations} />}
+      {!reservation.canceled && <EditReservation reservation={reservation} currentReservations={currentReservations} />}
     </article>
   );
 };

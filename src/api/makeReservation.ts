@@ -1,24 +1,13 @@
 import axios from "axios";
-import { ReservationData } from "../lib/interfaces";
 import { PaymentStatus } from "./interfaces";
+import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
 export const makeReservation = async (
-  reservationData: ReservationData,
-  users: ReservationData[],
+  reservationData: ReservationWithDetails,
+  customerAlreadyInDatabase: boolean,
   paymentId: string,
   transactionId: string
 ) => {
-  const customerAlreadyInDatabase = Object.values(users).filter(
-    (user) => {
-      if (user.firstName) {
-        return user.firstName.toLowerCase() === reservationData.firstName.toLowerCase() &&
-          user.lastName.toLowerCase() === reservationData.lastName.toLowerCase() &&
-          user.phoneNumber.toLowerCase() === reservationData.phoneNumber.toLowerCase() &&
-          user.email.toLowerCase() === reservationData.email.toLowerCase()
-      }
-    }
-  ).length
-
   const newCustomer = {
     firstName: reservationData.firstName,
     lastName: reservationData.lastName,
