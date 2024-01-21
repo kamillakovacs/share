@@ -96,14 +96,16 @@ const Customer: FC = () => {
           type="email"
           onChange={onChangeInput}
         />
-        <PhoneInput
+      </div>
+      <div className={customerStyles.detail}>
+        <input
           className={classNames(customerStyles.customer__input, {
             [customerStyles.customer__input__error]: errors.phoneNumber
           })}
           name="phoneNumber"
           placeholder={t("customer.phone")}
-          defaultCountry="HU"
-          onChange={onPhoneNumberInput}
+          type="tel"
+          onChange={onChangeInput}
         />
       </div>
       <div className={customerStyles.detailTitle}>
