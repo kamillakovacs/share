@@ -1,4 +1,4 @@
-import firebase from "firebase-admin";
+const firebase = require("../../lib/firebase").default;
 import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 import { NextApiRequest, NextApiResponse } from "next";
 
