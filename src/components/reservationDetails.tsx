@@ -26,17 +26,17 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
 
   useEffect(() => {
     console.log(reservation?.date, reservation?.dateOfPurchase)
-    if (reservation?.date != null) {
-      setDate(
-        new Intl.DateTimeFormat(i18n.language, {
-          month: "2-digit",
-          day: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
-        }).format(new Date(reservation?.date))
-      );
-    }
+    // if (reservation?.date != null) {
+    //   setDate(
+    //     new Intl.DateTimeFormat(i18n.language, {
+    //       month: "2-digit",
+    //       day: "2-digit",
+    //       year: "numeric",
+    //       hour: "2-digit",
+    //       minute: "2-digit"
+    //     }).format(new Date(reservation?.date))
+    //   );
+    // }
 
     // if (reservation?.dateOfPurchase !== null) {
     //   setDateOfPurchase(
