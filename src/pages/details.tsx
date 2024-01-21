@@ -27,15 +27,8 @@ interface Props {
 
 const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
   const router = useRouter();
-  const [data, setData] = useAppContext();
+  const [data] = useAppContext();
   const { t } = useTranslation("common");
-  const formattedDate = new Intl.DateTimeFormat("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit"
-  }).format(new Date(data.date));
 
   useEffect(() => {
     if (!data.numberOfGuests) {
@@ -116,7 +109,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
                   <div className={`${styles.todoitem} ${styles.todoitem__four}`} />
                   <label>{t("reservationDetails.summaryAndCheckout")}</label>
                 </div>
-                <ReservationSummary reservation={values} date={formattedDate} />
+                <ReservationSummary reservation={values} date={data.date} />
                 <div className={reservationStyles.reservation__barion__container}>
                   <div className={reservationStyles.reservation__info}>
                     <button
