@@ -22,6 +22,7 @@ export interface ReservationWithDetails {
   paymentMethod: string;
   paymentStatus?: PaymentStatus;
   canceled: CanceledBy;
+  uncancelable: boolean;
   communication: Communication;
   transactionId?: string;
 }

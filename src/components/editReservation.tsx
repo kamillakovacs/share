@@ -30,15 +30,13 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
   const { t, i18n } = useTranslation("common");
   const paymentId = router.query.paymentId as string;
   const [date, setDate] = useState(reservation.date);
-
   const [action, setAction] = useState("");
   const [updateResponse, setUpdateResponse] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
   //@ts-ignore
-  const reservationIsMoreThan48HoursAway: boolean = Math.floor(Math.abs(new Date() - new Date(reservation.date)) / 365) >= 48
+  const reservationIsMoreThan48HoursAway: boolean = Math.round((new Date(reservation.date).getTime() - new Date().getTime()) / (1000 * 3600 * 24)) > 2;
   const reservationIsInTheFuture: boolean = new Date(reservation.date).valueOf() > new Date().setHours(new Date().getHours() + 2)
-  console.log(reservationIsMoreThan48HoursAway)
 
   useEffect(() => {
     if (document && document.querySelector("#changeButton") && action == Action.Change) {
@@ -112,17 +110,13 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
       .catch(() => setUpdateResponse(500))
   };
 
-  const showCanceledButton =
-    (!reservation.canceled || reservation.canceled === CanceledBy.BeerSpa) &&
-    reservation.paymentStatus === PaymentStatus.Succeeded &&
-    reservationIsInTheFuture;
+  const notCanceled = !reservation.canceled && reservation.paymentStatus === PaymentStatus.Succeeded;
 
   return (
     <div>
       <div className={reservationStyles.reservation__info}>
-        {!reservation.canceled &&
-          reservation.paymentStatus === PaymentStatus.Succeeded &&
-          reservationIsInTheFuture && (
+        {
+          notCanceled && reservationIsInTheFuture && (
             <button
               className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
               id="changeButton"
@@ -133,29 +127,30 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
             </button>
           )
         }
-        {showCanceledButton && (
-          <>
-            <button
-              type="button"
-              className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
-              onClick={openModal}
-            >
-              {t("reservationDate.cancelReservation")}
-            </button>
-            {showModal &&
-              <Modal onClose={() => setShowModal(false)} title="Cancelation">
-                <span>Are you sure you want to cancel your reservation?</span>
-                <button
-                  type="submit"
-                  className={`${modalStyles.button} ${reservationStyles.reservation__margin}`}
-                  onClick={cancel}
-                >
-                  Yes, cancel it
-                </button>
-              </Modal>
-            }
-          </>
-        )
+        {
+          notCanceled && reservationIsMoreThan48HoursAway && reservation.uncancelable && (
+            <>
+              <button
+                type="button"
+                className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__margin}`}
+                onClick={openModal}
+              >
+                {t("reservationDate.cancelReservation")}
+              </button>
+              {showModal &&
+                <Modal onClose={() => setShowModal(false)} title="Cancelation">
+                  <span>Are you sure you want to cancel your reservation?</span>
+                  <button
+                    type="submit"
+                    className={`${modalStyles.button} ${reservationStyles.reservation__margin}`}
+                    onClick={cancel}
+                  >
+                    Yes, cancel it
+                  </button>
+                </Modal>
+              }
+            </>
+          )
         }
 
 

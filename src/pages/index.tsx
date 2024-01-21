@@ -60,6 +60,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
       paymentStatus: null,
       paymentMethod: null,
       canceled: null,
+      uncancelable: false,
       communication: {
         reservationEmailSent: false,
         receiptSent: false,

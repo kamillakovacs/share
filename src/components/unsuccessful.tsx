@@ -39,6 +39,7 @@ const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => 
       paymentStatus: null,
       paymentMethod: reservation.paymentMethod,
       canceled: null,
+      uncancelable: reservation.uncancelable,
       communication: {
         reservationEmailSent: reservation.communication.reservationEmailSent,
         receiptSent: reservation.communication.receiptSent,

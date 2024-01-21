@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const reservations = database.ref("reservations");
 
     await reservations.update({
-        [`${paymentId}/canceled`]: CanceledBy.TooLate
+        [`${paymentId}/uncancelable`]: true
     });
 
     return res.status(200).json({ success: true });

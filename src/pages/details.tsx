@@ -36,7 +36,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
     }
   });
 
-  const initialValues = {
+  const initialValues: ReservationWithDetails = {
     date: data.date,
     numberOfGuests: data.numberOfGuests,
     numberOfTubs: data.numberOfTubs,
@@ -48,6 +48,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
     paymentMethod: null,
     whereYouHeard: { value: "", label: "" },
     canceled: null,
+    uncancelable: false,
     communication: {
       reservationEmailSent: false,
       receiptSent: false,
@@ -76,6 +77,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
       paymentStatus: null,
       paymentMethod: values.paymentMethod,
       canceled: null,
+      uncancelable: false,
       communication: {
         reservationEmailSent: false,
         receiptSent: false,
