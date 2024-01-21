@@ -133,7 +133,7 @@ const getVariables = (
                 },
                 {
                     "var": "paymentStatus",
-                    "value": reservation.paymentStatus
+                    "value": language === "hu-HU" ? "Rendezve" : reservation.paymentStatus
                 }
             ]
         }
