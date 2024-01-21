@@ -34,7 +34,7 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
           year: "numeric",
           hour: "2-digit",
           minute: "2-digit"
-        }).format(new Date(reservation?.date))
+        }).format(new Date(reservation?.date.toString()))
       );
     }
 
@@ -46,7 +46,7 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
           year: "numeric",
           hour: "2-digit",
           minute: "2-digit"
-        }).format(new Date(reservation?.dateOfPurchase))
+        }).format(new Date(reservation?.dateOfPurchase.toString()))
       );
     }
   }, [setDate, setDateOfPurchase, reservation?.date, reservation?.dateOfPurchase, i18n.language]);
