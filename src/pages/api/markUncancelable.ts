@@ -1,5 +1,3 @@
-import { CanceledBy } from "../../lib/interfaces";
-
 export default async function handler(req, res) {
     const firebase = require("../../lib/firebase").default;
     const { paymentId } = req.body;

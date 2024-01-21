@@ -33,6 +33,7 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
   const [action, setAction] = useState("");
   const [updateResponse, setUpdateResponse] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const notCanceled = !reservation.canceled && reservation.paymentStatus === PaymentStatus.Succeeded;
 
   //@ts-ignore
   const reservationIsMoreThan48HoursAway: boolean = Math.round((new Date(reservation.date).getTime() - new Date().getTime()) / (1000 * 3600 * 24)) > 2;
@@ -59,7 +60,7 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
         return e;
       });
     if (!reservationIsMoreThan48HoursAway) {
-      // markUncancelable();
+      markUncancelable();
     }
   }, [reservationIsMoreThan48HoursAway, paymentId])
 
@@ -110,8 +111,6 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
       .catch(() => setUpdateResponse(500))
   };
 
-  const notCanceled = !reservation.canceled && reservation.paymentStatus === PaymentStatus.Succeeded;
-
   return (
     <div>
       <div className={reservationStyles.reservation__info}>
@@ -128,7 +127,7 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
           )
         }
         {
-          notCanceled && reservationIsMoreThan48HoursAway && reservation.uncancelable && (
+          notCanceled && reservationIsMoreThan48HoursAway && !reservation.uncancelable && (
             <>
               <button
                 type="button"
