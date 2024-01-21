@@ -6,7 +6,7 @@ import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
 interface Props {
   reservation: ReservationWithDetails;
-  date: string;
+  date: Date;
 }
 
 const ReservationSummary: FC<Props> = ({ reservation, date }) => {

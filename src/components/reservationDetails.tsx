@@ -12,7 +12,7 @@ import { PaymentStatus } from "../api/interfaces";
 import EditReservation from "./editReservation";
 
 import { CanceledBy, ReservationDataShort } from "../lib/interfaces";
-import { ReservationWithDetails, Reservations } from "../lib/validation/validationInterfaces";
+import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
 interface Props {
   reservation: ReservationWithDetails;
@@ -21,24 +21,10 @@ interface Props {
 
 const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => {
   const { t, i18n } = useTranslation("common");
-  const [date, setDate] = useState("");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
 
   useEffect(() => {
-    console.log(new Date(reservation?.date), new Date(reservation?.dateOfPurchase))
-    // if (reservation?.date != null) {
-    //   setDate(
-    //     new Intl.DateTimeFormat(i18n.language, {
-    //       month: "2-digit",
-    //       day: "2-digit",
-    //       year: "numeric",
-    //       hour: "2-digit",
-    //       minute: "2-digit"
-    //     }).format(new Date(reservation?.date))
-    //   );
-    // }
-
-    if (reservation?.dateOfPurchase !== null) {
+    if (reservation?.dateOfPurchase) {
       setDateOfPurchase(
         new Intl.DateTimeFormat(i18n.language, {
           month: "2-digit",
@@ -49,7 +35,7 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
         }).format(new Date(reservation?.dateOfPurchase))
       );
     }
-  }, [setDate, setDateOfPurchase, reservation?.date, reservation?.dateOfPurchase, i18n.language]);
+  }, [reservation?.dateOfPurchase, setDateOfPurchase, i18n.language]);
 
   return (
     <article className={thanksStyles.container}>
@@ -68,7 +54,7 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
             </div>
             <label>{t("summary.details")}</label>
           </div>
-          <ReservationSummary reservation={reservation} date={date} />
+          <ReservationSummary reservation={reservation} date={reservation?.date} />
 
           <div className={thanksStyles.summaryLabel}>
             <div className={thanksStyles.icon}>
