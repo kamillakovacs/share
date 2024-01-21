@@ -25,7 +25,7 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
   const [dateOfPurchase, setDateOfPurchase] = useState("");
 
   useEffect(() => {
-    if (reservation?.date) {
+    if (reservation?.date != null) {
       setDate(
         new Intl.DateTimeFormat(i18n.language, {
           month: "2-digit",
@@ -37,7 +37,7 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
       );
     }
 
-    if (reservation?.dateOfPurchase) {
+    if (reservation?.dateOfPurchase !== null) {
       setDateOfPurchase(
         new Intl.DateTimeFormat(i18n.language, {
           month: "2-digit",
