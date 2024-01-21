@@ -6,6 +6,7 @@ import { Reservation } from "../lib/validation/validationInterfaces";
 
 import styles from "../styles/main.module.scss";
 import summaryStyles from "../styles/summary.module.scss";
+import { currencyFormat } from "../lib/util/currencyFormat";
 
 const Summary: FC = () => {
   const { values } = useFormikContext<Reservation>();
@@ -20,19 +21,17 @@ const Summary: FC = () => {
 
       <div className={summaryStyles.container}>
         <div>{t("summary.infraredSauna")}</div>
-        <div>{`${t("summary.soakFor")} ${values.numberOfGuests ? values.numberOfGuests.value : 1} ${
-          values.numberOfGuests
+        <div>{`${t("summary.soakFor")} ${values.numberOfGuests ? values.numberOfGuests.value : 1} ${values.numberOfGuests
             ? values.numberOfGuests.value > 1
               ? t("summary.people")
               : t("summary.person")
             : t("summary.person")
-        } ${t("summary.in")} ${values.numberOfTubs ? values.numberOfTubs.value : 1} ${
-          values.numberOfTubs
+          } ${t("summary.in")} ${values.numberOfTubs ? values.numberOfTubs.value : 1} ${values.numberOfTubs
             ? values.numberOfTubs.value > 1
               ? t("summary.tubs")
               : t("summary.tub")
             : t("summary.tub")
-        } ${t("summary.ofBeerBath")} `}</div>
+          } ${t("summary.ofBeerBath")} `}</div>
         <div>{t("summary.strawBed")} </div>
         <div>{t("summary.unlimitedBeer")} </div>
         <div>{t("summary.towelsAndRobes")} </div>
@@ -41,7 +40,7 @@ const Summary: FC = () => {
           <div>
             {t("summary.total")} <span className={summaryStyles.vat}>{t("summary.vat")} </span>
           </div>
-          {values.price && <div>{`${values.price} ${t("summary.huf")} `}</div>}
+          {values.price && <div>{currencyFormat.format(parseFloat(values.price))}</div>}
         </div>
       </div>
     </>

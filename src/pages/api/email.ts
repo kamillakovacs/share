@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { ReservationWithDetails } from "../../lib/validation/validationInterfaces";
 import { Action } from "../../lib/interfaces";
+import { currencyFormat } from "../../lib/util/currencyFormat";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { reservation, paymentId, language, action, date } = req.body;
@@ -112,15 +113,15 @@ const getVariables = (
                 },
                 {
                     "var": "netPrice",
-                    "value": reservation.price.toString()
+                    "value": currencyFormat.format(parseFloat(reservation.price))
                 },
                 {
                     "var": "tax",
-                    "value": reservation.price.toString()
+                    "value": currencyFormat.format(parseFloat(reservation.price))
                 },
                 {
                     "var": "totalPrice",
-                    "value": reservation.price.toString()
+                    "value": currencyFormat.format(parseFloat(reservation.price))
                 },
                 {
                     "var": "url",

@@ -13,6 +13,7 @@ import EditReservation from "./editReservation";
 
 import { CanceledBy, ReservationDataShort } from "../lib/interfaces";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { currencyFormat } from "../lib/util/currencyFormat";
 
 interface Props {
   reservation: ReservationWithDetails;
@@ -22,6 +23,7 @@ interface Props {
 const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => {
   const { t, i18n } = useTranslation("common");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
+  const [price, setPrice] = useState("")
 
   useEffect(() => {
     if (reservation?.dateOfPurchase) {
@@ -35,7 +37,11 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
         }).format(new Date(reservation?.dateOfPurchase))
       );
     }
-  }, [reservation?.dateOfPurchase, setDateOfPurchase, i18n.language]);
+
+    if (reservation?.price) {
+      setPrice(currencyFormat.format(parseFloat(reservation.price)))
+    }
+  }, [reservation?.dateOfPurchase, reservation?.price, setDateOfPurchase, setPrice, i18n.language]);
 
   return (
     <article className={thanksStyles.container}>
@@ -79,7 +85,7 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
             </div>
             <div className={detailsStyles.details__row}>
               <div>{t("reservationDetails.totalPrice")}:</div>
-              <div>{reservation?.price} {t("summary.huf")}</div>
+              <div>{price}</div>
             </div>
             <div className={detailsStyles.details__row}>
               <div>{t("reservationDetails.paymentStatus")}:</div>
