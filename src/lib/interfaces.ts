@@ -30,7 +30,6 @@ export enum Action {
 }
 
 export enum CanceledBy {
-  TooLate = "tooLate",
   User = "user",
   BeerSpa = "beerspa"
 }
