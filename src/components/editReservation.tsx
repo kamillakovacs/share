@@ -36,8 +36,9 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
   const [showModal, setShowModal] = useState(false);
 
   //@ts-ignore
-  const reservationIsMoreThan48HoursAway: boolean = Math.floor(Math.abs(new Date() - new Date(reservation.date)) / 36e5) >= 48
+  const reservationIsMoreThan48HoursAway: boolean = Math.floor(Math.abs(new Date() - new Date(reservation.date)) / 365) >= 48
   const reservationIsInTheFuture: boolean = new Date(reservation.date).valueOf() > new Date().setHours(new Date().getHours() + 2)
+  console.log(reservationIsMoreThan48HoursAway)
 
   useEffect(() => {
     if (document && document.querySelector("#changeButton") && action == Action.Change) {
@@ -59,9 +60,9 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
         console.log("Error sending email confirming change")
         return e;
       });
-    // if (!reservationIsMoreThan48HoursAway) {
-    markUncancelable();
-    // }
+    if (!reservationIsMoreThan48HoursAway) {
+      // markUncancelable();
+    }
   }, [reservationIsMoreThan48HoursAway, paymentId])
 
   const change = async () => {
