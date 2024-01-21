@@ -18,15 +18,8 @@ interface Props {
 }
 
 const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => {
-  const { t, i18n } = useTranslation("common");
+  const { t } = useTranslation("common");
   const router = useRouter();
-  const formattedDate = new Intl.DateTimeFormat(i18n.language, {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit"
-  }).format(new Date(reservation.date));
 
   const redirectToStartPayment = async (reservationData: ReservationWithDetails) =>
     payment.useSendPaymentRequest(reservationData, customerAlreadyInDatabase, router);
@@ -65,7 +58,7 @@ const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => 
       <div style={{ color: "white", paddingLeft: 30, paddingTop: 10 }}>
         {t("reservationDetails.submitPaymentAgain")}
       </div>
-      <ReservationSummary reservation={reservation} date={formattedDate} />
+      <ReservationSummary reservation={reservation} date={reservation?.date} />
 
       <div className={detailsStyles.margin}>
         <Image src={barion} alt="barion-logo" className={detailsStyles.barion} />
