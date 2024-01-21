@@ -25,7 +25,7 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
   const [dateOfPurchase, setDateOfPurchase] = useState("");
 
   useEffect(() => {
-    console.log(reservation?.date, reservation?.dateOfPurchase)
+    console.log(reservation?.date, reservation?.date.toDateString(), reservation?.dateOfPurchase)
     // if (reservation?.date != null) {
     //   setDate(
     //     new Intl.DateTimeFormat(i18n.language, {
