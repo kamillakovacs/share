@@ -21,7 +21,6 @@ interface Props {
 
 const Reservation: FC<Props> = ({ reservation, paymentId, customerAlreadyInDatabase, currentReservations }) => {
   const { i18n } = useTranslation("common");
-
   useEffect(() => {
     const createAndSendConfirmationEmail = async () => await axios
       .post("/api/email", { reservation, paymentId, language: i18n.language, action: Action.None })
@@ -72,7 +71,6 @@ export async function getServerSideProps({ query, locale }) {
   const paymentId = query.paymentId as string
   const reservation: ReservationWithDetails = reservations[paymentId];
 
-
   const users: User[] = await customers.once("value").then(function (snapshot) {
     return snapshot.val() || "Anonymous";
   });
@@ -102,7 +100,7 @@ export async function getServerSideProps({ query, locale }) {
     );
   });
 
-  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservation, customerAlreadyInDatabase, currentReservations } };
+  return { props: { ...(await serverSideTranslations(locale, ["common"])), reservation, paymentId, customerAlreadyInDatabase, currentReservations } };
 }
 
 export default memo(Reservation);

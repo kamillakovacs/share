@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     await mailerSend.email.send(emailParams)
         .then(async () => await reservations.update({
-            [`${req.body.paymentId}/communication/reservationEmailSent`]: true
+            [`${paymentId}/communication/reservationEmailSent`]: true
         }))
         .catch(e => console.log(e));
 
