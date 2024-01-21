@@ -17,8 +17,9 @@ export const useSendPaymentRequest = async (
   const data = {
     POSKey: process.env.BARION_POS_KEY,
     PaymentType: "Immediate",
+
+    GuestCheckout: "True",
     FundingSources: ["All"],
-    TraceId: "",
 
     PaymentRequestId: `share-spa-${new Date(reservationData.date).getTime()}-${Date.now()}`,
     PayerHint: reservationData.email,
