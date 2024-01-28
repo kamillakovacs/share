@@ -21,6 +21,7 @@ interface Props {
 
 const Reservation: FC<Props> = ({ reservation, paymentId, customerAlreadyInDatabase, currentReservations }) => {
   const { i18n } = useTranslation("common");
+  console.log(reservation)
   useEffect(() => {
     const createAndSendConfirmationEmail = async () => await axios
       .post("/api/email", { reservation, paymentId, language: i18n.language, action: Action.None })
@@ -52,10 +53,10 @@ const Reservation: FC<Props> = ({ reservation, paymentId, customerAlreadyInDatab
             currentReservations={currentReservations}
           />
         )}
-        {(reservation?.paymentStatus === PaymentStatus.Canceled ||
-          reservation?.paymentStatus === PaymentStatus.Expired) && (
-            <Unsuccessful reservation={reservation} customerAlreadyInDatabase={customerAlreadyInDatabase} />
-          )}
+        {/* {(reservation?.paymentStatus === PaymentStatus.Canceled || */}
+        {/* reservation?.paymentStatus === PaymentStatus.Expired) && ( */}
+        <Unsuccessful reservation={reservation} customerAlreadyInDatabase={customerAlreadyInDatabase} />
+        {/* )} */}
       </article>
     </>
   );
