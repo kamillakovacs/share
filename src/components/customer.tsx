@@ -1,10 +1,8 @@
 import React, { ChangeEvent, FC, memo, useEffect } from "react";
 import Select, { ActionMeta } from "react-select";
 import classNames from "classnames";
-import { useFormikContext, ErrorMessage } from "formik";
+import { useFormikContext } from "formik";
 import { useTranslation } from "next-i18next";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
 
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 
@@ -19,15 +17,9 @@ const Customer: FC = () => {
 
   }, [values.whereYouHeard, setFieldValue]);
 
-
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setFieldTouched(e.target.name);
     setFieldValue(e.target.name, e.target.value);
-  };
-
-  const onPhoneNumberInput = (value: any) => {
-    setFieldTouched("phoneNumber");
-    setFieldValue("phoneNumber", value);
   };
 
   const setOption = (

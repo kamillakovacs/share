@@ -196,6 +196,10 @@ const Options: FC<Props> = ({ currentReservations }) => {
               container: (baseStyles) => ({
                 ...baseStyles,
                 ":focus-visible": { outline: "none" },
+                "@media only screen and (max-width: 500px)": {
+                  marginLeft: "20px",
+                  width: "450px"
+                },
               }),
               control: (baseStyles) => ({
                 ...baseStyles,
@@ -208,12 +212,18 @@ const Options: FC<Props> = ({ currentReservations }) => {
                 outline: "none",
                 ":focus": { borderColor: "#707070" },
                 ":hover": { borderColor: "#707070", boxShadow: "0 0 0 1px #707070" },
+                "@media only screen and (max-width: 500px)": {
+                  width: "auto"
+                },
               }),
               valueContainer: (baseStyles) => ({
                 ...baseStyles,
                 backgroundColor: "#343434",
                 borderRadius: "5px",
                 marginLeft: "50px",
+                "@media only screen and (max-width: 500px)": {
+                  marginLeft: "5px"
+                },
               }),
               singleValue: (baseStyles) => ({
                 ...baseStyles,
@@ -221,7 +231,10 @@ const Options: FC<Props> = ({ currentReservations }) => {
               }),
               placeholder: (baseStyles) => ({
                 ...baseStyles,
-                color: "white"
+                color: "white",
+                "@media only screen and (max-width: 500px)": {
+                  marginLeft: "2px"
+                },
               }),
               indicatorSeparator: (baseStyles) => ({
                 ...baseStyles,

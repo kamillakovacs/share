@@ -112,19 +112,19 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
   };
 
   return (
-    <div>
+    <div className={reservationStyles.reservation__infoContainer}>
       <div className={reservationStyles.reservation__info}>
         {
-          notCanceled && reservationIsInTheFuture && (
-            <button
-              className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
-              id="changeButton"
-              type="button"
-              onClick={change}
-            >
-              {t("reservationDate.changeReservationDate")}
-            </button>
-          )
+          // notCanceled && reservationIsInTheFuture && (
+          <button
+            className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
+            id="changeButton"
+            type="button"
+            onClick={change}
+          >
+            {t("reservationDate.changeReservationDate")}
+          </button>
+          // )
         }
         {
           notCanceled && reservationIsMoreThan48HoursAway && !reservation.uncancelable && (
@@ -165,7 +165,7 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
         {({ values, errors, dirty, handleSubmit }) => {
           const isFinalizeButtonEnabled = !!dirty && !Object.keys(errors).length && values.date.getHours() !== 0;
           return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={reservationStyles.reservation}>
               {action === Action.Change && (
                 <>
                   <section className={dateStyles.reservationDate}>

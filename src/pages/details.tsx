@@ -46,7 +46,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
     phoneNumber: null,
     email: null,
     paymentMethod: null,
-    whereYouHeard: { value: "", label: "" },
+    whereYouHeard: { value: null, label: null },
     canceled: null,
     uncancelable: false,
     communication: {
