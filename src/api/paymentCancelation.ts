@@ -31,8 +31,7 @@ export const useCancelPaymentRequest = async (
     .post(process.env.BARION_PAYMENT_REFUND_URL, data, {
       headers
     })
-    .then(async (res) => {
-      console.log(res)
+    .then(async () => {
       await axios
         .post("/api/email", { reservation, paymentId, language, action: Action.Cancel })
         .then((res) => res.data)

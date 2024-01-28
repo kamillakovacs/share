@@ -7,19 +7,20 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
+import { useAppContext } from "../../context/appContext";
 import * as payment from "../api/paymentRequest";
 import firebase from "../lib/firebase";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import { details } from "../lib/validation/validationSchemas";
-import { useAppContext } from "../../context/appContext";
+import { User } from "../lib/interfaces";
 
 import Customer from "../components/customer";
+import ReservationSummary from "../components/reservationSummary";
+
 import reservationStyles from "../styles/reservation.module.scss";
 import barion from "../../public/assets/barion-card-strip-intl__medium.png";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
-import ReservationSummary from "../components/reservationSummary";
-import { User } from "../lib/interfaces";
 
 interface Props {
   customerAlreadyInDatabase: boolean;

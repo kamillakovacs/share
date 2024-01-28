@@ -53,10 +53,9 @@ const Reservation: FC<Props> = ({ reservation, paymentId, customerAlreadyInDatab
             currentReservations={currentReservations}
           />
         )}
-        {/* {(reservation?.paymentStatus === PaymentStatus.Canceled || */}
-        {/* reservation?.paymentStatus === PaymentStatus.Expired) && ( */}
-        <Unsuccessful reservation={reservation} customerAlreadyInDatabase={customerAlreadyInDatabase} />
-        {/* )} */}
+        {reservation?.paymentStatus !== PaymentStatus.Succeeded && (
+          <Unsuccessful reservation={reservation} customerAlreadyInDatabase={customerAlreadyInDatabase} />
+        )}
       </article>
     </>
   );

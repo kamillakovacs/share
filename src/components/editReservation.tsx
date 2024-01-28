@@ -3,13 +3,13 @@ import axios from "axios";
 import classnames from "classnames";
 import { Formik } from "formik";
 import { useRouter } from "next/router";
-import { i18n, useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next";
 
 import * as cancelPayment from "../api/paymentCancelation";
 import * as changeReservation from "../api/makeReservation";
 
 import { Reservation, ReservationWithDetails } from "../lib/validation/validationInterfaces";
-import { Action, CanceledBy, ReservationDataShort } from "../lib/interfaces";
+import { Action, ReservationDataShort } from "../lib/interfaces";
 import Calendar from "../components/calendar";
 
 import reservationStyles from "../styles/reservation.module.scss";
@@ -97,7 +97,6 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
   };
 
   const onSubmit = async (values: Reservation) => {
-    console.log("submit")
     setDate(values.date);
 
     await axios
@@ -117,16 +116,16 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
     <div className={reservationStyles.reservation__infoContainer}>
       <div className={reservationStyles.reservation__info}>
         {
-          // notCanceled && reservationIsInTheFuture && (
-          <button
-            className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
-            id="changeButton"
-            type="button"
-            onClick={showChange}
-          >
-            {t("reservationDate.changeReservationDate")}
-          </button>
-          // )
+          notCanceled && reservationIsInTheFuture && (
+            <button
+              className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
+              id="changeButton"
+              type="button"
+              onClick={showChange}
+            >
+              {t("reservationDate.changeReservationDate")}
+            </button>
+          )
         }
         {
           notCanceled && reservationIsMoreThan48HoursAway && !reservation.uncancelable && (
@@ -153,8 +152,6 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
             </>
           )
         }
-
-
 
       </div>
       <Formik<Reservation>

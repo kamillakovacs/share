@@ -151,5 +151,9 @@
 @media only screen and (max-width: 500px) {
   .reservation {
     width: 500px;
+
+    &__logoContainer {
+      margin: 0 25px;
+    }
   }
 }

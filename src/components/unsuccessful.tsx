@@ -8,8 +8,7 @@ import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
 import * as payment from "../api/paymentRequest";
 import thanksStyles from "../styles/thanks.module.scss";
 import reservationStyles from "../styles/reservation.module.scss";
-import detailsStyles from "../styles/details.module.scss";
-import barion from "../../public/assets/barion.png";
+import barion from "../../public/assets/barion-card-strip-intl__medium.png";
 import ReservationSummary from "./reservationSummary";
 
 interface Props {
@@ -53,16 +52,25 @@ const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => 
 
   return (
     <article className={thanksStyles.container}>
-      <label className={thanksStyles.reservation__title}>
+      <label style={{
+        color: "white",
+        paddingTop: 10,
+        textAlign: "center",
+        fontSize: "24px",
+        fontFamily: "Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"
+      }}>
         <span>{t("reservationDetails.notSuccessful")}</span>
       </label>
-      <div style={{ color: "white", paddingLeft: 30, paddingTop: 10 }}>
+      <div style={{
+        color: "white",
+        paddingTop: 10,
+        fontFamily: "Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"
+      }}>
         {t("reservationDetails.submitPaymentAgain")}
       </div>
       <ReservationSummary reservation={reservation} date={reservation?.date} price={reservation?.price} />
 
-      <div className={detailsStyles.margin}>
-        <Image src={barion} alt="barion-logo" className={detailsStyles.barion} />
+      <>
         <div className={reservationStyles.reservation__info}>
           <button
             type="submit"
@@ -72,8 +80,14 @@ const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => 
             {t("details.finishAndPay")}
           </button>
         </div>
-      </div>
-    </article>
+        <div className={reservationStyles.reservation__logoContainer}>
+          <Image
+            src={barion}
+            alt="barion-logo"
+          />
+        </div>
+      </>
+    </article >
   );
 };
 
