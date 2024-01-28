@@ -34,27 +34,27 @@ export const useCancelPaymentRequest = async (
     .then(async () => {
       await axios
         .post("/api/email", { reservation, paymentId, language, action: Action.Cancel })
-        .then((res) => res.data)
+        .then(async () => sendCancelationReceipt(reservation, paymentId))
         .catch((e) => {
           console.log("Error sending email confirming cancelation")
-          return e;
-        });
-
-      await axios
-        .post("/api/receipt", { reservation, paymentId })
-        .then((res) => res.data)
-        .catch((e) => {
-          console.log("Error sending cancelation receipt")
-          return e;
-        });
-
-      await cancelReservation
-        .markReservationCanceled(paymentId)
-        .then(() => console.log("Reservation has been canceled and refunded"))
-        .catch((e) => {
-          console.log("Error saving cancelation")
           return e;
         });
     })
     .catch(e => console.log("Error refunding payment:" + e))
 };
+
+const sendCancelationReceipt = async (reservation: ReservationWithDetails, paymentId: string) => await axios
+  .post("/api/receipt", { reservation, paymentId })
+  .then(async () => markAsCanceledInDatabase(paymentId))
+  .catch((e) => {
+    console.log("Error sending cancelation receipt")
+    return e;
+  })
+
+const markAsCanceledInDatabase = async (paymentId: string) => await cancelReservation
+  .markReservationCanceled(paymentId)
+  .then(() => console.log("Reservation has been canceled and refunded"))
+  .catch((e) => {
+    console.log("Error saving cancelation")
+    return e;
+  });
