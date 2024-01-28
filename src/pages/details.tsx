@@ -46,7 +46,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
     phoneNumber: null,
     email: null,
     paymentMethod: null,
-    whereYouHeard: { value: null, label: null },
+    whereYouHeard: { value: "", label: "" },
     canceled: null,
     uncancelable: false,
     communication: {
@@ -111,7 +111,12 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
                   <div className={`${styles.todoitem} ${styles.todoitem__four}`} />
                   <label>{t("reservationDetails.summaryAndCheckout")}</label>
                 </div>
-                <ReservationSummary reservation={values} date={data.date} />
+                <ReservationSummary
+                  reservation={values}
+                  date={data.date}
+                  price={values.price}
+                  paymentStatus={values.paymentStatus}
+                />
                 <div className={reservationStyles.reservation__barion__container}>
                   <div className={reservationStyles.reservation__info}>
                     <button

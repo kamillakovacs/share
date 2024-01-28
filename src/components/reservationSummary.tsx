@@ -3,15 +3,20 @@ import { FC, memo, useEffect, useState } from "react";
 
 import detailsStyles from "../styles/details.module.scss";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+import { PaymentStatus } from "../api/interfaces";
+import { currencyFormat } from "../lib/util/currencyFormat";
 
 interface Props {
   reservation: ReservationWithDetails;
   date: Date;
+  price: string;
+  paymentStatus?: PaymentStatus
 }
 
-const ReservationSummary: FC<Props> = ({ reservation, date }) => {
+const ReservationSummary: FC<Props> = ({ reservation, date, price, paymentStatus }) => {
   const { t, i18n } = useTranslation("common");
   const [resDate, setResDate] = useState("");
+  const [resPrice, setResPrice] = useState("")
 
   useEffect(() => {
     if (date) {
@@ -25,7 +30,11 @@ const ReservationSummary: FC<Props> = ({ reservation, date }) => {
         }).format(new Date(date))
       );
     }
-  }, [setResDate, date, i18n.language]);
+
+    if (price && !paymentStatus) {
+      setResPrice(currencyFormat.format(parseFloat(price)))
+    }
+  }, [setResDate, date, setResPrice, price, paymentStatus, i18n.language]);
 
   return (
     <div className={detailsStyles.details}>
@@ -45,6 +54,10 @@ const ReservationSummary: FC<Props> = ({ reservation, date }) => {
         <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.lengthOfStay")}:</div>
         <div>{t("reservationDetails.hourAndFifteenMins")}</div>
       </div>
+      {!paymentStatus && <div className={detailsStyles.details__row}>
+        <div>{t("reservationDetails.totalPrice")}:</div>
+        <div>{resPrice}</div>
+      </div>}
     </div>
   )
 }

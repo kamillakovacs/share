@@ -56,7 +56,7 @@ const Main: FC<Props> = ({ currentReservations }) => {
       lastName: "",
       phoneNumber: "",
       email: "",
-      whereYouHeard: { value: null, label: null },
+      whereYouHeard: { value: "", label: "" },
       paymentStatus: null,
       paymentMethod: null,
       canceled: null,

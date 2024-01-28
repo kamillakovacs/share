@@ -13,6 +13,7 @@ import EditReservation from "./editReservation";
 
 import { CanceledBy, ReservationDataShort } from "../lib/interfaces";
 import { ReservationWithDetails } from "../lib/validation/validationInterfaces";
+
 import { currencyFormat } from "../lib/util/currencyFormat";
 
 interface Props {
@@ -39,9 +40,9 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
     }
 
     if (reservation?.price) {
-      setPrice(currencyFormat.format(parseFloat(reservation.price)))
+      setPrice(currencyFormat.format(parseFloat(reservation?.price)))
     }
-  }, [reservation?.dateOfPurchase, reservation?.price, setDateOfPurchase, setPrice, i18n.language]);
+  }, [reservation?.dateOfPurchase, setDateOfPurchase, reservation?.price, setPrice, i18n.language]);
 
   return (
     <article className={thanksStyles.container}>
@@ -60,7 +61,12 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
             </div>
             <label>{t("summary.details")}</label>
           </div>
-          <ReservationSummary reservation={reservation} date={reservation?.date} />
+          <ReservationSummary
+            reservation={reservation}
+            date={reservation?.date}
+            price={price}
+            paymentStatus={reservation?.paymentStatus}
+          />
 
           <div className={thanksStyles.summaryLabel}>
             <div className={thanksStyles.icon}>

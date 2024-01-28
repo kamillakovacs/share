@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, memo, useEffect } from "react";
+import React, { ChangeEvent, FC, memo } from "react";
 import Select, { ActionMeta } from "react-select";
 import classNames from "classnames";
 import { useFormikContext } from "formik";
@@ -11,11 +11,7 @@ import styles from "../styles/main.module.scss";
 
 const Customer: FC = () => {
   const { t } = useTranslation("common");
-  const { values, errors, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
-
-  useEffect(() => {
-
-  }, [values.whereYouHeard, setFieldValue]);
+  const { values, errors, touched, handleChange, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setFieldTouched(e.target.name);
@@ -26,8 +22,7 @@ const Customer: FC = () => {
     option: { value: string; label: string },
     select: ActionMeta<{ value: string; label: string }>
   ) => {
-    setFieldValue(select.name, option);
-    setFieldTouched(select.name);
+    handleChange({ target: { name: select.name, value: option } })
   };
 
   const whereYouHeardOptions = [
@@ -53,7 +48,7 @@ const Customer: FC = () => {
       <div className={customerStyles.detail}>
         <input
           className={classNames(customerStyles.customer__input, {
-            [customerStyles.customer__input__error]: errors.firstName
+            [customerStyles.customer__input__error]: errors.firstName && touched.firstName
           })}
           name="firstName"
           placeholder={t("customer.firstName")}
@@ -62,7 +57,7 @@ const Customer: FC = () => {
         />
         <input
           className={classNames(customerStyles.customer__input, {
-            [customerStyles.customer__input__error]: errors.lastName
+            [customerStyles.customer__input__error]: errors.lastName && touched.lastName
           })}
           name="lastName"
           placeholder={t("customer.lastName")}
@@ -81,7 +76,7 @@ const Customer: FC = () => {
       <div className={customerStyles.detail}>
         <input
           className={classNames(customerStyles.customer__input, {
-            [customerStyles.customer__input__error]: errors.email
+            [customerStyles.customer__input__error]: errors.email && touched.email
           })}
           name="email"
           placeholder={t("customer.email")}
@@ -92,7 +87,7 @@ const Customer: FC = () => {
       <div className={customerStyles.detail}>
         <input
           className={classNames(customerStyles.customer__input, {
-            [customerStyles.customer__input__error]: errors.phoneNumber
+            [customerStyles.customer__input__error]: errors.phoneNumber && touched.phoneNumber
           })}
           name="phoneNumber"
           placeholder={t("customer.phone")}
@@ -120,14 +115,14 @@ const Customer: FC = () => {
               height: "64px",
               backgroundColor: "#343434",
               borderWidth: "1px",
-              borderColor: errors && errors.whereYouHeard && errors.whereYouHeard?.value ? "red" : "#707070",
+              borderColor: touched.whereYouHeard && errors.whereYouHeard ? "red" : "#707070",
               cursor: "pointer !important",
               margin: "20px 0 0 25px",
               width: "650px",
               fontSize: "22px",
               fontWeight: "200",
               ":focus": { borderColor: "#707070" },
-              ":hover": { borderColor: errors && errors.whereYouHeard && errors.whereYouHeard?.value ? "red" : "#707070", boxShadow: "0 0 0 0" },
+              ":hover": { borderColor: touched.whereYouHeard && errors.whereYouHeard ? "red" : "#707070", boxShadow: "0 0 0 0" },
             }),
             singleValue: (baseStyles) => ({
               ...baseStyles,
