@@ -59,7 +59,7 @@ const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => 
       <div style={{ color: "white", paddingLeft: 30, paddingTop: 10 }}>
         {t("reservationDetails.submitPaymentAgain")}
       </div>
-      <ReservationSummary reservation={reservation} date={reservation?.date} />
+      <ReservationSummary reservation={reservation} date={reservation?.date} price={reservation?.price} />
 
       <div className={detailsStyles.margin}>
         <Image src={barion} alt="barion-logo" className={detailsStyles.barion} />

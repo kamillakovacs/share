@@ -123,6 +123,9 @@ const Customer: FC = () => {
               fontWeight: "200",
               ":focus": { borderColor: "#707070" },
               ":hover": { borderColor: touched.whereYouHeard && errors.whereYouHeard ? "red" : "#707070", boxShadow: "0 0 0 0" },
+              "@media only screen and (max-width: 500px)": {
+                width: "450px"
+              },
             }),
             singleValue: (baseStyles) => ({
               ...baseStyles,
@@ -137,7 +140,10 @@ const Customer: FC = () => {
               fontSize: "22px",
               color: "white",
               paddingLeft: "10px",
-              width: "650px"
+              width: "650px",
+              "@media only screen and (max-width: 500px)": {
+                width: "450px"
+              },
             }),
             menuList: (baseStyles) => ({
               ...baseStyles,

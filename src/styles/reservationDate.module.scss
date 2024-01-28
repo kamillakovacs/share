@@ -154,8 +154,6 @@
   .reservationDate {
 
     &__calendar {
-      // height: auto;
-
       &Icon {
         left: 25px;
         top: 30px;
@@ -164,7 +162,6 @@
 
     &__date {
       width: 450px;
-      // height: 400px;
       background-color: #343434;
       position: relative;
       border-radius: 10px;

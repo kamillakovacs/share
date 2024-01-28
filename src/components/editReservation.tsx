@@ -64,15 +64,8 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
     }
   }, [reservationIsMoreThan48HoursAway, paymentId])
 
-  const change = async () => {
+  const showChange = async () => {
     setAction(Action.Change);
-    await axios
-      .post("/api/email", { reservation, paymentId, language: i18n.language, t, action: Action.Change, date })
-      .then((res) => res.data)
-      .catch((e) => {
-        console.log("Error sending email confirming change")
-        return e;
-      });
   };
 
   const openModal = () => setShowModal(true)
@@ -103,9 +96,18 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
     paymentMethod: reservation.paymentMethod
   };
 
-  const onSubmit = (values: Reservation) => {
+  const onSubmit = async (values: Reservation) => {
     console.log("submit")
     setDate(values.date);
+
+    await axios
+      .post("/api/email", { reservation, paymentId, language: i18n.language, t, action: Action.Change, date })
+      .then((res) => res.data)
+      .catch((e) => {
+        console.log("Error sending email confirming change")
+        return e;
+      });
+
     return redirectToChangeReservation(values.date)
       .then(() => setUpdateResponse(200))
       .catch(() => setUpdateResponse(500))
@@ -120,7 +122,7 @@ const EditReservation: FC<Props> = ({ reservation, currentReservations }) => {
             className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__largemargin}`}
             id="changeButton"
             type="button"
-            onClick={change}
+            onClick={showChange}
           >
             {t("reservationDate.changeReservationDate")}
           </button>
