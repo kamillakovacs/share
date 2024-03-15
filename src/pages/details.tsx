@@ -1,7 +1,7 @@
 import "firebase/database";
 import React, { FC, memo, useEffect } from "react";
 import classnames from "classnames";
-import { Formik } from "formik";
+import { Field, Formik } from "formik";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -21,6 +21,7 @@ import reservationStyles from "../styles/reservation.module.scss";
 import barion from "../../public/assets/barion-card-strip-intl__medium.png";
 import styles from "../styles/main.module.scss";
 import detailsStyles from "../styles/details.module.scss";
+import classNames from "classnames";
 
 interface Props {
   customerAlreadyInDatabase: boolean;
@@ -55,7 +56,9 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
       receiptSent: false,
       rescheduleEmailSentCount: 0,
       cancelationEmailSent: false
-    }
+    },
+    requirements: null,
+    termsAndConditions: false
   };
 
   const goBack = () => router.replace("/");
@@ -84,7 +87,9 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
         receiptSent: false,
         rescheduleEmailSentCount: 0,
         cancelationEmailSent: false
-      }
+      },
+      requirements: null,
+      termsAndConditions: false
     };
 
     return redirectToStartPayment(reservationData);
@@ -109,7 +114,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
               <form onSubmit={handleSubmit}>
                 <Customer />
                 <div className={detailsStyles.details__detailTitle}>
-                  <div className={`${styles.todoitem} ${styles.todoitem__four}`} />
+                  <div className={`${styles.todoitem} ${styles.todoitem__cashier}`} />
                   <label>{t("reservationDetails.summaryAndCheckout")}</label>
                 </div>
                 <ReservationSummary
@@ -119,6 +124,22 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
                   paymentStatus={values.paymentStatus}
                 />
                 <div className={reservationStyles.reservation__barion__container}>
+                  <div
+                    className={classNames(reservationStyles.reservation__checkbox, {
+                      [reservationStyles.reservation__checkbox__error]: errors.termsAndConditions
+                    })}
+                  >
+                    <label>
+                      <Field type="checkbox" name="termsAndConditions" />
+                      {t("details.iAgree")}
+                    </label>
+                  </div>
+                  <div className={reservationStyles.reservation__checkbox}>
+                    <label>
+                      <Field type="checkbox" name="newsletter" />
+                      {t("details.newsletter")}
+                    </label>
+                  </div>
                   <div className={reservationStyles.reservation__info}>
                     <button
                       className={`${reservationStyles.reservation__button} ${reservationStyles.reservation__back}`}
@@ -139,10 +160,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
                       {t("details.finishAndPay")}
                     </button>
                   </div>
-                  <Image
-                    src={barion}
-                    alt="barion-logo"
-                  />
+                  <Image src={barion} alt="barion-logo" />
                 </div>
               </form>
             );
@@ -159,16 +177,16 @@ export async function getServerSideProps({ locale }) {
     return snapshot.val() || "Anonymous";
   });
 
-  const customerAlreadyInDatabase = Object.values(users).filter(
-    (user) => {
-      if (user.firstName) {
-        return user.firstName.toLowerCase() === user.firstName.toLowerCase() &&
-          user.lastName.toLowerCase() === user.lastName.toLowerCase() &&
-          user.phoneNumber.toLowerCase() === user.phoneNumber.toLowerCase() &&
-          user.email.toLowerCase() === user.email.toLowerCase()
-      }
+  const customerAlreadyInDatabase = Object.values(users).filter((user) => {
+    if (user.firstName) {
+      return (
+        user.firstName.toLowerCase() === user.firstName.toLowerCase() &&
+        user.lastName.toLowerCase() === user.lastName.toLowerCase() &&
+        user.phoneNumber.toLowerCase() === user.phoneNumber.toLowerCase() &&
+        user.email.toLowerCase() === user.email.toLowerCase()
+      );
     }
-  ).length
+  }).length;
 
   return {
     props: {

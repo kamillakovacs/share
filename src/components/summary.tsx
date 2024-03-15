@@ -27,7 +27,7 @@ const Summary: FC = () => {
         <div>{t("summary.strawBed")}</div>
         <div>{t("summary.snacks")}</div>
         <div>{t("summary.towelsAndRobes")}</div>
-        
+
         <div className={summaryStyles.total}>
           <div>
             {t("summary.total")} <span className={summaryStyles.vat}>{t("summary.vat")} </span>

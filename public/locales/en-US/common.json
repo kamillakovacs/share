@@ -13,7 +13,7 @@
     "updateError": "There was an error updating your date. Please call us."
   },
   "options": {
-    "noOptions": "No options",
+    "noOptions": "Please indicate number of guests",
     "numberOfPeopleAndTubs": "Number of People & Tubs",
     "selectGuests": "Select guests",
     "selectTubs": "Select tubs",
@@ -60,6 +60,8 @@
     "huf": "HUF"
   },
   "details": {
+    "iAgree": "I accept the Terms of Service.",
+    "newsletter": "I'd like to hear about future promotions and events.",
     "yourDetails": "Your Details",
     "complete": "Complete",
     "finishAndPay": "Payment"

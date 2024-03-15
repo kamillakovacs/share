@@ -11,7 +11,8 @@ import styles from "../styles/main.module.scss";
 
 const Customer: FC = () => {
   const { t } = useTranslation("common");
-  const { values, errors, touched, handleChange, setFieldValue, setFieldTouched } = useFormikContext<ReservationWithDetails>();
+  const { values, errors, touched, handleChange, setFieldValue, setFieldTouched } =
+    useFormikContext<ReservationWithDetails>();
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setFieldTouched(e.target.name);
@@ -22,7 +23,7 @@ const Customer: FC = () => {
     option: { value: string; label: string },
     select: ActionMeta<{ value: string; label: string }>
   ) => {
-    handleChange({ target: { name: select.name, value: option } })
+    handleChange({ target: { name: select.name, value: option } });
   };
 
   const whereYouHeardOptions = [
@@ -121,14 +122,17 @@ const Customer: FC = () => {
               fontSize: "22px",
               fontWeight: "200",
               ":focus": { borderColor: "#707070" },
-              ":hover": { borderColor: touched.whereYouHeard && errors.whereYouHeard ? "red" : "#707070", boxShadow: "0 0 0 0" },
+              ":hover": {
+                borderColor: touched.whereYouHeard && errors.whereYouHeard ? "red" : "#707070",
+                boxShadow: "0 0 0 0"
+              },
               "@media only screen and (max-width: 500px)": {
                 width: "450px"
-              },
+              }
             }),
             singleValue: (baseStyles) => ({
               ...baseStyles,
-              color: "white",
+              color: "white"
             }),
             menu: (baseStyles) => ({
               ...baseStyles,
@@ -142,7 +146,7 @@ const Customer: FC = () => {
               width: "650px",
               "@media only screen and (max-width: 500px)": {
                 width: "450px"
-              },
+              }
             }),
             menuList: (baseStyles) => ({
               ...baseStyles,
@@ -161,11 +165,11 @@ const Customer: FC = () => {
             placeholder: (baseStyles) => ({
               ...baseStyles,
               marginLeft: "12px"
-            }),
+            })
           }}
           options={whereYouHeardOptions}
           name="whereYouHeard"
-          onChange={setOption}          
+          onChange={setOption}
           value={values.whereYouHeard.value ? values.whereYouHeard : null}
           placeholder={t("customer.select")}
           instanceId="where-you-heard"
@@ -173,18 +177,12 @@ const Customer: FC = () => {
         />
       </div>
       <div className={customerStyles.detailTitle}>
-        <div
-          className={classNames(`${styles.todoitem} ${styles.todoitem__four}`, {
-            [styles.todoitem__done]: values.requirements
-          })}
-        />
+        <div className={classNames(`${styles.todoitem} ${styles.todoitem__done}`)} />
         <label>{t("customer.note")}</label>
       </div>
       <input
-        className={classNames(customerStyles.customer__input, {
-          [customerStyles.customer__input__error]: errors.lastName && touched.lastName
-        })}
-        name="lastName"
+        className={customerStyles.customer__input}
+        name="note"
         placeholder={t("customer.requirements")}
         type="text"
         onChange={onChangeInput}

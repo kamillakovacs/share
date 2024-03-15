@@ -20,6 +20,7 @@ export interface ReservationWithDetails {
   email: string;
   whereYouHeard: { label: string; value: string };
   requirements: string;
+  termsAndConditions: boolean;
   paymentMethod: string;
   paymentStatus?: PaymentStatus;
   canceled: CanceledBy;

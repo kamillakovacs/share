@@ -39,12 +39,10 @@ export const details = Yup.object().shape({
   phoneNumber: Yup.string()
     .matches(phoneRegex, "Please enter a valid phone number. (06301234567, +36201234567, 123-456-7890)")
     .required("Required"),
-  email: Yup.string()
-    .email("Please enter a valid email address")
-    .required("Required"),
-  whereYouHeard: Yup.object()
-    .shape({
-      value: Yup.string().required("Required"),
-      label: Yup.string().required("Required")
-    })
+  email: Yup.string().email("Please enter a valid email address").required("Required"),
+  whereYouHeard: Yup.object().shape({
+    value: Yup.string().required("Required"),
+    label: Yup.string().required("Required")
+  }),
+  termsAndConditions: Yup.bool().oneOf([true], "You need to accept the terms and conditions")
 });

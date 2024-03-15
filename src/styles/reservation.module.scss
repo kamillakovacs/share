@@ -18,7 +18,7 @@
   &__info {
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px 0 30px;
 
     &Container {
       display: flex;
@@ -114,7 +114,7 @@
   &__barion__container {
     display: flex;
     flex-direction: column;
-    margin: 25px 32px 0;
+    margin: 25px 0 0 24px;
     align-items: center;
   }
 
@@ -145,6 +145,22 @@
     margin: 40px 0 0 0;
     color: white;
     font-weight: 200;
+  }
+
+  &__checkbox {
+    display: flex;
+    width: 100%;
+    font-size: 22px;
+
+    input {
+      margin-right: 10px;
+    }
+
+    &__error {
+      input {
+        outline: 2px solid red;
+      }
+    }
   }
 }
 

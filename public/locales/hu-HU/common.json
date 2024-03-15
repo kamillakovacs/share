@@ -1,10 +1,10 @@
 {
   "index": {
-    "reserveYourExperience": "Foglald le a Craft Beer Spa élményt",
+    "reserveYourExperience": "Foglald le privát Sör Fürdődet most!",
     "continue": "Tovább"
   },
   "reservationDate": {
-    "dateAndTime": "Válassz időpontot",
+    "dateAndTime": "Foglalásod időpontja",
     "time": "idő",
     "changeReservationDate": "Időpont megváltoztatása",
     "cancelReservation": "Foglalás törlése",
@@ -54,6 +54,8 @@
     "huf": "Ft."
   },
   "details": {
+    "iAccept": "Elfogadom a Felhasználói Szerződést és az Adatvédelmi szabályzatot.",
+    "newsletter": "Szeretnék értesülni az aktuális promóciókról és eseményekről.",
     "yourDetails": "Személyes adataid",
     "complete": "Beküldés",
     "finishAndPay": "Fizetés",
