@@ -18,7 +18,7 @@ const Payment: FC = () => {
   return (
     <div>
       <div className={customerStyles.detailTitle}>
-        <div className={`${styles.todoitem} ${styles.todoitem__four}`} />
+        <div className={`${styles.todoitem} ${styles.todoitem__cashier}`} />
         <label>{t("price.paymentMethods")}</label>
       </div>
       <div className={customerStyles.detail}></div>

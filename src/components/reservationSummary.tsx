@@ -22,11 +22,11 @@ const ReservationSummary: FC<Props> = ({ reservation, date, price, paymentStatus
     if (date) {
       setResDate(
         new Intl.DateTimeFormat(i18n.language, {
-          month: "2-digit",
-          day: "2-digit",
+          month: "long",
+          day: "numeric",
           year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
+          hour: "numeric",
+          minute: "numeric"
         }).format(new Date(date))
       );
     }
@@ -39,19 +39,19 @@ const ReservationSummary: FC<Props> = ({ reservation, date, price, paymentStatus
   return (
     <div className={detailsStyles.details}>
       <div className={detailsStyles.details__row}>
-        <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.location")}:</div>
+        <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.location")}</div>
         <div>{t("reservationDetails.shareSpa")}</div>
       </div>
       <div className={detailsStyles.details__row}>
-        <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.tubsReserved")}:</div>
+        <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.tubsReserved")}</div>
         <div>{reservation?.numberOfTubs?.label}</div>
       </div>
       <div className={detailsStyles.details__row}>
-        <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.date")}:</div>
+        <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.date")}</div>
         <div>{resDate}</div>
       </div>
       <div className={detailsStyles.details__row}>
-        <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.lengthOfStay")}:</div>
+        <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.lengthOfStay")}</div>
         <div>{t("reservationDetails.hourAndFifteenMins")}</div>
       </div>
       {!paymentStatus && <div className={detailsStyles.details__row}>

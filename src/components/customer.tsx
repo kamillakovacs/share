@@ -107,8 +107,7 @@ const Customer: FC = () => {
         <Select
           styles={{
             container: (baseStyles) => ({
-              ...baseStyles,
-              paddingBottom: "20px"
+              ...baseStyles
             }),
             control: (baseStyles) => ({
               ...baseStyles,
@@ -159,16 +158,37 @@ const Customer: FC = () => {
               cursor: "pointer",
               paddingLeft: "10px"
             }),
+            placeholder: (baseStyles) => ({
+              ...baseStyles,
+              marginLeft: "12px"
+            }),
           }}
           options={whereYouHeardOptions}
           name="whereYouHeard"
-          onChange={setOption}
-          value={values.whereYouHeard}
+          onChange={setOption}          
+          value={values.whereYouHeard.value ? values.whereYouHeard : null}
           placeholder={t("customer.select")}
           instanceId="where-you-heard"
           isSearchable={false}
         />
       </div>
+      <div className={customerStyles.detailTitle}>
+        <div
+          className={classNames(`${styles.todoitem} ${styles.todoitem__four}`, {
+            [styles.todoitem__done]: values.requirements
+          })}
+        />
+        <label>{t("customer.note")}</label>
+      </div>
+      <input
+        className={classNames(customerStyles.customer__input, {
+          [customerStyles.customer__input__error]: errors.lastName && touched.lastName
+        })}
+        name="lastName"
+        placeholder={t("customer.requirements")}
+        type="text"
+        onChange={onChangeInput}
+      />
     </section>
   );
 };

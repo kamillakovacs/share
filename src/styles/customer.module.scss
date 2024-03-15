@@ -32,6 +32,10 @@
     margin: 20px 0 0 25px;
     font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 
+    &:focus-visible {
+      outline: none;
+    }
+
     input {
       background-color: inherit;
       border: none;
