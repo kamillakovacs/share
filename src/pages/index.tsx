@@ -66,7 +66,9 @@ const Main: FC<Props> = ({ currentReservations }) => {
         receiptSent: false,
         rescheduleEmailSentCount: 0,
         cancelationEmailSent: false
-      }
+      },
+      requirements: null,
+      termsAndConditions: false
     };
 
     return redirectToDetailsPage(reservationData);
@@ -120,8 +122,9 @@ export async function getServerSideProps({ locale }) {
     if (snapshot.val()) {
       return (
         Object.values(snapshot.val())
-          .filter((res: ReservationWithDetails) =>
-            res.paymentStatus === PaymentStatus.Succeeded && new Date(res.date) > new Date()
+          .filter(
+            (res: ReservationWithDetails) =>
+              res.paymentStatus === PaymentStatus.Succeeded && new Date(res.date) > new Date()
           )
           .map((res: ReservationWithDetails) => ({
             date: res.date ?? null,
@@ -132,7 +135,6 @@ export async function getServerSideProps({ locale }) {
     } else {
       return null;
     }
-
   });
 
   return {
