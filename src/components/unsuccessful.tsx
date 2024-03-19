@@ -44,7 +44,9 @@ const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => 
         receiptSent: reservation.communication.receiptSent,
         rescheduleEmailSentCount: reservation.communication.rescheduleEmailSentCount,
         cancelationEmailSent: reservation.communication.cancelationEmailSent
-      }
+      },
+      requirements: reservation.requirements,
+      termsAndConditions: reservation.termsAndConditions
     };
 
     return redirectToStartPayment(reservationData);
@@ -52,20 +54,24 @@ const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => 
 
   return (
     <article className={thanksStyles.container}>
-      <label style={{
-        color: "white",
-        paddingTop: 10,
-        textAlign: "center",
-        fontSize: "24px",
-        fontFamily: "Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"
-      }}>
+      <label
+        style={{
+          color: "white",
+          paddingTop: 10,
+          textAlign: "center",
+          fontSize: "24px",
+          fontFamily: "Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"
+        }}
+      >
         <span>{t("reservationDetails.notSuccessful")}</span>
       </label>
-      <div style={{
-        color: "white",
-        paddingTop: 10,
-        fontFamily: "Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"
-      }}>
+      <div
+        style={{
+          color: "white",
+          paddingTop: 10,
+          fontFamily: "Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif"
+        }}
+      >
         {t("reservationDetails.submitPaymentAgain")}
       </div>
       <ReservationSummary reservation={reservation} date={reservation?.date} price={reservation?.price} />
@@ -81,13 +87,10 @@ const Unsuccessful: FC<Props> = ({ customerAlreadyInDatabase, reservation }) => 
           </button>
         </div>
         <div className={reservationStyles.reservation__logoContainer}>
-          <Image
-            src={barion}
-            alt="barion-logo"
-          />
+          <Image src={barion} alt="barion-logo" />
         </div>
       </>
-    </article >
+    </article>
   );
 };
 
