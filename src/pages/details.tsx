@@ -131,7 +131,7 @@ const Details: FC<Props> = ({ customerAlreadyInDatabase }) => {
                   >
                     <label>
                       <Field type="checkbox" name="termsAndConditions" />
-                      {t("details.iAgree")}
+                      {t("details.iAccept")}
                     </label>
                   </div>
                   <div className={reservationStyles.reservation__checkbox}>
