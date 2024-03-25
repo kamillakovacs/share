@@ -4,6 +4,7 @@ import { useTranslation } from "next-i18next";
 
 import { Reservation } from "../lib/validation/validationInterfaces";
 
+import detailsStyles from "../styles/details.module.scss";
 import styles from "../styles/main.module.scss";
 import summaryStyles from "../styles/summary.module.scss";
 import { currencyFormat } from "../lib/util/currencyFormat";
@@ -16,24 +17,28 @@ const Summary: FC = () => {
     <>
       <div className={summaryStyles.label}>
         <div className={styles.cart} />
-        <label>{t("summary.details")}</label>
+        <label>{t("summary.youCanEnjoy")}</label>
       </div>
 
       <div className={summaryStyles.container}>
-        <div>{t("summary.exclusiveUse")}</div>
-        <div>{t("summary.bath")}</div>
-        <div>{t("summary.unlimitedBeer")}</div>
-        <div>{t("summary.infraredSauna")}</div>
-        <div>{t("summary.strawBed")}</div>
-        <div>{t("summary.snacks")}</div>
-        <div>{t("summary.towelsAndRobes")}</div>
+        <ul className={detailsStyles.detailsUl}>
+          <li>{t("summary.exclusiveUse")}</li>
+          <li>{t("summary.bath")}</li>
+          <li>{t("summary.unlimitedBeer")}</li>
+          <li>{t("summary.infraredSauna")}</li>
+          <li>{t("summary.strawBed")}</li>
+          <li>{t("summary.snacks")}</li>
+          <li>{t("summary.towelsAndRobes")}</li>
+        </ul>
 
-        <div className={summaryStyles.total}>
-          <div>
-            {t("summary.total")} <span className={summaryStyles.vat}>{t("summary.vat")} </span>
+        {values.price && (
+          <div className={summaryStyles.total}>
+            <div>
+              {t("summary.total")} <span className={summaryStyles.vat}>{t("summary.vat")} </span>
+            </div>
+            <div>{currencyFormat.format(parseFloat(values.price))}</div>
           </div>
-          {values.price && <div>{currencyFormat.format(parseFloat(values.price))}</div>}
-        </div>
+        )}
       </div>
     </>
   );

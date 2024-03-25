@@ -1,6 +1,6 @@
 {
   "index": {
-    "reserveYourExperience": "Foglald le privát Sör Fürdődet most!",
+    "reserveYourExperience": "Foglald le a privát sörfürdődet!",
     "continue": "Tovább"
   },
   "reservationDate": {
@@ -39,16 +39,17 @@
     "sixPeople": "6 fő"
   },
   "summary": {
-    "details": "A Craft Beer Spa termében a következőket élvezheted:",
-    "yourExperience": "A Craft Beer Spa élményed",
-    "infraredSauna": "- Turmalinos infraszaunát a méregtelenítésre",
-    "bath": "- 100% természetes anyagokat (sörkivonatokat és gyögynövényeket) tartalmazó dézsafürdőzést akácfa dézsákban",
+    "youCanEnjoy": "A Craft Beer Spa termében a következőket élvezheted",
+    "details": "A Craft Beer Spa foglalásod részletei",
+    "yourExperience": "A Craft Beer Spa élményed tartalmazza",
+    "infraredSauna": "Turmalinos infraszaunát a méregtelenítésre",
+    "bath": "100% természetes anyagokat (sörkivonatokat és gyögynövényeket) tartalmazó dézsafürdőzést akácfa dézsákban",
     "ofBeerBath": " sörfürdőben",
-    "strawBed": "- Relaxációt valódi búzaszalma ágyon",
-    "snacks": "- Sörkorcsolyát",
-    "unlimitedBeer": "- Korlátlan mennyiségű csapolt sörfogyasztást, hazai mikrofőzdék kínálatából",
-    "towelsAndRobes": "- Törölközőt, fürdőlepedőt",
-    "exclusiveUse": "- A sörterápiás szoba privát használatát",
+    "strawBed": "Relaxációt valódi búzaszalma ágyon",
+    "snacks": "Sörkorcsolyát",
+    "unlimitedBeer": "Korlátlan mennyiségű csapolt sörfogyasztást, hazai mikrofőzdék kínálatából",
+    "towelsAndRobes": "Törölközőt, fürdőlepedőt",
+    "exclusiveUse": "A sörterápiás szoba privát használatát",
     "total": "Összesen: ",
     "vat": "(ÁFA-val)",
     "huf": "Ft."
@@ -95,7 +96,8 @@
   "reservationDetails": {
     "summaryAndCheckout": "Összegzés",
     "location": "Helyszín",
-    "shareSpa": "Craft Beer Spa – 3323 Szarvaskő, Borsod u. 9.",
+    "craftBeerSpa": "Craft Beer Spa",
+    "szarvasko": "3323 Szarvaskő, Borsod u. 9.",
     "tubsReserved": "Dézsák",
     "date": "Időpont",
     "lengthOfStay": "Időtartam",

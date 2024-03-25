@@ -10,6 +10,10 @@
   margin: 20px 0 0 25px;
   line-height: 40px;
 
+  &Ul {
+    list-style-type: circle;
+  }
+
   &__title {
     padding-bottom: 10px;
   }
@@ -27,6 +31,12 @@
 
     &Label {
       max-width: 180px;
+    }
+
+    &Location {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
   }
 

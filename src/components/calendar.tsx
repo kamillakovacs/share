@@ -3,7 +3,7 @@ import { DayPicker } from "react-day-picker";
 import React, { FC, memo } from "react";
 import classnames from "classnames";
 import { useFormikContext } from "formik";
-import { hu, enUS } from 'date-fns/locale';
+import { hu, enUS } from "date-fns/locale";
 import { useTranslation } from "next-i18next";
 
 import CalendarIcon from "../../public/assets/calendar.svg";
@@ -31,6 +31,7 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
     if (!isExistingReservation) {
       setFieldValue("numberOfGuests", null);
       setFieldValue("numberOfTubs", null);
+      setFieldValue("price", "");
     }
     handleIconColors(".calendarIcon");
 
@@ -75,21 +76,24 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
   };
 
   const colorIconGreen = (selector: string) =>
-    ((document.querySelectorAll(selector).forEach(s => (s as HTMLElement).style.fill = "#00d531")));
+    document.querySelectorAll(selector).forEach((s) => ((s as HTMLElement).style.fill = "#00d531"));
 
-
-  const resetIconColor = (selector: string) =>
-    ((document.querySelector(selector) as HTMLElement).style.fill = "white");
-
+  const resetIconColor = (selector: string) => ((document.querySelector(selector) as HTMLElement).style.fill = "white");
 
   const allTubsAreReservedForGivenEntireDay = (day: Date) => {
     if (!currentReservations) {
       return false;
     }
 
-    const hoursReservedOnGivenDay = getReservationsOnDate(day).map((res: ReservationDataShort) => new Date(res.date).getHours());
-    const timesReservationOnDay: number[] = hoursReservedOnGivenDay.filter((hour, index) => hoursReservedOnGivenDay?.indexOf(hour) == index);
-    const allTimesAreReservedOnGivenDay: boolean = [10, 12, 14, 16, 18, 20].every(time => timesReservationOnDay?.includes(time));
+    const hoursReservedOnGivenDay = getReservationsOnDate(day).map((res: ReservationDataShort) =>
+      new Date(res.date).getHours()
+    );
+    const timesReservationOnDay: number[] = hoursReservedOnGivenDay.filter(
+      (hour, index) => hoursReservedOnGivenDay?.indexOf(hour) == index
+    );
+    const allTimesAreReservedOnGivenDay: boolean = [10, 12, 14, 16, 18, 20].every(
+      (time) => timesReservationOnDay?.includes(time)
+    );
 
     if (!allTimesAreReservedOnGivenDay) {
       return false;
@@ -98,23 +102,25 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
     return getReservationsOnDate(day).length > 0;
   };
 
-  const getReservationsOnDate = (day: Date) => Object.values(currentReservations).filter((res: ReservationDataShort) => {
-    if (res.date === null) {
-      return;
-    }
-    // find if there are reservations on given day
-    let givenDay = new Date(day.getFullYear(), day.getMonth(), day.getDate());
-    let reservationDateAndTime = new Date(res.date);
-    let reservationDate = new Date(
-      reservationDateAndTime.getFullYear(),
-      reservationDateAndTime.getMonth(),
-      reservationDateAndTime.getDate()
-    );
-    return reservationDate.toISOString() === givenDay.toISOString();
-  });
+  const getReservationsOnDate = (day: Date) =>
+    Object.values(currentReservations).filter((res: ReservationDataShort) => {
+      if (res.date === null) {
+        return;
+      }
+      // find if there are reservations on given day
+      let givenDay = new Date(day.getFullYear(), day.getMonth(), day.getDate());
+      let reservationDateAndTime = new Date(res.date);
+      let reservationDate = new Date(
+        reservationDateAndTime.getFullYear(),
+        reservationDateAndTime.getMonth(),
+        reservationDateAndTime.getDate()
+      );
+      return reservationDate.toISOString() === givenDay.toISOString();
+    });
 
-  const isSixtyDaysFromToday = (day: Date) => day.valueOf() > new Date().setDate(new Date().getDate() + 60)
-  const availableDates = (day: Date) => day <= new Date() || allTubsAreReservedForGivenEntireDay(day) || isSixtyDaysFromToday(day)
+  const isSixtyDaysFromToday = (day: Date) => day.valueOf() > new Date().setDate(new Date().getDate() + 60);
+  const availableDates = (day: Date) =>
+    day <= new Date() || allTubsAreReservedForGivenEntireDay(day) || isSixtyDaysFromToday(day);
 
   const allTubsAreReservedForGivenDayAndTime = (time: string): boolean => {
     if (!currentReservations || !values.date) {
@@ -164,7 +170,6 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
             showOutsideDays
             fixedWeeks
             className={dateStyles.reservationDate__datePicker}
-
           />
         </div>
         {values.date && (
@@ -199,7 +204,9 @@ const Calendar: FC<Props> = ({ currentReservations, isExistingReservation }) => 
           </div>
           <span>{t("reservationDate.time")}</span>
         </div>
-        <div className={classnames(`${dateStyles.reservationDate__timeResponsiveOptions} reservationDate__timeOptions`)}>
+        <div
+          className={classnames(`${dateStyles.reservationDate__timeResponsiveOptions} reservationDate__timeOptions`)}
+        >
           {timeOptions.map((time, index) => (
             <button
               key={index}

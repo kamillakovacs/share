@@ -10,13 +10,13 @@ interface Props {
   reservation: ReservationWithDetails;
   date: Date;
   price: string;
-  paymentStatus?: PaymentStatus
+  paymentStatus?: PaymentStatus;
 }
 
 const ReservationSummary: FC<Props> = ({ reservation, date, price, paymentStatus }) => {
   const { t, i18n } = useTranslation("common");
   const [resDate, setResDate] = useState("");
-  const [resPrice, setResPrice] = useState("")
+  const [resPrice, setResPrice] = useState("");
 
   useEffect(() => {
     if (date) {
@@ -32,7 +32,7 @@ const ReservationSummary: FC<Props> = ({ reservation, date, price, paymentStatus
     }
 
     if (price && !paymentStatus) {
-      setResPrice(currencyFormat.format(parseFloat(price)))
+      setResPrice(currencyFormat.format(parseFloat(price)));
     }
   }, [setResDate, date, setResPrice, price, paymentStatus, i18n.language]);
 
@@ -40,7 +40,10 @@ const ReservationSummary: FC<Props> = ({ reservation, date, price, paymentStatus
     <div className={detailsStyles.details}>
       <div className={detailsStyles.details__row}>
         <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.location")}</div>
-        <div>{t("reservationDetails.shareSpa")}</div>
+        <div className={detailsStyles.details__rowLocation}>
+          <div>{t("reservationDetails.craftBeerSpa")}</div>
+          <div>{t("reservationDetails.szarvasko")}</div>
+        </div>
       </div>
       <div className={detailsStyles.details__row}>
         <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.tubsReserved")}</div>
@@ -54,12 +57,14 @@ const ReservationSummary: FC<Props> = ({ reservation, date, price, paymentStatus
         <div className={detailsStyles.details__rowLabel}>{t("reservationDetails.lengthOfStay")}</div>
         <div>{t("reservationDetails.hourAndFifteenMins")}</div>
       </div>
-      {!paymentStatus && <div className={detailsStyles.details__row}>
-        <div>{t("reservationDetails.totalPrice")}:</div>
-        <div>{resPrice}</div>
-      </div>}
+      {!paymentStatus && (
+        <div className={detailsStyles.details__row}>
+          <div>{t("reservationDetails.totalPrice")}:</div>
+          <div>{resPrice}</div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default memo(ReservationSummary);

@@ -24,33 +24,33 @@ interface Props {
 const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => {
   const { t, i18n } = useTranslation("common");
   const [dateOfPurchase, setDateOfPurchase] = useState("");
-  const [price, setPrice] = useState("")
+  const [price, setPrice] = useState("");
 
   useEffect(() => {
     if (reservation?.dateOfPurchase) {
       setDateOfPurchase(
         new Intl.DateTimeFormat(i18n.language, {
-          month: "2-digit",
-          day: "2-digit",
+          month: "long",
+          day: "numeric",
           year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
+          hour: "numeric",
+          minute: "numeric"
         }).format(new Date(reservation?.dateOfPurchase))
       );
     }
 
     if (reservation?.price) {
-      setPrice(currencyFormat.format(parseFloat(reservation?.price)))
+      setPrice(currencyFormat.format(parseFloat(reservation?.price)));
     }
   }, [reservation?.dateOfPurchase, setDateOfPurchase, reservation?.price, setPrice, i18n.language]);
 
   return (
     <article className={thanksStyles.container}>
       <label className={thanksStyles.reservation__title}>
-        <span>{
-          reservation?.canceled && reservation?.canceled !== CanceledBy.BeerSpa ?
-            t("thanks.thisReservationWasCanceled") :
-            t("thanks.thankYou")}
+        <span>
+          {reservation?.canceled && reservation?.canceled !== CanceledBy.BeerSpa
+            ? t("thanks.thisReservationWasCanceled")
+            : t("thanks.thankYou")}
         </span>
       </label>
       <div className={thanksStyles.reservation}>
@@ -96,8 +96,9 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
             <div className={detailsStyles.details__row}>
               <div>{t("reservationDetails.paymentStatus")}:</div>
               <div>
-                {reservation.paymentStatus == PaymentStatus.Succeeded ?
-                  t("reservationDetails.paid") : t("reservationDetails.outstanding")}
+                {reservation.paymentStatus == PaymentStatus.Succeeded
+                  ? t("reservationDetails.paid")
+                  : t("reservationDetails.outstanding")}
               </div>
             </div>
             <div className={detailsStyles.details__row}>
@@ -113,22 +114,15 @@ const ReservationDetails: FC<Props> = ({ reservation, currentReservations }) => 
             <label>{t("summary.yourExperience")}</label>
           </div>
           <div className={detailsStyles.details}>
-            <div>{t("summary.infraredSauna")}</div>
-            <div>{`${t("summary.soakFor")} ${reservation?.numberOfGuests ? reservation?.numberOfGuests.value : 1} ${reservation?.numberOfGuests
-              ? reservation.numberOfGuests.value > 1
-                ? t("summary.people")
-                : t("summary.person")
-              : t("summary.person")
-              } in ${reservation?.numberOfTubs ? reservation?.numberOfTubs.value : 1} ${reservation?.numberOfTubs
-                ? reservation?.numberOfTubs.value > 1
-                  ? t("summary.tubs")
-                  : t("summary.tub")
-                : t("summary.tub")
-              } ${t("summary.ofBeerBath")} `}</div>
-            <div>{t("summary.strawBed")} </div>
-            <div>{t("summary.unlimitedBeer")} </div>
-            <div>{t("summary.towelsAndRobes")} </div>
-            <div>{t("summary.exclusiveUse")} </div>
+            <ul className={detailsStyles.detailsUl}>
+              <li>{t("summary.exclusiveUse")}</li>
+              <li>{t("summary.bath")}</li>
+              <li>{t("summary.unlimitedBeer")}</li>
+              <li>{t("summary.infraredSauna")}</li>
+              <li>{t("summary.strawBed")}</li>
+              <li>{t("summary.snacks")}</li>
+              <li>{t("summary.towelsAndRobes")}</li>
+            </ul>
           </div>
 
           <div className={thanksStyles.summaryLabel}>
